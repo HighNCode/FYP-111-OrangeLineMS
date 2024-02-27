@@ -319,34 +319,36 @@ class _MultiStepFormState extends State<MultiStepForm> {
               ],
             ),
           ),
+          // Container(
+          //   color: const Color(
+          //       0xFFFF8518), // Change page indicators background color
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: List<Widget>.generate(_totalPages, (int index) {
+          //       return Padding(
+          //         padding: const EdgeInsets.all(8.0),
+          //         child: Container(
+          //           width: 8.0,
+          //           height: 8.0,
+          //           decoration: BoxDecoration(
+          //             shape: BoxShape.circle,
+          //             color: _currentPage == index
+          //                 ? const Color(
+          //                     0xFFff8518) // Active page indicator color
+          //                 : const Color(
+          //                     0xFF313134), // Inactive page indicator color
+          //           ),
+          //         ),
+          //       );
+          //     }),
+          //   ),
+          // ),
           Container(
-            color: const Color(
-                0xFF1F1F1F), // Change page indicators background color
+            color: const Color(0xFFFF8518), // Change this color if needed
             child: Row(
+// Change buttons background color
+
               mainAxisAlignment: MainAxisAlignment.center,
-              children: List<Widget>.generate(_totalPages, (int index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    width: 8.0,
-                    height: 8.0,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: _currentPage == index
-                          ? const Color(
-                              0xFFff8518) // Active page indicator color
-                          : const Color(
-                              0xFF313134), // Inactive page indicator color
-                    ),
-                  ),
-                );
-              }),
-            ),
-          ),
-          Container(
-            color: const Color(0xFF1F1F1F), // Change buttons background color
-            child: ButtonBar(
-              alignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
                   onPressed: () {
@@ -360,7 +362,8 @@ class _MultiStepFormState extends State<MultiStepForm> {
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.resolveWith<Color>(
                       (Set<MaterialState> states) {
-                        return Colors.blue; // Color when button is enabled
+                        return Color(
+                            0xFF313134); // Color when button is enabled
                       },
                     ),
                   ),
@@ -386,8 +389,8 @@ class _MultiStepFormState extends State<MultiStepForm> {
                     backgroundColor: MaterialStateProperty.resolveWith<Color>(
                       (Set<MaterialState> states) {
                         return _currentPage == _totalPages - 1
-                            ? Colors.green // Color when on the last page
-                            : Colors.blue; // Color when button is enabled
+                            ? Colors.orange // Color when on the last page
+                            : Color(0xFF313134); // Color when button is enabled
                       },
                     ),
                   ),
