@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:toast/toast.dart';
 
 class PlotScreen extends StatefulWidget {
   @override
@@ -9,6 +10,8 @@ class PlotScreen extends StatefulWidget {
 
 class _PlotScreenState extends State<PlotScreen> {
   String plotData = '';
+  // List<Map<String, dynamic>> tableData = [];
+  List<dynamic> tableData = [];
 
   @override
   void initState() {
@@ -26,6 +29,70 @@ class _PlotScreenState extends State<PlotScreen> {
       });
     } else {
       throw Exception('Failed to load plot data');
+    }
+  }
+
+  void _getTable() async {
+    final response =
+        await http.get(Uri.parse('http://127.0.0.1:8000/get_table'));
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseData = json.decode(response.body);
+
+      print(responseData);
+
+      if (responseData.containsKey('table_data')) {
+        var tableData = responseData['table_data'];
+
+        // Check if tableData is a String
+        if (tableData is String) {
+          // Parse the String as a JSON array
+          List<dynamic> records = json.decode(tableData);
+
+          // Check if records is a list and contains map entries
+          if (records is List &&
+              records.isNotEmpty &&
+              records.first is Map<String, dynamic>) {
+            // Format the content
+            List<DataRow> dataRows = [];
+            for (Map<String, dynamic> record in records) {
+              dataRows.add(DataRow(
+                cells: [
+                  DataCell(Text(record['Date'])),
+                  DataCell(Text(record['Forecasted_Quantity'].toString())),
+                ],
+              ));
+            }
+
+            // Show the dialog box with DataTable
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Table Data'),
+                  content: SingleChildScrollView(
+                    child: DataTable(
+                      columns: [
+                        DataColumn(label: Text('Date')),
+                        DataColumn(label: Text('Forecasted Quantity')),
+                      ],
+                      rows: dataRows,
+                    ),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('OK'),
+                    ),
+                  ],
+                );
+              },
+            );
+          }
+        }
+      }
     }
   }
 
@@ -87,7 +154,6 @@ class _PlotScreenState extends State<PlotScreen> {
                   Row(
                     children: [
                       Container(
-                        // No margin for the second Container
                         margin: EdgeInsets.fromLTRB(55, 0, 0, 0.10),
                         width: 500,
                         height: 8,
@@ -96,7 +162,6 @@ class _PlotScreenState extends State<PlotScreen> {
                         ),
                       ),
                       Container(
-                        // No margin for the second Container
                         width: 200,
                         height: 8,
                         decoration: BoxDecoration(
@@ -116,6 +181,54 @@ class _PlotScreenState extends State<PlotScreen> {
                           )
                         : CircularProgressIndicator(),
                   ),
+                  SizedBox(height: 30),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 55),
+                        child: ElevatedButton(
+                          onPressed: _getTable,
+                          style: ElevatedButton.styleFrom(
+                            primary: Color(0xddff8518),
+                          ),
+                          child: SizedBox(
+                            height: 30.0,
+                            child: Center(
+                              child: Text(
+                                'Show Details',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      //     SizedBox(height: 20),
+                      //     if (tableData.isNotEmpty)
+                      //       DataTable(
+                      //         columns: [
+                      //           DataColumn(label: Text('Column 1')),
+                      //           DataColumn(label: Text('Column 2')),
+                      //           // Add more columns as needed
+                      //         ],
+                      //         rows: tableData
+                      //             .map(
+                      //               (row) => DataRow(
+                      //                 cells: [
+                      //                   DataCell(Text('${row['key1']}')),
+                      //                   DataCell(Text('${row['key2']}')),
+                      //                   // Add more cells as needed
+                      //                 ],
+                      //               ),
+                      //             )
+                      //             .toList(),
+                      //       )
+                      //     else
+                      //       Text('Table data not available'),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -125,14 +238,13 @@ class _PlotScreenState extends State<PlotScreen> {
             top: 10,
             child: Container(
               decoration: BoxDecoration(
-                color: Color(0xddff8518), // Replace with your desired color
-                shape: BoxShape.circle, // Makes the container circular
+                color: Color(0xddff8518),
+                shape: BoxShape.circle,
               ),
               child: IconButton(
                 icon: Icon(Icons.arrow_back),
-                color: Colors.white, // Icon color
+                color: Colors.white,
                 onPressed: () {
-                  // Navigate back when the back button is pressed
                   Navigator.pop(context);
                 },
               ),
