@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:fl_chart/fl_chart.dart';
-import 'package:third_app/Screen/Wheel_Analysis/Page1.dart';
-import 'package:third_app/Screen/fault_detection/Page3.dart';
-import 'package:third_app/Screen/Fault_Data/first.dart';
-import 'package:third_app/Screen/Wheel Data OCR/ocr.dart';
+import 'package:third_app/Screen/mainPage/MyDashboard.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,29 +11,38 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.orange,
-        scaffoldBackgroundColor: Colors.black,
-      ),
-      home: MyDashboard(),
+      home: LoginScreen(),
     );
   }
 }
 
-class MyDashboard extends StatefulWidget {
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: LoginScreen(),
+//     );
+//   }
+// }
+
+class LoginScreen extends StatefulWidget {
   @override
-  _MyDashboardState createState() => _MyDashboardState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _MyDashboardState extends State<MyDashboard> {
-  int _selectedMenuItem = 0; // Track the selected menu item
-  TextEditingController _searchController = TextEditingController();
+class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
+  String result = '';
+  bool isPasswordVisible = false;
+  bool? checked = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Color.fromARGB(255, 8, 8, 8),
+        toolbarHeight: 80,
         title: Row(
           children: [
             // Add an image here
@@ -49,7 +54,6 @@ class _MyDashboardState extends State<MyDashboard> {
                 height: 50, // Adjust the height as needed
               ),
             ),
-
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -59,356 +63,188 @@ class _MyDashboardState extends State<MyDashboard> {
                 ),
               ],
             ),
-
-            SizedBox(width: 325), // Add space between title and search bar
-            Container(
-              constraints: BoxConstraints(maxWidth: 260),
-              child: TextField(
-                controller: _searchController,
-                style: TextStyle(color: Colors.white),
-                onSubmitted: (value) {
-                  if (value.toLowerCase() == 'wheel analysis') {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Page1()),
-                    );
-                  }
-                },
-                decoration: InputDecoration(
-                  hintText: 'Search',
-                  hintStyle: TextStyle(color: Colors.grey),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.orange),
-                  ),
-                  suffixIcon: Icon(
-                    Icons.search,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
           ],
         ),
-        iconTheme: IconThemeData(
-          color: Colors.orange, // Set the icon (menu) color to orange
-        ),
       ),
-      drawer: MyDrawer(
-        selectedMenuItem: _selectedMenuItem,
-        onMenuItemSelected: (int index) {
-          setState(() {
-            if (index == 0) {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => MyDashboard()));
-            } else {
-              _selectedMenuItem = index;
-              print(_selectedMenuItem);
-              if (index == 1) {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Page1()));
-              } else if (index == 2) {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => first()));
-              } else if (index == 3) {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Page3()));
-              } else if (index == 4) {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => ocr()));
-              } else {
-                // Handle other menu items or scenarios if needed
-                print('fail');
-              }
-            }
-          });
-          // Navigator.pop(context);
-        },
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(top: 0, bottom: 20),
-              color: Color(0xddff8518),
-              height: 200,
-              width: 1250,
-              child: Row(
+      body: Stack(
+        children: [
+          Container(
+            height: 720,
+            width: 1370,
+            decoration: BoxDecoration(
+              color: Color(0xFFFFFFFF),
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage('assets/background.png'),
+              ),
+            ),
+          ),
+          Positioned(
+            left: 300,
+            top: 20,
+            child: Container(
+              width: 800,
+              height: 570,
+              decoration: BoxDecoration(
+                color: Color(0xFF313134).withOpacity(0.8),
+                borderRadius: BorderRadius.circular(20.2151851654),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 16.0, top: 0), // Adjust left padding
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Lahore Metro',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
+                  Text(
+                    'Login',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(250, 16, 250, 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Username',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            border: Border.all(color: Colors.grey),
+                          ),
+                          child: TextField(
+                            style: TextStyle(color: Colors.black),
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 15.0, horizontal: 20.0),
+                              hintText: 'Username',
+                              hintStyle: TextStyle(color: Colors.grey),
+                              border: InputBorder.none,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
-                            SizedBox(height: 30),
-                            Row(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Passenger Capacity',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    SizedBox(height: 10),
-                                    Text(
-                                      '300 Person',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    SizedBox(height: 20),
-                                    Text(
-                                      'Total Staff',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    SizedBox(height: 10),
-                                    Text(
-                                      '345',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(250, 16, 250, 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Password',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            border: Border.all(color: Colors.grey),
+                          ),
+                          child: TextField(
+                            style: TextStyle(color: Colors.black),
+                            obscureText: !isPasswordVisible,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 15.0, horizontal: 20.0),
+                              hintText: 'Password',
+                              hintStyle: TextStyle(color: Colors.grey),
+                              border: InputBorder.none,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  isPasswordVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: Colors.grey,
                                 ),
-                                SizedBox(width: 60),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Engine Fitness',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    SizedBox(height: 10),
-                                    Text(
-                                      '100%',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    SizedBox(height: 20),
-                                    Text(
-                                      'Maintenance and Repair',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    SizedBox(height: 10),
-                                    Text(
-                                      'On Schedule',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                onPressed: () {
+                                  setState(() {
+                                    isPasswordVisible = !isPasswordVisible;
+                                  });
+                                },
+                              ),
                             ),
-                          ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(250, 2, 250, 12),
+                    child: Row(
+                      children: [
+                        Checkbox(
+                          value: checked,
+                          activeColor: Color(0xddff8518),
+                          onChanged: (newBool) {
+                            setState(() {
+                              checked = newBool;
+                            });
+                          },
+                        ),
+                        Text(
+                          'Remember Me',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MyDashboard(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Color(0xddff8518),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      minimumSize: Size(300, 60),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        'Login',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
                         ),
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Image.asset(
-                      'assets/pic.png',
-                      width: 500,
-                      height: 400,
-                    ),
-                  ),
                 ],
               ),
             ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.start, // Align to the start (left)
-              children: [
-                SizedBox(width: 60),
-                Text(
-                  'Overview',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(width: 60),
-                _buildCard('Statistics', Icons.show_chart),
-                SizedBox(width: 180), // Add space between cards
-                _buildCard('Tasks', Icons.assignment),
-                SizedBox(width: 180),
-                _buildTimeContainer(),
-              ],
-            ),
-            SizedBox(height: 10),
-            SizedBox(height: 10),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-Widget _buildCard(String title, IconData icon) {
-  return Card(
-    color: Colors.grey[900],
-    margin: EdgeInsets.all(10),
-    child: Padding(
-      padding: EdgeInsets.all(16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Icon(
-            icon,
-            color: Colors.orange,
-            size: 100,
-          ),
-          SizedBox(height: 10),
-          Text(
-            title,
-            style: TextStyle(color: Colors.white, fontSize: 16),
           ),
         ],
-      ),
-    ),
-  );
-}
-
-Widget _buildTimeContainer() {
-  DateTime now = DateTime.now();
-  String formattedTime =
-      "${now.hour}:${now.minute} ${now.hour >= 12 ? 'PM' : 'AM'}";
-
-  return Container(
-    padding: EdgeInsets.all(16),
-    decoration: BoxDecoration(
-      color: Colors.grey[900],
-      borderRadius: BorderRadius.circular(10),
-    ),
-    constraints: BoxConstraints(
-      minHeight: 100,
-      minWidth: 200,
-    ),
-    child: Column(
-      children: [
-        Text(
-          'Current Time:',
-          style: TextStyle(color: Colors.white, fontSize: 18),
-        ),
-        SizedBox(height: 10),
-        Text(
-          formattedTime,
-          style: TextStyle(color: Colors.orange, fontSize: 24),
-        ),
-      ],
-    ),
-  );
-}
-
-class MyDrawer extends StatelessWidget {
-  final int selectedMenuItem;
-  final Function(int) onMenuItemSelected;
-
-  const MyDrawer({
-    Key? key,
-    required this.selectedMenuItem,
-    required this.onMenuItemSelected,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: Container(
-        color: Color(0xFF313134), // Set the background color for the drawer
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            Container(
-              color: Color(0xFF313134),
-              child: DrawerHeader(
-                child: Center(
-                  child: Text(
-                    'MENU',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                    ),
-                  ),
-                ),
-                decoration: BoxDecoration(
-                  color: Color(0xFF313134),
-                ),
-              ),
-            ),
-            Container(
-              height: 910,
-              color: Color(0xFF313134),
-              child: Column(
-                children: <Widget>[
-                  _buildMenuItem(0, 'Home', Icons.home),
-                  _buildMenuItem(1, 'Wheel Data Form', Icons.data_usage),
-                  _buildMenuItem(2, 'Fault Data Form', Icons.edit),
-                  _buildMenuItem(3, 'Fault Detection', Icons.warning),
-                  _buildMenuItem(4, 'Wheel Analysis', Icons.analytics),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMenuItem(int index, String title, IconData icon) {
-    return ListTile(
-      title: Text(
-        title,
-        style: TextStyle(
-          color: selectedMenuItem == index ? Color(0xddff8518) : Colors.white,
-        ),
-      ),
-      onTap: () {
-        onMenuItemSelected(index);
-      },
-      leading: Icon(
-        icon,
-        color: selectedMenuItem == index ? Color(0xddff8518) : Colors.white,
       ),
     );
   }
