@@ -73,7 +73,7 @@ class _PlotScreenState extends State<PlotScreen> {
                   content: SingleChildScrollView(
                     child: DataTable(
                       columns: [
-                        DataColumn(label: Text('Date')),
+                        DataColumn(label: Text('Month')),
                         DataColumn(label: Text('Forecasted Quantity')),
                       ],
                       rows: dataRows,
