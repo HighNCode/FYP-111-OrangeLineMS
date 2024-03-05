@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:third_app/Screen/mainPage/MyDashboard.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 void main() {
   runApp(const MyApp());
@@ -36,6 +38,55 @@ class _LoginScreenState extends State<LoginScreen> {
   String result = '';
   bool isPasswordVisible = false;
   bool? checked = false;
+
+  void checkLoginFields(BuildContext context) {
+    if (FieldsEmpty()) {
+      // Show a Snackbar if any field is empty
+      final snackBar = SnackBar(
+        content: Text('Fields are empty.'),
+        duration: Duration(seconds: 1),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } else {
+      loginUser();
+    }
+  }
+
+  bool FieldsEmpty() {
+    // Check if any of the TextControllers has empty text
+    return emailController.text.isEmpty || passController.text.isEmpty;
+  }
+
+  Future<void> loginUser() async {
+    final String apiUrl =
+        "http://127.0.0.1:8000/login"; // Update with your Flask API endpoint
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'username': emailController.text,
+        'password': passController.text,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print('Data sent successfully');
+      print('Response: ${response.body}');
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MyDashboard(),
+        ),
+      );
+    } else {
+      final snackBar = SnackBar(
+        content: Text('Incorrect Password or username'),
+        duration: Duration(seconds: 1),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,6 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           child: TextField(
                             style: TextStyle(color: Colors.black),
+                            controller: emailController,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: 15.0, horizontal: 20.0),
@@ -159,6 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           child: TextField(
                             style: TextStyle(color: Colors.black),
+                            controller: passController,
                             obscureText: !isPasswordVisible,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
@@ -215,12 +268,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MyDashboard(),
-                        ),
-                      );
+                      checkLoginFields(context);
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Color(0xddff8518),
