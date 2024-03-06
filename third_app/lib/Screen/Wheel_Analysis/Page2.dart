@@ -3,7 +3,7 @@ import 'dart:convert';
 // Import the Uint8List type.
 import 'package:http/http.dart' as http;
 
-import 'package:third_app/main.dart';
+import 'package:third_app/Screen/mainPage/MyDashboard.dart';
 import 'package:flutter/services.dart';
 
 void main() {
