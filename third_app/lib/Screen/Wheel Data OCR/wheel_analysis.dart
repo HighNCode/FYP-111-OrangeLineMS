@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:third_app/main.dart';
+//import 'package:third_app/main.dart';
 
 void main() {
   runApp(MyApp());
