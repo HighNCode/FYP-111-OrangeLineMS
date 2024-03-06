@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:toast/toast.dart';
 
 class PlotScreen extends StatefulWidget {
   @override
@@ -48,7 +47,7 @@ class _PlotScreenState extends State<PlotScreen> {
         if (tableData is String) {
           // Parse the String as a JSON array
           List<dynamic> records = json.decode(tableData);
-
+          print(records);
           // Check if records is a list and contains map entries
           if (records is List &&
               records.isNotEmpty &&
@@ -59,7 +58,7 @@ class _PlotScreenState extends State<PlotScreen> {
               dataRows.add(DataRow(
                 cells: [
                   DataCell(Text(record['Date'])),
-                  DataCell(Text(record['Forecasted_Quantity'].toString())),
+                  DataCell(Text(record['Quantity'])),
                 ],
               ));
             }
