@@ -172,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             border: Border.all(color: Colors.grey),
                           ),
                           child: TextField(
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(color: Colors.white),
                             controller: emailController,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
@@ -210,7 +210,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             border: Border.all(color: Colors.grey),
                           ),
                           child: TextField(
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(color: Colors.white),
                             controller: passController,
                             obscureText: !isPasswordVisible,
                             decoration: InputDecoration(

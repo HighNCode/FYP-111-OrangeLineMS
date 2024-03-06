@@ -57,7 +57,7 @@ class _ocrState extends State<ocr> {
         // Prepare the image file for upload
         final File imageFile = _image!;
 
-        final uri = Uri.parse('http://192.168.100.94:8000/upload_image');
+        final uri = Uri.parse('http://127.0.0.1:8000/upload_image');
         final request = http.MultipartRequest('POST', uri)
           ..files.add(http.MultipartFile(
             'image',
@@ -264,7 +264,7 @@ class _MultiStepFormState extends State<MultiStepForm> {
   Future<void> sendOCRToFlaskAPI() async {
     try {
       //const String apiUrl = 'http://192.168.0.115:8000/upload_ocr';
-      const String apiUrl = 'http://192.168.100.94:8000/upload_ocr';
+      const String apiUrl = 'http://127.0.0.1:8000/upload_ocr';
       print('\n*****************************************');
       DataManager().trainData['afterCut'] = DataManager.afterCut.toString();
       String jsonData = jsonEncode(DataManager().trainData);

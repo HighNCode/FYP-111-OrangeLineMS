@@ -32,7 +32,7 @@ class _Page3State extends State<Page3> {
 
   Future<void> getFaultSolution(String faultDescription) async {
     final response = await http.post(
-      Uri.parse('http://127.0.0.1:5000/extract_fault_solution'),
+      Uri.parse('http://127.0.0.1:8000/extract_fault_solution'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },

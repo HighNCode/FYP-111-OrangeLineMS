@@ -108,7 +108,7 @@ class _generalInfoState extends State<generalInfo> {
 
   Future<void> sendRequest() async {
     final url = Uri.parse(
-        'http://192.168.100.94:8000/intial_measurement'); // Replace with your Flask API endpoint URL
+        'http://127.0.0.1:8000/intial_measurement'); // Replace with your Flask API endpoint URL
     final headers = <String, String>{
       'Content-Type': 'application/json',
     };

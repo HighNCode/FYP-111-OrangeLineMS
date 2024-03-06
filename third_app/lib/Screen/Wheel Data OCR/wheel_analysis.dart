@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-//import 'package:third_app/main.dart';
+import 'package:third_app/Screen/mainPage/MyDashboard.dart';
 
 void main() {
   runApp(MyApp());
@@ -228,7 +228,13 @@ class _WheelAnalysis extends State<WheelAnalysis> {
                   color: Colors.white, // Icon color
                   onPressed: () {
                     // Navigate back when the back button is pressed
-                    Navigator.pop(context);
+                    // Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyDashboard(),
+                      ),
+                    );
                   },
                 ),
               ),
@@ -242,7 +248,7 @@ class _WheelAnalysis extends State<WheelAnalysis> {
   Future<void> TrainToFlask(String selectedTrainNo) async {
     try {
       //const String apiUrl = 'http://192.168.0.115:8000/wheel_analysis';
-      const String apiUrl = 'http://192.168.100.94:8000/wheel_analysis';
+      const String apiUrl = 'http://127.0.0.1:8000/wheel_analysis';
       final Map<String, String> jsonData = {
         'selected_train_no': selectedTrainNo,
       };

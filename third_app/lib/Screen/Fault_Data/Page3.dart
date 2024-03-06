@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // Import the Uint8List type.
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:third_app/Screen/mainPage/MyDashboard.dart';
 
 void main() {
   runApp(MyApp());
@@ -357,6 +358,13 @@ class _Page3State extends State<Page3> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   // sendData(context);
+
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MyDashboard(),
+                                    ),
+                                  );
                                 },
                                 child: Text(
                                   'Submit',

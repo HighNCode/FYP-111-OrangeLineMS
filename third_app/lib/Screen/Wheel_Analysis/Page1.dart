@@ -134,7 +134,7 @@ class _Page1State extends State<Page1> {
 
   Future<void> sendPostRequest() async {
     final url = Uri.parse(
-        'http://192.168.100.94:8000/general_info'); // Replace with your Flask API endpoint URL
+        'http://127.0.0.1:8000:8000/general_info'); // Replace with your Flask API endpoint URL
     final headers = <String, String>{
       'Content-Type': 'application/json',
     };

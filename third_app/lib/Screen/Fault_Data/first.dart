@@ -104,7 +104,7 @@ class _firstState extends State<first> {
 
   Future<void> fetchSystem() async {
     final response = await http.post(
-        Uri.parse('http://127.0.0.1:5000/get_related_system'),
+        Uri.parse('http://127.0.0.1:8000/get_related_system'),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode(<String, String>{'class_instance': 'System'}));
 
@@ -124,7 +124,7 @@ class _firstState extends State<first> {
     selectedValue4Controller.value = 'Select equipment';
     if (selectedValue3 != 'Select system') {
       final response = await http.post(
-          Uri.parse('http://127.0.0.1:5000/get_related_equipment'),
+          Uri.parse('http://127.0.0.1:8000/get_related_equipment'),
           headers: <String, String>{'Content-Type': 'application/json'},
           body:
               jsonEncode(<String, String>{'system_instance': selectedValue3}));
@@ -147,7 +147,7 @@ class _firstState extends State<first> {
     //selectedValue5 = 'Select location';
     if (selectedValue4 != 'Select equipment') {
       final response = await http.post(
-          Uri.parse('http://127.0.0.1:5000/get_related_location'),
+          Uri.parse('http://127.0.0.1:8000/get_related_location'),
           headers: <String, String>{'Content-Type': 'application/json'},
           body: jsonEncode(
               <String, String>{'equipment_instance': selectedValue4}));
