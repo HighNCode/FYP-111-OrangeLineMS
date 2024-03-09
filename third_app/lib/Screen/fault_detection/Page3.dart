@@ -3,6 +3,7 @@ import 'dart:convert';
 // Import the Uint8List type.
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
+import 'package:third_app/Screen/mainPage/MyDashboard.dart';
 
 void main() {
   runApp(MyApp());
@@ -248,6 +249,58 @@ class _Page3State extends State<Page3> {
                                   borderSide: BorderSide(
                                     color: Color(0xddff8518),
                                     width: 2,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              left: 220,
+              top: 600,
+              child: Align(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 30),
+                      child: Row(
+                        children: [
+                          SizedBox(height: 5),
+                          Padding(
+                            padding: EdgeInsets.only(left: 710),
+                            child: SizedBox(
+                              width: 150,
+                              height: 40,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  // sendData(context);
+
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MyDashboard(),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  'Save',
+                                  style: TextStyle(
+                                    color: Color(0xffffffff),
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color(0xddff8518),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
                                   ),
                                 ),
                               ),
