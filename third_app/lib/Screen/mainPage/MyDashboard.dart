@@ -5,6 +5,7 @@ import 'package:third_app/Screen/fault_detection/Page3.dart';
 import 'package:third_app/Screen/Fault_Data/first.dart';
 import 'package:third_app/Screen/Wheel Data OCR/ocr.dart';
 import 'package:third_app/Screen/Spare_Parts/PlotScreen.dart';
+import 'package:third_app/Screen/mainPage/Home.dart';
 
 void main() {
   runApp(MyApp());
@@ -45,317 +46,310 @@ class MyDashboard extends StatefulWidget {
 class _MyDashboardState extends State<MyDashboard> {
   int _selectedMenuItem = 0; // Track the selected menu item
   TextEditingController _searchController = TextEditingController();
+  // Widgets for different pages
+  final List<Widget> _pages = [
+    Home(),
+    Page1(),
+    first(),
+    Page3(),
+    ocr(),
+    PlotScreen(),
+  ];
+
+  void _onMenuItemSelected(int index) {
+    setState(() {
+      _selectedMenuItem = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Row(
-          children: [
-            // Add an image here
-            Padding(
-              padding: const EdgeInsets.only(right: 0.0),
-              child: Image.asset(
-                'assets/Logo.png', // Replace with your image asset
-                width: 70, // Adjust the width as needed
-                height: 70, // Adjust the height as needed
-              ),
-            ),
-
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Orange Line Maintenance System',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ],
-            ),
-
-            SizedBox(width: 325), // Add space between title and search bar
-            Container(
-              constraints: BoxConstraints(maxWidth: 260),
-              child: TextField(
-                controller: _searchController,
-                style: TextStyle(color: Colors.white),
-                onSubmitted: (value) {
-                  if (value.toLowerCase() == 'wheel analysis') {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Page1()),
-                    );
-                  }
-                },
-                decoration: InputDecoration(
-                  hintText: 'Search',
-                  hintStyle: TextStyle(color: Colors.grey),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.orange),
-                  ),
-                  suffixIcon: Icon(
-                    Icons.search,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-        iconTheme: IconThemeData(
-          color: Colors.orange, // Set the icon (menu) color to orange
-        ),
-      ),
+      appBar: _buildAppBar(),
       drawer: MyDrawer(
         selectedMenuItem: _selectedMenuItem,
-        onMenuItemSelected: (int index) {
-          setState(() {
-            if (index == 0) {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => MyDashboard()));
-            } else {
-              _selectedMenuItem = index;
-              print(_selectedMenuItem);
-              if (index == 1) {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Page1()));
-              } else if (index == 2) {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => first()));
-              } else if (index == 3) {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Page3()));
-              } else if (index == 4) {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => ocr()));
-              } else if (index == 5) {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => PlotScreen()));
-              } else {
-                // Handle other menu items or scenarios if needed
-                print('fail');
-              }
-            }
-          });
-          // Navigator.pop(context);
-        },
+        onMenuItemSelected: _onMenuItemSelected,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(top: 0, bottom: 20),
-              color: Color(0xddff8518),
-              height: 200,
-              width: 1250,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 16.0, top: 0), // Adjust left padding
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Lahore Metro',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 30),
-                            Row(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Passenger Capacity',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    SizedBox(height: 10),
-                                    Text(
-                                      '300 Person',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    SizedBox(height: 20),
-                                    Text(
-                                      'Total Staff',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    SizedBox(height: 10),
-                                    Text(
-                                      '345',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(width: 60),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Engine Fitness',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    SizedBox(height: 10),
-                                    Text(
-                                      '100%',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    SizedBox(height: 20),
-                                    Text(
-                                      'Maintenance and Repair',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    SizedBox(height: 10),
-                                    Text(
-                                      'On Schedule',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Image.asset(
-                      'assets/pic.png',
-                      width: 500,
-                      height: 400,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.start, // Align to the start (left)
-              children: [
-                SizedBox(width: 60),
-                Text(
-                  'Overview',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(width: 60),
-                _buildCard('Statistics', Icons.show_chart),
-                SizedBox(width: 180), // Add space between cards
-                _buildCard('Tasks', Icons.assignment),
-                SizedBox(width: 180),
-                _buildTimeContainer(),
-              ],
-            ),
-            SizedBox(height: 10),
-            SizedBox(height: 10),
-          ],
-        ),
-      ),
+      body: _pages[_selectedMenuItem], // Show the selected page
     );
   }
-}
 
-Widget _buildCard(String title, IconData icon) {
-  return Card(
-    color: Colors.grey[900],
-    margin: EdgeInsets.all(10),
-    child: Padding(
-      padding: EdgeInsets.all(16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Icon(
-            icon,
-            color: Colors.orange,
-            size: 100,
+  AppBar _buildAppBar() {
+    Color appBarColor;
+
+    // Set different app bar colors based on the selected menu item
+    switch (_selectedMenuItem) {
+      case 0:
+        appBarColor = Colors.black; // Color for the first page
+        break;
+      case 1:
+        appBarColor = Color(0xFF111112); // Color for the second page
+        break;
+      case 2:
+        appBarColor = Color(0xFF111112); // Color for the third page
+        break;
+      case 3:
+        appBarColor = Color(0xFF111112); // Color for the fourth page
+        break;
+      case 4:
+        appBarColor = Color(0xFF111112); // Color for the fifth page
+        break;
+      default:
+        appBarColor = Colors.black; // Default color
+    }
+
+    return AppBar(
+      backgroundColor: appBarColor,
+      title: Row(
+        children: [
+          // Add an image here
+          Padding(
+            padding: const EdgeInsets.only(right: 0.0),
+            child: Image.asset(
+              'assets/Logo.png', // Replace with your image asset
+              width: 70, // Adjust the width as needed
+              height: 70, // Adjust the height as needed
+            ),
           ),
-          SizedBox(height: 10),
-          Text(
-            title,
-            style: TextStyle(color: Colors.white, fontSize: 16),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Orange Line Maintenance System',
+                style: TextStyle(color: Colors.white),
+              ),
+            ],
+          ),
+
+          SizedBox(width: 325), // Add space between title and search bar
+          Container(
+            constraints: BoxConstraints(maxWidth: 260),
+            child: TextField(
+              controller: _searchController,
+              style: TextStyle(color: Colors.white),
+              onSubmitted: (value) {
+                if (value.toLowerCase() == 'wheel analysis') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Page1()),
+                  );
+                }
+              },
+              decoration: InputDecoration(
+                hintText: 'Search',
+                hintStyle: TextStyle(color: Colors.grey),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.orange),
+                ),
+                suffixIcon: Icon(
+                  Icons.search,
+                  color: Colors.white,
+                ),
+              ),
+            ),
           ),
         ],
       ),
-    ),
-  );
-}
+      iconTheme: IconThemeData(
+        color: Colors.orange, // Set the icon (menu) color to orange
+      ),
+    );
+  }
 
-Widget _buildTimeContainer() {
-  DateTime now = DateTime.now();
-  String formattedTime =
-      "${now.hour}:${now.minute} ${now.hour >= 12 ? 'PM' : 'AM'}";
-
-  return Container(
-    padding: EdgeInsets.all(16),
-    decoration: BoxDecoration(
-      color: Colors.grey[900],
-      borderRadius: BorderRadius.circular(10),
-    ),
-    constraints: BoxConstraints(
-      minHeight: 100,
-      minWidth: 200,
-    ),
-    child: Column(
-      children: [
-        Text(
-          'Current Time:',
-          style: TextStyle(color: Colors.white, fontSize: 18),
-        ),
-        SizedBox(height: 10),
-        Text(
-          formattedTime,
-          style: TextStyle(color: Colors.orange, fontSize: 24),
-        ),
-      ],
-    ),
-  );
+  // drawer: MyDrawer(
+  //   selectedMenuItem: _selectedMenuItem,
+  //   onMenuItemSelected: (int index) {
+  //     setState(() {
+  //       if (index == 0) {
+  //         Navigator.push(context,
+  //             MaterialPageRoute(builder: (context) => MyDashboard()));
+  //       } else {
+  //         _selectedMenuItem = index;
+  //         print(_selectedMenuItem);
+  //         if (index == 1) {
+  //           Navigator.push(
+  //               context, MaterialPageRoute(builder: (context) => Page1()));
+  //         } else if (index == 2) {
+  //           Navigator.push(
+  //               context, MaterialPageRoute(builder: (context) => first()));
+  //         } else if (index == 3) {
+  //           Navigator.push(
+  //               context, MaterialPageRoute(builder: (context) => Page3()));
+  //         } else if (index == 4) {
+  //           Navigator.push(
+  //               context, MaterialPageRoute(builder: (context) => ocr()));
+  //         } else if (index == 5) {
+  //           Navigator.push(context,
+  //               MaterialPageRoute(builder: (context) => PlotScreen()));
+  //         } else {
+  //           // Handle other menu items or scenarios if needed
+  //           print('fail');
+  //         }
+  //       }
+  //     });
+  //     // Navigator.pop(context);
+  //   },
+  // ),
+//     body: Center(
+//       child: Column(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: <Widget>[
+//           Container(
+//             margin: EdgeInsets.only(top: 0, bottom: 20),
+//             color: Color(0xddff8518),
+//             height: 200,
+//             width: 1250,
+//             child: Row(
+//               children: [
+//                 Expanded(
+//                   child: Align(
+//                     alignment: Alignment.centerLeft,
+//                     child: Padding(
+//                       padding: const EdgeInsets.only(
+//                           left: 16.0, top: 0), // Adjust left padding
+//                       child: Column(
+//                         crossAxisAlignment: CrossAxisAlignment.start,
+//                         children: [
+//                           Text(
+//                             'Lahore Metro',
+//                             style: TextStyle(
+//                               color: Colors.white,
+//                               fontSize: 24,
+//                               fontWeight: FontWeight.bold,
+//                             ),
+//                           ),
+//                           SizedBox(height: 30),
+//                           Row(
+//                             children: [
+//                               Column(
+//                                 crossAxisAlignment: CrossAxisAlignment.start,
+//                                 children: [
+//                                   Text(
+//                                     'Passenger Capacity',
+//                                     style: TextStyle(
+//                                       color: Colors.white,
+//                                       fontSize: 16,
+//                                     ),
+//                                   ),
+//                                   SizedBox(height: 10),
+//                                   Text(
+//                                     '300 Person',
+//                                     style: TextStyle(
+//                                       color: Colors.white,
+//                                       fontSize: 16,
+//                                     ),
+//                                   ),
+//                                   SizedBox(height: 20),
+//                                   Text(
+//                                     'Total Staff',
+//                                     style: TextStyle(
+//                                       color: Colors.white,
+//                                       fontSize: 16,
+//                                     ),
+//                                   ),
+//                                   SizedBox(height: 10),
+//                                   Text(
+//                                     '345',
+//                                     style: TextStyle(
+//                                       color: Colors.white,
+//                                       fontSize: 16,
+//                                     ),
+//                                   ),
+//                                 ],
+//                               ),
+//                               SizedBox(width: 60),
+//                               Column(
+//                                 crossAxisAlignment: CrossAxisAlignment.start,
+//                                 children: [
+//                                   Text(
+//                                     'Engine Fitness',
+//                                     style: TextStyle(
+//                                       color: Colors.white,
+//                                       fontSize: 16,
+//                                     ),
+//                                   ),
+//                                   SizedBox(height: 10),
+//                                   Text(
+//                                     '100%',
+//                                     style: TextStyle(
+//                                       color: Colors.white,
+//                                       fontSize: 16,
+//                                     ),
+//                                   ),
+//                                   SizedBox(height: 20),
+//                                   Text(
+//                                     'Maintenance and Repair',
+//                                     style: TextStyle(
+//                                       color: Colors.white,
+//                                       fontSize: 16,
+//                                     ),
+//                                   ),
+//                                   SizedBox(height: 10),
+//                                   Text(
+//                                     'On Schedule',
+//                                     style: TextStyle(
+//                                       color: Colors.white,
+//                                       fontSize: 16,
+//                                     ),
+//                                   ),
+//                                 ],
+//                               ),
+//                             ],
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//                 Padding(
+//                   padding: const EdgeInsets.all(5.0),
+//                   child: Image.asset(
+//                     'assets/pic.png',
+//                     width: 500,
+//                     height: 400,
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//           SizedBox(height: 20),
+//           Row(
+//             mainAxisAlignment:
+//                 MainAxisAlignment.start, // Align to the start (left)
+//             children: [
+//               SizedBox(width: 60),
+//               Text(
+//                 'Overview',
+//                 style: TextStyle(
+//                   color: Colors.white,
+//                   fontSize: 24,
+//                   fontWeight: FontWeight.bold,
+//                 ),
+//               ),
+//             ],
+//           ),
+//           Row(
+//             mainAxisAlignment: MainAxisAlignment.start,
+//             children: [
+//               SizedBox(width: 60),
+//               _buildCard('Statistics', Icons.show_chart),
+//               SizedBox(width: 180), // Add space between cards
+//               _buildCard('Tasks', Icons.assignment),
+//               SizedBox(width: 180),
+//               _buildTimeContainer(),
+//             ],
+//           ),
+//           SizedBox(height: 10),
+//           SizedBox(height: 10),
+//         ],
+//       ),
+//     ),
+//   );
+// }
 }
 
 class MyDrawer extends StatelessWidget {
@@ -372,7 +366,7 @@ class MyDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: Container(
-        color: Color(0xFF313134), // Set the background color for the drawer
+        color: Color(0xFF313134),
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[

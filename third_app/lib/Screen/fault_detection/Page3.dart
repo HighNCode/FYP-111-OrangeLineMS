@@ -3,7 +3,6 @@ import 'dart:convert';
 // Import the Uint8List type.
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
-import 'package:third_app/Screen/mainPage/MyDashboard.dart';
 
 void main() {
   runApp(MyApp());
@@ -52,6 +51,37 @@ class _Page3State extends State<Page3> {
     }
   }
 
+  void clearTextFields() {
+    FaultInputController.clear();
+    FaultSolutionController.clear();
+  }
+
+  Future<void> sendDataRequest() async {
+    final url = Uri.parse('http://127.0.0.1:8000/fault_detection');
+    final headers = <String, String>{
+      'Content-Type': 'application/json',
+    };
+
+    final data = <String, dynamic>{
+      'faultdescController': (FaultInputController.text),
+      'faultsolController': (FaultSolutionController.text),
+    };
+
+    final response = await http.post(
+      url,
+      headers: headers,
+      body: jsonEncode(data),
+    );
+    if (response.statusCode == 200) {
+      print('Data sent successfully');
+      print('Response: ${response.body}');
+
+      clearTextFields();
+    } else {
+      print('Failed to send data. Error: ${response.statusCode}');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,10 +99,10 @@ class _Page3State extends State<Page3> {
           children: [
             Positioned(
               left: 250,
-              top: 70,
+              top: 50,
               child: Container(
-                width: 900,
-                height: 600,
+                width: 895,
+                height: 590,
                 decoration: BoxDecoration(
                   color: Color(0xFF313134),
                   borderRadius: BorderRadius.circular(20.2151851654),
@@ -262,8 +292,8 @@ class _Page3State extends State<Page3> {
               ),
             ),
             Positioned(
-              left: 220,
-              top: 600,
+              left: 150,
+              top: 570,
               child: Align(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -281,14 +311,14 @@ class _Page3State extends State<Page3> {
                               height: 40,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  // sendData(context);
+                                  sendDataRequest();
 
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => MyDashboard(),
-                                    ),
-                                  );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) => MyDashboard(),
+                                  //   ),
+                                  // );
                                 },
                                 child: Text(
                                   'Save',
@@ -313,25 +343,24 @@ class _Page3State extends State<Page3> {
                 ),
               ),
             ),
-            Positioned(
-              left: 10,
-              top: 10,
-              child: Container(
-                //decoration
-                decoration: BoxDecoration(
-                  color: Color(0xddff8518), // Replace with your desired color
-                  shape: BoxShape.circle, // Makes the container circular
-                ),
-                child: IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  color: Colors.white, // Icon color
-                  onPressed: () {
-                    // Navigate back when the back button is pressed
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-            ),
+            // Positioned(
+            //   left: 10,
+            //   top: 10,
+            //   child: Container(
+            //     decoration: BoxDecoration(
+            //       color: Color(0xddff8518), // Replace with your desired color
+            //       shape: BoxShape.circle, // Makes the container circular
+            //     ),
+            //     child: IconButton(
+            //       icon: Icon(Icons.arrow_back),
+            //       color: Colors.white, // Icon color
+            //       onPressed: () {
+            //         // Navigate back when the back button is pressed
+            //         Navigator.pop(context);
+            //       },
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

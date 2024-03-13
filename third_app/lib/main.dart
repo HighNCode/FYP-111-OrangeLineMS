@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 8, 8, 8),
+        backgroundColor: Color(0xFF111112),
         toolbarHeight: 80,
         title: Row(
           children: [

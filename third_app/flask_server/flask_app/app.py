@@ -208,6 +208,8 @@ def get_table():
     if new_df  is not None:
         # Convert df_predicted to JSON
         new_df ['Date'] = new_df ['Date'].astype(str)
+        new_df['Quantity'] = new_df['Quantity'].astype(float).round(2)
+
         new_df ['Quantity'] = new_df ['Quantity'].astype(str)
 
         table_data = new_df.to_json(orient='records')
@@ -655,6 +657,52 @@ def wheel_analysis():
         result = mainFun4(train_no)
         return jsonify(result)
         
+
+
+# Fault Detection
+    
+# def check_connection(supabase_client):
+#     try:
+#         # Retrieve a list of tables to verify the connection
+#         tables = supabase_client.table('FaultDetection').select('fault_sol').execute()
+#         print("Connection to Supabase successful!")
+#         print("Tables in the database:", tables)
+#     except Exception as e:
+#         print("Error:", e)
+
+
+@app.route('/fault_detection', methods=['POST'])
+def fault_detection():
+    if request.method == 'POST':
+        data = request.get_json() 
+        print(data)
+
+        fault_description = data.get('faultdescController', '')
+        fault_solution = data.get('faultsolController', '')
+
+       
+        # Define your Supabase project URL and API key
+        supabase_url = "https://typmqqidaijuobjosrpi.supabase.co"
+        supabase_key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR5cG1xcWlkYWlqdW9iam9zcnBpIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTM0MzkzODAsImV4cCI6MjAwOTAxNTM4MH0.Ihde633Yj9FFaQ7hKLooxDxaFEno4fK8YxSb3gy8S4c"
+
+        # Initialize the Supabase client
+        supabase_client = supabase.Client(supabase_url, supabase_key)
+        table_name = "FaultDetection"
+        
+        insert_faultdata = {
+        'fault_desc': fault_description,
+        'fault_sol': fault_solution,
+        
+      
+    }
+        print(insert_faultdata)
+        supabase_client.table(table_name).insert(insert_faultdata).execute()
+        
+
+        # Respond back to Flutter application with a success message
+        return jsonify({'message': 'Data received successfully'}), 200
+    else:
+        return jsonify({'error': 'Invalid request method'}), 405
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)

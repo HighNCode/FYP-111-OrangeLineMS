@@ -144,74 +144,147 @@ class _Page2State extends State<Page2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: 720,
-        width: 1370,
-        decoration: BoxDecoration(
-          color: Color(0xFFFFFFFF),
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: AssetImage('assets/background.png'),
-          ),
-        ),
-        child: Stack(
+      appBar: AppBar(
+        backgroundColor: Color(0xFF111112),
+        automaticallyImplyLeading: false,
+        title: Row(
           children: [
-            Positioned(
-              left: 250,
-              top: 70,
-              child: Container(
-                width: 900,
-                height: 600,
-                decoration: BoxDecoration(
-                  color: Color(0xFF313134),
-                  borderRadius: BorderRadius.circular(20.2151851654),
+            // Add an image here
+            Padding(
+              padding: const EdgeInsets.only(right: 0.0),
+              child: Image.asset(
+                'assets/Logo.png', // Replace with your image asset
+                width: 70, // Adjust the width as needed
+                height: 70, // Adjust the height as needed
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Orange Line Maintenance System',
+                  style: TextStyle(color: Colors.white),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.fromLTRB(50, 15, 0, 25),
-                      child: RichText(
-                        text: TextSpan(
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 26.2151851654,
-                            fontWeight: FontWeight.w400,
-                            height: 1.2125,
-                            color: Color(0xFFFFFFFF),
-                          ),
-                          children: [
-                            TextSpan(
-                              text: 'Wheel Data Entry',
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 35,
-                                fontWeight: FontWeight.normal,
-                                height: 1.2125,
-                                color: Color(0xFFFFFFFF),
-                              ),
+              ],
+            ),
+
+            SizedBox(width: 325), // Add space between title and search bar
+            Container(
+              constraints: BoxConstraints(maxWidth: 260),
+              child: TextField(
+                // controller: _searchController1,
+                // style: TextStyle(color: Colors.white),
+                // onSubmitted: (value) {
+                //   if (value.toLowerCase() == 'wheel analysis') {
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(builder: (context) => Page1()),
+                //     );
+                //   }
+                // },
+                decoration: InputDecoration(
+                  hintText: 'Search',
+                  hintStyle: TextStyle(color: Colors.grey),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.orange),
+                  ),
+                  suffixIcon: Icon(
+                    Icons.search,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.orange, // Set the icon (menu) color to orange
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          height: 720,
+          width: 1370,
+          decoration: BoxDecoration(
+            color: Color(0xFFFFFFFF),
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage('assets/background.png'),
+            ),
+          ),
+          child: Stack(
+            children: [
+              Positioned(
+                left: 250,
+                top: 50,
+                child: Container(
+                  width: 895,
+                  height: 590,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF313134),
+                    borderRadius: BorderRadius.circular(20.2151851654),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.fromLTRB(50, 15, 0, 25),
+                        child: RichText(
+                          text: TextSpan(
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 26.2151851654,
+                              fontWeight: FontWeight.w400,
+                              height: 1.2125,
+                              color: Color(0xFFFFFFFF),
                             ),
-                            TextSpan(text: ' '),
-                          ],
+                            children: [
+                              TextSpan(
+                                text: 'Wheel Data Entry',
+                                style: TextStyle(
+                                  fontFamily: 'Inter',
+                                  fontSize: 35,
+                                  fontWeight: FontWeight.normal,
+                                  height: 1.2125,
+                                  color: Color(0xFFFFFFFF),
+                                ),
+                              ),
+                              TextSpan(text: ' '),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(55, 0, 0, 0),
-                      padding: EdgeInsets.fromLTRB(41, 20, 12, 20),
-                      height: 80,
-                      width: 750,
-                      decoration: BoxDecoration(
-                        color: Color(0xFF222229),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.fromLTRB(0, 0, 43, 0.18),
-                            child: Center(
+                      Container(
+                        margin: EdgeInsets.fromLTRB(55, 0, 0, 0),
+                        padding: EdgeInsets.fromLTRB(41, 20, 12, 20),
+                        height: 80,
+                        width: 750,
+                        decoration: BoxDecoration(
+                          color: Color(0xFF222229),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.fromLTRB(0, 0, 43, 0.18),
+                              child: Center(
+                                child: Text(
+                                  'General Information',
+                                  style: TextStyle(
+                                    fontSize: 20.2151851654,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color(0xFFFFFFFF),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.fromLTRB(30, 0, 30, 0.18),
                               child: Text(
-                                'General Information',
+                                'Initial Measurements',
                                 style: TextStyle(
                                   fontSize: 20.2151851654,
                                   fontWeight: FontWeight.w400,
@@ -219,541 +292,530 @@ class _Page2State extends State<Page2> {
                                 ),
                               ),
                             ),
+                            Container(
+                              margin: EdgeInsets.fromLTRB(40, 0, 0, 0.18),
+                              child: Text(
+                                'Final Measurements',
+                                style: TextStyle(
+                                  fontSize: 20.2151851654,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color(0xddff8518),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.fromLTRB(55, 0, 0, 0.10),
+                            width: 510,
+                            height: 8,
+                            decoration: BoxDecoration(
+                              color: Color(0xFF222229),
+                            ),
                           ),
                           Container(
-                            margin: EdgeInsets.fromLTRB(30, 0, 30, 0.18),
-                            child: Text(
-                              'Initial Measurements',
+                            // No margin for the second Container
+                            width: 240,
+                            height: 8,
+                            decoration: BoxDecoration(
+                              color: Color(0xddff8518),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 275,
+                top: 280,
+                child: Align(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 30),
+                        child: Row(
+                          children: [
+                            Text(
+                              'Wheel Tread Diameter',
                               style: TextStyle(
-                                fontSize: 20.2151851654,
+                                fontFamily: 'Inter',
+                                fontSize: 18,
                                 fontWeight: FontWeight.w400,
-                                color: Color(0xFFFFFFFF),
+                                height: 1.2,
+                                color: Color(0xffffffff),
                               ),
                             ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.fromLTRB(40, 0, 0, 0.18),
-                            child: Text(
-                              'Final Measurements',
+                            SizedBox(
+                              width: 5, // Add spacing between the text and "*"
+                            ),
+                            Text(
+                              '*',
                               style: TextStyle(
-                                fontSize: 20.2151851654,
+                                fontSize: 18,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: EdgeInsets.only(left: 30),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 150,
+                              height: 40,
+                              child: TextField(
+                                controller: ALWheelTreadController,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  hintText: 'Left Wheel',
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                  filled: true,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0xddff8518),
+                                      width: 2,
+                                    ),
+                                  ),
+                                ),
+                                onChanged: (text) {
+                                  // Check if the entered text is a double or integer
+                                  isDoubleOrInteger(context, text);
+                                },
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            SizedBox(
+                              width: 150,
+                              height: 40,
+                              child: TextField(
+                                controller: ARWheelTreadController,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  hintText: 'Right Wheel',
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                  filled: true,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0xddff8518),
+                                      width: 2,
+                                    ),
+                                  ),
+                                ),
+                                onChanged: (text) {
+                                  // Check if the entered text is a double or integer
+                                  isDoubleOrInteger(context, text);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 20), // Add spacing between the sections
+                      Padding(
+                        padding: EdgeInsets.only(left: 30),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 5, // Add spacing between the text and "*"
+                            ),
+                            Text(
+                              'Flange Thickness',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 18,
                                 fontWeight: FontWeight.w400,
-                                color: Color(0xddff8518),
+                                height: 1.2,
+                                color: Color(0xffffffff),
                               ),
                             ),
-                          ),
-                        ],
+                            Text(
+                              ' *',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.fromLTRB(55, 0, 0, 0.10),
-                          width: 510,
-                          height: 8,
-                          decoration: BoxDecoration(
-                            color: Color(0xFF222229),
-                          ),
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: EdgeInsets.only(left: 30),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 150,
+                              height: 40,
+                              child: TextField(
+                                controller: ALFlangeThicknessController,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  hintText: 'Left Wheel',
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                  filled: true,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0xddff8518),
+                                      width: 2,
+                                    ),
+                                  ),
+                                ),
+                                onChanged: (text) {
+                                  // Check if the entered text is a double or integer
+                                  isDoubleOrInteger(context, text);
+                                },
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            SizedBox(
+                              width: 150,
+                              height: 40,
+                              child: TextField(
+                                controller: ARFlangeThicknessController,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  hintText: 'Right Wheel',
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                  filled: true,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0xddff8518),
+                                      width: 2,
+                                    ),
+                                  ),
+                                ),
+                                onChanged: (text) {
+                                  // Check if the entered text is a double or integer
+                                  isDoubleOrInteger(context, text);
+                                },
+                              ),
+                            ),
+                          ],
                         ),
-                        Container(
-                          // No margin for the second Container
-                          width: 240,
-                          height: 8,
-                          decoration: BoxDecoration(
-                            color: Color(0xddff8518),
-                          ),
+                      ),
+                      SizedBox(height: 20), // Add spacing between the sections
+                      Padding(
+                        padding: EdgeInsets.only(left: 30),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 5, // Add spacing between the text and "*"
+                            ),
+                            Text(
+                              'Flange Height',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                                height: 1.2,
+                                color: Color(0xffffffff),
+                              ),
+                            ),
+                            Text(
+                              ' *',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: EdgeInsets.only(left: 30),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 150,
+                              height: 40,
+                              child: TextField(
+                                controller: ALFlangeHeightController,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  hintText: 'Left Wheel',
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                  filled: true,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0xddff8518),
+                                      width: 2,
+                                    ),
+                                  ),
+                                ),
+                                onChanged: (text) {
+                                  // Check if the entered text is a double or integer
+                                  isDoubleOrInteger(context, text);
+                                },
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            SizedBox(
+                              width: 150,
+                              height: 40,
+                              child: TextField(
+                                controller: ARFlangeHeightController,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  hintText: 'Right Wheel',
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                  filled: true,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0xddff8518),
+                                      width: 2,
+                                    ),
+                                  ),
+                                ),
+                                onChanged: (text) {
+                                  // Check if the entered text is a double or integer
+                                  isDoubleOrInteger(context, text);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Positioned(
-              left: 275,
-              top: 280,
-              child: Align(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 30),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Wheel Tread Diameter',
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                              height: 1.2,
-                              color: Color(0xffffffff),
+              Positioned(
+                left: 700,
+                top: 280,
+                child: Align(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 30),
+                        child: Row(
+                          children: [
+                            Text(
+                              'Flange Gradient',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                                height: 1.2,
+                                color: Color(0xffffffff),
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            width: 5, // Add spacing between the text and "*"
-                          ),
-                          Text(
-                            '*',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.red,
+                            SizedBox(
+                              width: 5, // Add spacing between the text and "*"
                             ),
-                          ),
-                        ],
+                            Text(
+                              '*',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: EdgeInsets.only(left: 30),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 150,
-                            height: 40,
-                            child: TextField(
-                              controller: ALWheelTreadController,
-                              keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
-                                hintText: 'Left Wheel',
-                                hintStyle: TextStyle(color: Colors.grey),
-                                filled: true,
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0xddff8518),
-                                    width: 2,
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: EdgeInsets.only(left: 30),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 150,
+                              height: 40,
+                              child: TextField(
+                                controller: ALFlangeGradientController,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  hintText: 'Left Wheel',
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                  filled: true,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0xddff8518),
+                                      width: 2,
+                                    ),
                                   ),
                                 ),
+                                onChanged: (text) {
+                                  // Check if the entered text is a double or integer
+                                  isDoubleOrInteger(context, text);
+                                },
                               ),
-                              onChanged: (text) {
-                                // Check if the entered text is a double or integer
-                                isDoubleOrInteger(context, text);
-                              },
                             ),
-                          ),
-                          SizedBox(width: 10),
-                          SizedBox(
-                            width: 150,
-                            height: 40,
-                            child: TextField(
-                              controller: ARWheelTreadController,
-                              keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
-                                hintText: 'Right Wheel',
-                                hintStyle: TextStyle(color: Colors.grey),
-                                filled: true,
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0xddff8518),
-                                    width: 2,
+                            SizedBox(width: 10),
+                            SizedBox(
+                              width: 150,
+                              height: 40,
+                              child: TextField(
+                                controller: ARFlangeGradientController,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  hintText: 'Right Wheel',
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                  filled: true,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0xddff8518),
+                                      width: 2,
+                                    ),
                                   ),
                                 ),
+                                onChanged: (text) {
+                                  // Check if the entered text is a double or integer
+                                  isDoubleOrInteger(context, text);
+                                },
                               ),
-                              onChanged: (text) {
-                                // Check if the entered text is a double or integer
-                                isDoubleOrInteger(context, text);
-                              },
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 20), // Add spacing between the sections
-                    Padding(
-                      padding: EdgeInsets.only(left: 30),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 5, // Add spacing between the text and "*"
-                          ),
-                          Text(
-                            'Flange Thickness',
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                              height: 1.2,
-                              color: Color(0xffffffff),
+                      SizedBox(height: 20), // Add spacing between the sections
+                      Padding(
+                        padding: EdgeInsets.only(left: 30),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 5, // Add spacing between the text and "*"
                             ),
-                          ),
-                          Text(
-                            ' *',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.red,
+                            Text(
+                              'Radial Deviation',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                                height: 1.2,
+                                color: Color(0xffffffff),
+                              ),
                             ),
-                          ),
-                        ],
+                            Text(
+                              ' *',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: EdgeInsets.only(left: 30),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 150,
-                            height: 40,
-                            child: TextField(
-                              controller: ALFlangeThicknessController,
-                              keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
-                                hintText: 'Left Wheel',
-                                hintStyle: TextStyle(color: Colors.grey),
-                                filled: true,
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0xddff8518),
-                                    width: 2,
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: EdgeInsets.only(left: 30),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 150,
+                              height: 40,
+                              child: TextField(
+                                controller: ALRadialDeviationController,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  hintText: 'Left Wheel',
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                  filled: true,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0xddff8518),
+                                      width: 2,
+                                    ),
                                   ),
                                 ),
+                                onChanged: (text) {
+                                  // Check if the entered text is a double or integer
+                                  isDoubleOrInteger(context, text);
+                                },
                               ),
-                              onChanged: (text) {
-                                // Check if the entered text is a double or integer
-                                isDoubleOrInteger(context, text);
-                              },
                             ),
-                          ),
-                          SizedBox(width: 10),
-                          SizedBox(
-                            width: 150,
-                            height: 40,
-                            child: TextField(
-                              controller: ARFlangeThicknessController,
-                              keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
-                                hintText: 'Right Wheel',
-                                hintStyle: TextStyle(color: Colors.grey),
-                                filled: true,
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0xddff8518),
-                                    width: 2,
+                            SizedBox(width: 10),
+                            SizedBox(
+                              width: 150,
+                              height: 40,
+                              child: TextField(
+                                controller: ARRadialDeviationController,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  hintText: 'Right Wheel',
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                  filled: true,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0xddff8518),
+                                      width: 2,
+                                    ),
                                   ),
                                 ),
+                                onChanged: (text) {
+                                  // Check if the entered text is a double or integer
+                                  isDoubleOrInteger(context, text);
+                                },
                               ),
-                              onChanged: (text) {
-                                // Check if the entered text is a double or integer
-                                isDoubleOrInteger(context, text);
-                              },
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 20), // Add spacing between the sections
-                    Padding(
-                      padding: EdgeInsets.only(left: 30),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 5, // Add spacing between the text and "*"
-                          ),
-                          Text(
-                            'Flange Height',
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                              height: 1.2,
-                              color: Color(0xffffffff),
-                            ),
-                          ),
-                          Text(
-                            ' *',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: EdgeInsets.only(left: 30),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 150,
-                            height: 40,
-                            child: TextField(
-                              controller: ALFlangeHeightController,
-                              keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
-                                hintText: 'Left Wheel',
-                                hintStyle: TextStyle(color: Colors.grey),
-                                filled: true,
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0xddff8518),
-                                    width: 2,
-                                  ),
-                                ),
-                              ),
-                              onChanged: (text) {
-                                // Check if the entered text is a double or integer
-                                isDoubleOrInteger(context, text);
-                              },
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          SizedBox(
-                            width: 150,
-                            height: 40,
-                            child: TextField(
-                              controller: ARFlangeHeightController,
-                              keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
-                                hintText: 'Right Wheel',
-                                hintStyle: TextStyle(color: Colors.grey),
-                                filled: true,
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0xddff8518),
-                                    width: 2,
-                                  ),
-                                ),
-                              ),
-                              onChanged: (text) {
-                                // Check if the entered text is a double or integer
-                                isDoubleOrInteger(context, text);
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
-              left: 700,
-              top: 280,
-              child: Align(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 30),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Flange Gradient',
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                              height: 1.2,
-                              color: Color(0xffffffff),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 5, // Add spacing between the text and "*"
-                          ),
-                          Text(
-                            '*',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: EdgeInsets.only(left: 30),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 150,
-                            height: 40,
-                            child: TextField(
-                              controller: ALFlangeGradientController,
-                              keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
-                                hintText: 'Left Wheel',
-                                hintStyle: TextStyle(color: Colors.grey),
-                                filled: true,
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0xddff8518),
-                                    width: 2,
-                                  ),
-                                ),
-                              ),
-                              onChanged: (text) {
-                                // Check if the entered text is a double or integer
-                                isDoubleOrInteger(context, text);
-                              },
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          SizedBox(
-                            width: 150,
-                            height: 40,
-                            child: TextField(
-                              controller: ARFlangeGradientController,
-                              keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
-                                hintText: 'Right Wheel',
-                                hintStyle: TextStyle(color: Colors.grey),
-                                filled: true,
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0xddff8518),
-                                    width: 2,
-                                  ),
-                                ),
-                              ),
-                              onChanged: (text) {
-                                // Check if the entered text is a double or integer
-                                isDoubleOrInteger(context, text);
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 20), // Add spacing between the sections
-                    Padding(
-                      padding: EdgeInsets.only(left: 30),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 5, // Add spacing between the text and "*"
-                          ),
-                          Text(
-                            'Radial Deviation',
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                              height: 1.2,
-                              color: Color(0xffffffff),
-                            ),
-                          ),
-                          Text(
-                            ' *',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: EdgeInsets.only(left: 30),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 150,
-                            height: 40,
-                            child: TextField(
-                              controller: ALRadialDeviationController,
-                              keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
-                                hintText: 'Left Wheel',
-                                hintStyle: TextStyle(color: Colors.grey),
-                                filled: true,
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0xddff8518),
-                                    width: 2,
-                                  ),
-                                ),
-                              ),
-                              onChanged: (text) {
-                                // Check if the entered text is a double or integer
-                                isDoubleOrInteger(context, text);
-                              },
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          SizedBox(
-                            width: 150,
-                            height: 40,
-                            child: TextField(
-                              controller: ARRadialDeviationController,
-                              keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
-                                hintText: 'Right Wheel',
-                                hintStyle: TextStyle(color: Colors.grey),
-                                filled: true,
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0xddff8518),
-                                    width: 2,
-                                  ),
-                                ),
-                              ),
-                              onChanged: (text) {
-                                // Check if the entered text is a double or integer
-                                isDoubleOrInteger(context, text);
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
 
-                    SizedBox(height: 150),
-                    Padding(
-                      padding: EdgeInsets.only(left: 240),
-                      child: SizedBox(
-                        width: 150,
-                        height: 40,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // Navigate to the RecognizePage when the button is clicked
+                      SizedBox(height: 140),
+                      Padding(
+                        padding: EdgeInsets.only(left: 240),
+                        child: SizedBox(
+                          width: 150,
+                          height: 40,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              // Navigate to the RecognizePage when the button is clicked
 
-                            checkFields(context);
-                          },
-                          child: Text(
-                            'Submit',
-                            style: TextStyle(
-                              color: Color(0xffffffff),
-                              fontSize: 20,
+                              checkFields(context);
+                            },
+                            child: Text(
+                              'Submit',
+                              style: TextStyle(
+                                color: Color(0xffffffff),
+                                fontSize: 20,
+                              ),
                             ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            primary: Color(0xddff8518),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
+                            style: ElevatedButton.styleFrom(
+                              primary: Color(0xddff8518),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Positioned(
-              left: 10,
-              top: 10,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Color(0xddff8518), // Replace with your desired color
-                  shape: BoxShape.circle, // Makes the container circular
-                ),
-                child: IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  color: Colors.white, // Icon color
-                  onPressed: () {
-                    // Navigate back when the back button is pressed
-                    Navigator.pop(context);
-                  },
+              Positioned(
+                left: 10,
+                top: 10,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xddff8518), // Replace with your desired color
+                    shape: BoxShape.circle, // Makes the container circular
+                  ),
+                  child: IconButton(
+                    icon: Icon(Icons.arrow_back),
+                    color: Colors.white, // Icon color
+                    onPressed: () {
+                      // Navigate back when the back button is pressed
+                      Navigator.pop(context);
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

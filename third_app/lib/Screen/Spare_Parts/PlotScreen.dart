@@ -112,10 +112,10 @@ class _PlotScreenState extends State<PlotScreen> {
           ),
           Positioned(
             left: 250,
-            top: 70,
+            top: 50,
             child: Container(
-              width: 900,
-              height: 600,
+              width: 895,
+              height: 590,
               decoration: BoxDecoration(
                 color: Color(0xFF313134),
                 borderRadius: BorderRadius.circular(20.2151851654),
@@ -180,7 +180,7 @@ class _PlotScreenState extends State<PlotScreen> {
                           )
                         : CircularProgressIndicator(),
                   ),
-                  SizedBox(height: 30),
+                  SizedBox(height: 25),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -232,23 +232,23 @@ class _PlotScreenState extends State<PlotScreen> {
               ),
             ),
           ),
-          Positioned(
-            left: 10,
-            top: 10,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Color(0xddff8518),
-                shape: BoxShape.circle,
-              ),
-              child: IconButton(
-                icon: Icon(Icons.arrow_back),
-                color: Colors.white,
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-          ),
+          // Positioned(
+          //   left: 10,
+          //   top: 10,
+          //   child: Container(
+          //     decoration: BoxDecoration(
+          //       color: Color(0xddff8518),
+          //       shape: BoxShape.circle,
+          //     ),
+          //     child: IconButton(
+          //       icon: Icon(Icons.arrow_back),
+          //       color: Colors.white,
+          //       onPressed: () {
+          //         Navigator.pop(context);
+          //       },
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
