@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'data_manager.dart';
+import 'package:third_app/main.dart';
 
 //import 'app_data.dart';
 void main() {
@@ -75,36 +76,30 @@ class _GeneralInfoState extends State<GeneralInfo> {
                 ),
               ],
             ),
+            SizedBox(width: 810),
+            Icon(Icons.person, color: Colors.white),
 
-            SizedBox(width: 325), // Add space between title and search bar
-            Container(
-              constraints: BoxConstraints(maxWidth: 260),
-              child: TextField(
-                // controller: _searchController1,
-                // style: TextStyle(color: Colors.white),
-                // onSubmitted: (value) {
-                //   if (value.toLowerCase() == 'wheel analysis') {
-                //     Navigator.push(
-                //       context,
-                //       MaterialPageRoute(builder: (context) => Page1()),
-                //     );
-                //   }
-                // },
-                decoration: InputDecoration(
-                  hintText: 'Search',
-                  hintStyle: TextStyle(color: Colors.grey),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.orange),
-                  ),
-                  suffixIcon: Icon(
-                    Icons.search,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
+            PopupMenuButton<String>(
+              offset: Offset(0, 40),
+              icon: Icon(Icons.arrow_drop_down, color: Colors.white),
+              onSelected: (value) {
+                if (value == 'logout') {
+                  // Navigate to the login page
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                }
+              },
+              itemBuilder: (BuildContext context) {
+                return ['Logout'].map((String choice) {
+                  return PopupMenuItem<String>(
+                    value: 'logout',
+                    child: Container(
+                      child: Text(choice,
+                          style: TextStyle(color: Colors.black)), // Logout text
+                    ),
+                  );
+                }).toList();
+              },
             ),
           ],
         ),

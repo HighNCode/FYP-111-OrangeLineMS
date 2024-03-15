@@ -93,6 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF111112),
+        automaticallyImplyLeading: false,
         toolbarHeight: 80,
         title: Row(
           children: [

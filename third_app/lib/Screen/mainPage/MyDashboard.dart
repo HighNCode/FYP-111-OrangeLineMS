@@ -6,6 +6,7 @@ import 'package:third_app/Screen/Fault_Data/first.dart';
 import 'package:third_app/Screen/Wheel Data OCR/ocr.dart';
 import 'package:third_app/Screen/Spare_Parts/PlotScreen.dart';
 import 'package:third_app/Screen/mainPage/Home.dart';
+import 'package:third_app/main.dart';
 
 void main() {
   runApp(MyApp());
@@ -122,35 +123,60 @@ class _MyDashboardState extends State<MyDashboard> {
             ],
           ),
 
-          SizedBox(width: 325), // Add space between title and search bar
-          Container(
-            constraints: BoxConstraints(maxWidth: 260),
-            child: TextField(
-              controller: _searchController,
-              style: TextStyle(color: Colors.white),
-              onSubmitted: (value) {
-                if (value.toLowerCase() == 'wheel analysis') {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Page1()),
-                  );
-                }
-              },
-              decoration: InputDecoration(
-                hintText: 'Search',
-                hintStyle: TextStyle(color: Colors.grey),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.orange),
-                ),
-                suffixIcon: Icon(
-                  Icons.search,
-                  color: Colors.white,
-                ),
-              ),
-            ),
+          // SizedBox(width: 325), // Add space between title and search bar
+          // Container(
+          //   constraints: BoxConstraints(maxWidth: 260),
+          //   child: TextField(
+          //     controller: _searchController,
+          //     style: TextStyle(color: Colors.white),
+          //     onSubmitted: (value) {
+          //       if (value.toLowerCase() == 'wheel analysis') {
+          //         Navigator.push(
+          //           context,
+          //           MaterialPageRoute(builder: (context) => Page1()),
+          //         );
+          //       }
+          //     },
+          //     decoration: InputDecoration(
+          //       hintText: 'Search',
+          //       hintStyle: TextStyle(color: Colors.grey),
+          //       enabledBorder: UnderlineInputBorder(
+          //         borderSide: BorderSide(color: Colors.white),
+          //       ),
+          //       focusedBorder: UnderlineInputBorder(
+          //         borderSide: BorderSide(color: Colors.orange),
+          //       ),
+          //       suffixIcon: Icon(
+          //         Icons.search,
+          //         color: Colors.white,
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          SizedBox(width: 750),
+          Icon(Icons.person, color: Colors.white),
+
+          PopupMenuButton<String>(
+            offset: Offset(0, 40),
+            icon: Icon(Icons.arrow_drop_down, color: Colors.white),
+            onSelected: (value) {
+              if (value == 'logout') {
+                // Navigate to the login page
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()));
+              }
+            },
+            itemBuilder: (BuildContext context) {
+              return ['Logout'].map((String choice) {
+                return PopupMenuItem<String>(
+                  value: 'logout',
+                  child: Container(
+                    child: Text(choice,
+                        style: TextStyle(color: Colors.black)), // Logout text
+                  ),
+                );
+              }).toList();
+            },
           ),
         ],
       ),
