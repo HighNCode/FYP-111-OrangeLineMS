@@ -76,9 +76,16 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       if (response.statusCode == 200) {
-        final userData = jsonDecode(response.body);
+        //Decode JSON string
+        Map<String, dynamic> responseData = jsonDecode(response.body);
 
-        final String occupation = userData['user_info']['occupation'];
+        // Accessing user_info array
+        List<dynamic> userInfo = responseData['user_info'];
+
+        // Accessing occupation from user_info
+        String occupation = userInfo[0]['occupation'];
+        print(occupation);
+        print(occupation);
         // After fetching the occupation value
         AppState.occupation = occupation;
 
