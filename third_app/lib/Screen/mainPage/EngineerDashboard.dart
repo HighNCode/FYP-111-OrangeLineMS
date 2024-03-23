@@ -4,7 +4,7 @@ import 'package:third_app/Screen/Wheel_Analysis/Page1.dart';
 import 'package:third_app/Screen/fault_detection/Page3.dart';
 import 'package:third_app/Screen/Fault_Data/first.dart';
 import 'package:third_app/Screen/Wheel Data OCR/ocr.dart';
-import 'package:third_app/Screen/Spare_Parts/PlotScreen.dart';
+
 import 'package:third_app/Screen/mainPage/Home.dart';
 import 'package:third_app/main.dart';
 
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MyDashboard(),
+      home: EngineerDashboard(),
       theme: ThemeData(
         primarySwatch: Colors.orange,
         scaffoldBackgroundColor: Colors.black,
@@ -39,23 +39,19 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyDashboard extends StatefulWidget {
+class EngineerDashboard extends StatefulWidget {
+  // final String role; // Define the named parameter 'role'
+
+  // EngineerDashboard(
+  //     {required this.role}); // Constructor with named parameter 'role'
+
   @override
-  _MyDashboardState createState() => _MyDashboardState();
+  _EngineerDashboardState createState() => _EngineerDashboardState();
 }
 
-class _MyDashboardState extends State<MyDashboard> {
+class _EngineerDashboardState extends State<EngineerDashboard> {
   int _selectedMenuItem = 0; // Track the selected menu item
-  TextEditingController _searchController = TextEditingController();
-  // Widgets for different pages
-  final List<Widget> _pages = [
-    Home(),
-    Page1(),
-    first(),
-    Page3(),
-    ocr(),
-    PlotScreen(),
-  ];
+  final String occupation = "Engineer";
 
   void _onMenuItemSelected(int index) {
     setState(() {
@@ -72,8 +68,27 @@ class _MyDashboardState extends State<MyDashboard> {
         selectedMenuItem: _selectedMenuItem,
         onMenuItemSelected: _onMenuItemSelected,
       ),
-      body: _pages[_selectedMenuItem], // Show the selected page
+      body: _getPage(_selectedMenuItem), // Show the selected page
     );
+  }
+
+  Widget _getPage(int index) {
+    switch (index) {
+      case 0:
+        return Home();
+      case 1:
+        return Page1();
+      case 2:
+        return first();
+      case 3:
+        return Page3();
+      case 4:
+        return ocr();
+      // case 5:
+      //   return PlotScreen();
+      default:
+        return Container(); // Return an empty container if index is out of range
+    }
   }
 
   AppBar _buildAppBar() {
@@ -423,7 +438,7 @@ class MyDrawer extends StatelessWidget {
                   _buildMenuItem(2, 'Fault Data Form', Icons.edit),
                   _buildMenuItem(3, 'Fault Detection', Icons.warning),
                   _buildMenuItem(4, 'Wheel Analysis', Icons.analytics),
-                  _buildMenuItem(5, 'Spare Parts', Icons.settings),
+                  // _buildMenuItem(5, 'Spare Parts', Icons.settings),
                 ],
               ),
             ),

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:third_app/Screen/mainPage/MyDashboard.dart';
+import 'package:third_app/Screen/mainPage/ManagerDashboard.dart';
+import 'package:third_app/Screen/mainPage/EngineerDashboard.dart';
+import 'package:third_app/Screen/mainPage/Home.dart';
+
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+// Inside your login page
+import 'app_state.dart';
 
 void main() {
   runApp(const MyApp());
@@ -57,36 +62,96 @@ class _LoginScreenState extends State<LoginScreen> {
     return emailController.text.isEmpty || passController.text.isEmpty;
   }
 
+  final String apiUrl = "http://127.0.0.1:8000/login";
+
   Future<void> loginUser() async {
-    final String apiUrl =
-        "http://127.0.0.1:8000/login"; // Update with your Flask API endpoint
-
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'username': emailController.text,
-        'password': passController.text,
-      }),
-    );
-
-    if (response.statusCode == 200) {
-      print('Data sent successfully');
-      print('Response: ${response.body}');
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MyDashboard(),
-        ),
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'username': emailController.text,
+          'password': passController.text,
+        }),
       );
-    } else {
+
+      if (response.statusCode == 200) {
+        final userData = jsonDecode(response.body);
+
+        final String occupation = userData['user_info']['occupation'];
+        // After fetching the occupation value
+        AppState.occupation = occupation;
+
+        switch (occupation) {
+          // case 'Admin':
+          //   Navigator.pushReplacement(
+          //     context,
+          //     MaterialPageRoute(builder: (context) => AdminHomePage()),
+          //   );
+          // break;
+          case 'Manager':
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => ManagerDashboard()),
+            );
+            break;
+          case 'Engineer':
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => EngineerDashboard()),
+            );
+            break;
+          default:
+            // Handle other occupations or roles
+            break;
+        }
+      } else {
+        final snackBar = SnackBar(
+          content: Text('Incorrect username or password.'),
+          duration: Duration(seconds: 2),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+    } catch (error) {
+      print('Error: $error');
       final snackBar = SnackBar(
-        content: Text('Incorrect Password or username'),
-        duration: Duration(seconds: 1),
+        content: Text('An error occurred. Please try again later.'),
+        duration: Duration(seconds: 2),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
+
+  // Future<void> loginUser() async {
+  // final String apiUrl =
+  //     "http://127.0.0.1:8000/login"; // Update with your Flask API endpoint
+
+  //   final response = await http.post(
+  //     Uri.parse(apiUrl),
+  //     headers: {'Content-Type': 'application/json'},
+  //     body: jsonEncode({
+  //       'username': emailController.text,
+  //       'password': passController.text,
+  //     }),
+  //   );
+
+  //   if (response.statusCode == 200) {
+  //     print('Data sent successfully');
+  //     print('Response: ${response.body}');
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //         builder: (context) => MyDashboard(),
+  //       ),
+  //     );
+  //   } else {
+  //     final snackBar = SnackBar(
+  //       content: Text('Incorrect Password or username'),
+  //       duration: Duration(seconds: 1),
+  //     );
+  //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

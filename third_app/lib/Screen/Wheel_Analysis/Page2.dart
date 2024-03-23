@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 // Import the Uint8List type.
 import 'package:http/http.dart' as http;
-
-import 'package:third_app/Screen/mainPage/MyDashboard.dart';
+import 'package:third_app/app_state.dart';
+import 'package:third_app/Screen/mainPage/EngineerDashboard.dart';
+import 'package:third_app/Screen/mainPage/ManagerDashboard.dart';
 import 'package:flutter/services.dart';
 import 'package:third_app/main.dart';
 
@@ -97,6 +98,8 @@ class _Page2State extends State<Page2> {
   }
 
   Future<void> sendRequests() async {
+    // Access the occupation variable
+
     final url = Uri.parse(
         'http://127.0.0.1:8000/final_measurement'); // Replace with your Flask API endpoint URL
     final headers = <String, String>{
@@ -127,15 +130,19 @@ class _Page2State extends State<Page2> {
       headers: headers,
       body: jsonEncode(data),
     );
+
     if (response.statusCode == 200) {
       print('Data sent successfully');
       print('Response: ${response.body}');
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MyDashboard(),
-        ),
-      );
+
+      
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => EngineerDashboard(),
+            ),
+          );
+        
     } else {
       print('Failed to send data. Error: ${response.statusCode}');
     }

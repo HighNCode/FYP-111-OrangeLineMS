@@ -18,6 +18,13 @@ class _PlotScreenState extends State<PlotScreen> {
     fetchData();
   }
 
+  @override
+  void dispose() {
+    plotData = ''; // Reset plotData
+    tableData = []; // Reset tableData
+    super.dispose();
+  }
+
   Future<void> fetchData() async {
     final response =
         await http.get(Uri.parse('http://127.0.0.1:8000/get_plot'));

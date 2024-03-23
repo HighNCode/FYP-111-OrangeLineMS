@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 // Import the Uint8List type.
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:third_app/Screen/mainPage/MyDashboard.dart';
+import 'package:third_app/Screen/mainPage/EngineerDashboard.dart';
 import 'package:third_app/main.dart';
 
 void main() {
@@ -419,7 +419,8 @@ class _Page3State extends State<Page3> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => MyDashboard(),
+                                        builder: (context) =>
+                                            EngineerDashboard(), // Provide the role parameter here
                                       ),
                                     );
                                   },

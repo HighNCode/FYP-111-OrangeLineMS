@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:third_app/Screen/mainPage/MyDashboard.dart';
+import 'package:third_app/Screen/mainPage/EngineerDashboard.dart';
+import 'package:third_app/Screen/mainPage/ManagerDashboard.dart';
 // import 'package:third_app/Screen/Wheel_Analysis/Page1.dart';
 // import 'package:third_app/Screen/fault_detection/Page3.dart';
 // import 'package:third_app/Screen/Fault_Data/first.dart';
 // import 'package:third_app/Screen/Wheel Data OCR/ocr.dart';
 // import 'package:third_app/Screen/Spare_Parts/PlotScreen.dart';
 import 'package:third_app/main.dart';
+import 'package:third_app/app_state.dart';
 
 void main() {
   runApp(MyApp());
@@ -41,6 +43,7 @@ class _WheelAnalysis extends State<WheelAnalysis> {
 
   bool isTrainNumberSelected = false;
   String apiResponse = '';
+  String occupation = AppState.occupation;
 
   @override
   Widget build(BuildContext context) {
@@ -325,12 +328,21 @@ class _WheelAnalysis extends State<WheelAnalysis> {
                     onPressed: () {
                       // Navigate back when the back button is pressed
                       // Navigator.pop(context);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MyDashboard(),
-                        ),
-                      );
+                      if (occupation == 'Engineer') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EngineerDashboard(),
+                          ),
+                        );
+                      } else if (occupation == 'Manager') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ManagerDashboard(),
+                          ),
+                        );
+                      }
                     },
                   ),
                 ),
