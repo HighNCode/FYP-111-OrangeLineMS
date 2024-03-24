@@ -863,7 +863,7 @@ class _firstState extends State<first> {
                             ),
                           ),
                           style: ElevatedButton.styleFrom(
-                            primary: Color(0xddff8518),
+                            backgroundColor: Color(0xddff8518),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
                             ),

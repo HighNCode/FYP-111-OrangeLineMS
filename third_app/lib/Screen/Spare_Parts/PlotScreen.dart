@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:toast/toast.dart';
+//import 'package:toast/toast.dart';
 
 class PlotScreen extends StatefulWidget {
   @override
@@ -190,7 +190,7 @@ class _PlotScreenState extends State<PlotScreen> {
                         child: ElevatedButton(
                           onPressed: _getTable,
                           style: ElevatedButton.styleFrom(
-                            primary: Color(0xddff8518),
+                            backgroundColor: Color(0xddff8518),
                           ),
                           child: SizedBox(
                             height: 30.0,
