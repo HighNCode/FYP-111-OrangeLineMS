@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'data_manager.dart';
+import 'package:third_app/main.dart';
 
 //import 'app_data.dart';
 void main() {
@@ -51,687 +52,757 @@ class FinalMeasurements extends StatefulWidget {
 class _FinalMeasurementsState extends State<FinalMeasurements> {
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: 720,
-        width: 1370,
-        decoration: BoxDecoration(
-          color: Color(0xFFFFFFFF),
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: AssetImage('assets/background.png'),
-          ),
-        ),
-        child: Stack(
+      appBar: AppBar(
+        backgroundColor: Color(0xFF111112),
+        automaticallyImplyLeading: false,
+        title: Row(
           children: [
-            Positioned(
-              left: 250,
-              top: 70,
-              child: Container(
-                width: 900,
-                height: 600,
-                decoration: BoxDecoration(
-                  color: Color(0xFF313134),
-                  borderRadius: BorderRadius.circular(20.2151851654),
+            // Add an image here
+            Padding(
+              padding: const EdgeInsets.only(right: 0.0),
+              child: Image.asset(
+                'assets/Logo.png', // Replace with your image asset
+                width: 70, // Adjust the width as needed
+                height: 70, // Adjust the height as needed
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Orange Line Maintenance System',
+                  style: TextStyle(color: Colors.white),
                 ),
-                child: SafeArea(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(left: 35, top: 75),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              CustomTextWidget(
-                                text: 'Final',
-                                letterSpacing: 2.0,
-                              ),
-                              SizedBox(height: 8),
-                              CustomTextWidget(
-                                text: 'Measurements',
-                                letterSpacing: 2.0,
-                              ),
-                              SizedBox(height: 16),
-                            ],
-                          ),
-                        ),
-                        const Padding(
-                            padding: EdgeInsets.only(left: 35, top: 42),
-                            child: Row(
+              ],
+            ),
+            SizedBox(width: 810),
+            Icon(Icons.person, color: Colors.white),
+
+            PopupMenuButton<String>(
+              offset: Offset(0, 40),
+              icon: Icon(Icons.arrow_drop_down, color: Colors.white),
+              onSelected: (value) {
+                if (value == 'logout') {
+                  // Navigate to the login page
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                }
+              },
+              itemBuilder: (BuildContext context) {
+                return ['Logout'].map((String choice) {
+                  return PopupMenuItem<String>(
+                    value: 'logout',
+                    child: Container(
+                      child: Text(choice,
+                          style: TextStyle(color: Colors.black)), // Logout text
+                    ),
+                  );
+                }).toList();
+              },
+            ),
+          ],
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.orange, // Set the icon (menu) color to orange
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          height: 720,
+          width: 1370,
+          decoration: BoxDecoration(
+            color: Color(0xFFFFFFFF),
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage('assets/background.png'),
+            ),
+          ),
+          child: Stack(
+            children: [
+              Positioned(
+                left: 250,
+                top: 30,
+                child: Container(
+                  width: 895,
+                  height: 590,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF313134),
+                    borderRadius: BorderRadius.circular(20.2151851654),
+                  ),
+                  child: SafeArea(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 35, top: 75),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 CustomTextWidget(
-                                  text: 'Diameter',
-                                  textStyle: TextStyle(
-                                    fontSize: 22,
-                                    color: Color(0xFFF5F5F5),
-                                  ),
+                                  text: 'Final',
+                                  letterSpacing: 2.0,
                                 ),
+                                SizedBox(height: 8),
+                                CustomTextWidget(
+                                  text: 'Measurements',
+                                  letterSpacing: 2.0,
+                                ),
+                                SizedBox(height: 16),
                               ],
-                            )),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 35, top: 6),
-                          child: Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 16),
-                                  Container(
-                                    width: 150,
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.3),
-                                          spreadRadius: 2,
-                                          blurRadius: 4,
-                                          offset: const Offset(0, 3),
-                                        ),
-                                      ],
-                                    ), // Adjust the width as needed
-                                    child: TextField(
-                                      onChanged: (newValue) {
-                                        DataManager()
-                                                .trainData['A-LHS-Diameter'] =
-                                            newValue;
-                                      },
-                                      style: const TextStyle(
-                                        color: Color(0xFFF5F5F5),
-                                      ),
-                                      controller: TextEditingController(
-                                          text: DataManager().trainData[
-                                                  'A-LHS-Diameter'] ??
-                                              ''),
-                                      decoration: InputDecoration(
-                                        hintText: 'Left',
-                                        hintStyle:
-                                            const TextStyle(color: Colors.grey),
-                                        filled: true,
-                                        fillColor: const Color(0xFF313134),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: const BorderSide(
-                                              color: Color(0xFFFF8518),
-                                              width: 2.0),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                  width:
-                                      16), // Add spacing between the two columns
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 16),
-                                  Container(
-                                    width: 150,
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.3),
-                                          spreadRadius: 2,
-                                          blurRadius: 4,
-                                          offset: const Offset(0, 3),
-                                        ),
-                                      ],
-                                    ), // Adjust the width as needed
-                                    child: TextField(
-                                      onChanged: (newValue) {
-                                        DataManager()
-                                                .trainData['A-RHS-Diameter'] =
-                                            newValue;
-                                      },
-                                      style: const TextStyle(
-                                        color: Color(0xFFF5F5F5),
-                                      ),
-                                      controller: TextEditingController(
-                                          text: DataManager().trainData[
-                                                  'A-RHS-Diameter'] ??
-                                              ''),
-                                      decoration: InputDecoration(
-                                        hintText: 'Right',
-                                        hintStyle:
-                                            const TextStyle(color: Colors.grey),
-                                        filled: true,
-                                        fillColor: const Color(0xFF313134),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: const BorderSide(
-                                              color: Color(0xFFFF8518),
-                                              width: 2.0),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
-                        const Padding(
-                            padding: EdgeInsets.only(left: 35, top: 42),
+                          const Padding(
+                              padding: EdgeInsets.only(left: 35, top: 42),
+                              child: Row(
+                                children: [
+                                  CustomTextWidget(
+                                    text: 'Diameter',
+                                    textStyle: TextStyle(
+                                      fontSize: 22,
+                                      color: Color(0xFFF5F5F5),
+                                    ),
+                                  ),
+                                ],
+                              )),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 35, top: 6),
                             child: Row(
                               children: [
-                                CustomTextWidget(
-                                  text: 'Flange Thickness',
-                                  textStyle: TextStyle(
-                                    fontSize: 22,
-                                    color: Color(0xFFF5F5F5),
-                                  ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 16),
+                                    Container(
+                                      width: 150,
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.3),
+                                            spreadRadius: 2,
+                                            blurRadius: 4,
+                                            offset: const Offset(0, 3),
+                                          ),
+                                        ],
+                                      ), // Adjust the width as needed
+                                      child: TextField(
+                                        onChanged: (newValue) {
+                                          DataManager()
+                                                  .trainData['A-LHS-Diameter'] =
+                                              newValue;
+                                        },
+                                        style: const TextStyle(
+                                          color: Color(0xFFF5F5F5),
+                                        ),
+                                        controller: TextEditingController(
+                                            text: DataManager().trainData[
+                                                    'A-LHS-Diameter'] ??
+                                                ''),
+                                        decoration: InputDecoration(
+                                          hintText: 'Left',
+                                          hintStyle: const TextStyle(
+                                              color: Colors.grey),
+                                          filled: true,
+                                          fillColor: const Color(0xFF313134),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: const BorderSide(
+                                                color: Color(0xFFFF8518),
+                                                width: 2.0),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                    width:
+                                        16), // Add spacing between the two columns
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 16),
+                                    Container(
+                                      width: 150,
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.3),
+                                            spreadRadius: 2,
+                                            blurRadius: 4,
+                                            offset: const Offset(0, 3),
+                                          ),
+                                        ],
+                                      ), // Adjust the width as needed
+                                      child: TextField(
+                                        onChanged: (newValue) {
+                                          DataManager()
+                                                  .trainData['A-RHS-Diameter'] =
+                                              newValue;
+                                        },
+                                        style: const TextStyle(
+                                          color: Color(0xFFF5F5F5),
+                                        ),
+                                        controller: TextEditingController(
+                                            text: DataManager().trainData[
+                                                    'A-RHS-Diameter'] ??
+                                                ''),
+                                        decoration: InputDecoration(
+                                          hintText: 'Right',
+                                          hintStyle: const TextStyle(
+                                              color: Colors.grey),
+                                          filled: true,
+                                          fillColor: const Color(0xFF313134),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: const BorderSide(
+                                                color: Color(0xFFFF8518),
+                                                width: 2.0),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
-                            )),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 35, top: 6),
-                          child: Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 16),
-                                  Container(
-                                    width: 150,
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.3),
-                                          spreadRadius: 2,
-                                          blurRadius: 4,
-                                          offset: const Offset(0, 3),
-                                        ),
-                                      ],
-                                    ), // Adjust the width as needed
-                                    child: TextField(
-                                      onChanged: (newValue) {
-                                        DataManager().trainData[
-                                            'A-LHS-FlangeThickness'] = newValue;
-                                      },
-                                      style: const TextStyle(
-                                        color: Color(0xFFF5F5F5),
-                                      ),
-                                      controller: TextEditingController(
-                                          text: DataManager().trainData[
-                                                  'A-LHS-FlangeThickness'] ??
-                                              ''),
-                                      decoration: InputDecoration(
-                                        hintText: 'Left',
-                                        hintStyle:
-                                            const TextStyle(color: Colors.grey),
-                                        filled: true,
-                                        fillColor: const Color(0xFF313134),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: const BorderSide(
-                                              color: Color(0xFFFF8518),
-                                              width: 2.0),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                  width:
-                                      16), // Add spacing between the two columns
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 16),
-                                  Container(
-                                    width: 150,
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.3),
-                                          spreadRadius: 2,
-                                          blurRadius: 4,
-                                          offset: const Offset(0, 3),
-                                        ),
-                                      ],
-                                    ), // Adjust the width as needed
-                                    child: TextField(
-                                      onChanged: (newValue) {
-                                        DataManager().trainData[
-                                            'A-RHS-FlangeThickness'] = newValue;
-                                      },
-                                      style: const TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 236, 214, 214),
-                                      ),
-                                      controller: TextEditingController(
-                                          text: DataManager().trainData[
-                                                  'A-RHS-FlangeThickness'] ??
-                                              ''),
-                                      decoration: InputDecoration(
-                                        hintText: 'Right',
-                                        hintStyle:
-                                            const TextStyle(color: Colors.grey),
-                                        filled: true,
-                                        fillColor: const Color(0xFF313134),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: const BorderSide(
-                                              color: Color(0xFFFF8518),
-                                              width: 2.0),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
-                        const Padding(
-                            padding: EdgeInsets.only(left: 35, top: 42),
+                          const Padding(
+                              padding: EdgeInsets.only(left: 35, top: 42),
+                              child: Row(
+                                children: [
+                                  CustomTextWidget(
+                                    text: 'Flange Thickness',
+                                    textStyle: TextStyle(
+                                      fontSize: 22,
+                                      color: Color(0xFFF5F5F5),
+                                    ),
+                                  ),
+                                ],
+                              )),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 35, top: 6),
                             child: Row(
                               children: [
-                                CustomTextWidget(
-                                  text: 'Flange Width',
-                                  textStyle: TextStyle(
-                                    fontSize: 22,
-                                    color: Color(0xFFF5F5F5),
-                                  ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 16),
+                                    Container(
+                                      width: 150,
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.3),
+                                            spreadRadius: 2,
+                                            blurRadius: 4,
+                                            offset: const Offset(0, 3),
+                                          ),
+                                        ],
+                                      ), // Adjust the width as needed
+                                      child: TextField(
+                                        onChanged: (newValue) {
+                                          DataManager().trainData[
+                                                  'A-LHS-FlangeThickness'] =
+                                              newValue;
+                                        },
+                                        style: const TextStyle(
+                                          color: Color(0xFFF5F5F5),
+                                        ),
+                                        controller: TextEditingController(
+                                            text: DataManager().trainData[
+                                                    'A-LHS-FlangeThickness'] ??
+                                                ''),
+                                        decoration: InputDecoration(
+                                          hintText: 'Left',
+                                          hintStyle: const TextStyle(
+                                              color: Colors.grey),
+                                          filled: true,
+                                          fillColor: const Color(0xFF313134),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: const BorderSide(
+                                                color: Color(0xFFFF8518),
+                                                width: 2.0),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                    width:
+                                        16), // Add spacing between the two columns
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 16),
+                                    Container(
+                                      width: 150,
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.3),
+                                            spreadRadius: 2,
+                                            blurRadius: 4,
+                                            offset: const Offset(0, 3),
+                                          ),
+                                        ],
+                                      ), // Adjust the width as needed
+                                      child: TextField(
+                                        onChanged: (newValue) {
+                                          DataManager().trainData[
+                                                  'A-RHS-FlangeThickness'] =
+                                              newValue;
+                                        },
+                                        style: const TextStyle(
+                                          color: Color.fromARGB(
+                                              255, 236, 214, 214),
+                                        ),
+                                        controller: TextEditingController(
+                                            text: DataManager().trainData[
+                                                    'A-RHS-FlangeThickness'] ??
+                                                ''),
+                                        decoration: InputDecoration(
+                                          hintText: 'Right',
+                                          hintStyle: const TextStyle(
+                                              color: Colors.grey),
+                                          filled: true,
+                                          fillColor: const Color(0xFF313134),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: const BorderSide(
+                                                color: Color(0xFFFF8518),
+                                                width: 2.0),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
-                            )),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 35, top: 6),
-                          child: Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 16),
-                                  Container(
-                                    width: 150,
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.3),
-                                          spreadRadius: 2,
-                                          blurRadius: 4,
-                                          offset: const Offset(0, 3),
-                                        ),
-                                      ],
-                                    ), // Adjust the width as needed
-                                    child: TextField(
-                                      onChanged: (newValue) {
-                                        DataManager().trainData[
-                                            'A-LHS-FlangeWidth'] = newValue;
-                                      },
-                                      style: const TextStyle(
-                                        color: Color(0xFFF5F5F5),
-                                      ),
-                                      controller: TextEditingController(
-                                          text: DataManager().trainData[
-                                                  'A-LHS-FlangeWidth'] ??
-                                              ''),
-                                      decoration: InputDecoration(
-                                        hintText: 'Left',
-                                        hintStyle:
-                                            const TextStyle(color: Colors.grey),
-                                        filled: true,
-                                        fillColor: const Color(0xFF313134),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: const BorderSide(
-                                              color: Color(0xFFFF8518),
-                                              width: 2.0),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                  width:
-                                      16), // Add spacing between the two columns
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 16),
-                                  Container(
-                                    width: 150,
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.3),
-                                          spreadRadius: 2,
-                                          blurRadius: 4,
-                                          offset: const Offset(0, 3),
-                                        ),
-                                      ],
-                                    ), // Adjust the width as needed
-                                    child: TextField(
-                                      onChanged: (newValue) {
-                                        DataManager().trainData[
-                                            'A-RHS-FlangeWidth'] = newValue;
-                                      },
-                                      style: const TextStyle(
-                                        color: Color(0xFFF5F5F5),
-                                      ),
-                                      controller: TextEditingController(
-                                          text: DataManager().trainData[
-                                                  'A-RHS-FlangeWidth'] ??
-                                              ''),
-                                      decoration: InputDecoration(
-                                        hintText: 'Right',
-                                        hintStyle:
-                                            const TextStyle(color: Colors.grey),
-                                        filled: true,
-                                        fillColor: const Color(0xFF313134),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: const BorderSide(
-                                              color: Color(0xFFFF8518),
-                                              width: 2.0),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
-                        const Padding(
-                            padding: EdgeInsets.only(left: 35, top: 42),
+                          const Padding(
+                              padding: EdgeInsets.only(left: 35, top: 42),
+                              child: Row(
+                                children: [
+                                  CustomTextWidget(
+                                    text: 'Flange Width',
+                                    textStyle: TextStyle(
+                                      fontSize: 22,
+                                      color: Color(0xFFF5F5F5),
+                                    ),
+                                  ),
+                                ],
+                              )),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 35, top: 6),
                             child: Row(
                               children: [
-                                CustomTextWidget(
-                                  text: 'Flange Gradient',
-                                  textStyle: TextStyle(
-                                    fontSize: 22,
-                                    color: Color(0xFFF5F5F5),
-                                  ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 16),
+                                    Container(
+                                      width: 150,
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.3),
+                                            spreadRadius: 2,
+                                            blurRadius: 4,
+                                            offset: const Offset(0, 3),
+                                          ),
+                                        ],
+                                      ), // Adjust the width as needed
+                                      child: TextField(
+                                        onChanged: (newValue) {
+                                          DataManager().trainData[
+                                              'A-LHS-FlangeWidth'] = newValue;
+                                        },
+                                        style: const TextStyle(
+                                          color: Color(0xFFF5F5F5),
+                                        ),
+                                        controller: TextEditingController(
+                                            text: DataManager().trainData[
+                                                    'A-LHS-FlangeWidth'] ??
+                                                ''),
+                                        decoration: InputDecoration(
+                                          hintText: 'Left',
+                                          hintStyle: const TextStyle(
+                                              color: Colors.grey),
+                                          filled: true,
+                                          fillColor: const Color(0xFF313134),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: const BorderSide(
+                                                color: Color(0xFFFF8518),
+                                                width: 2.0),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                    width:
+                                        16), // Add spacing between the two columns
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 16),
+                                    Container(
+                                      width: 150,
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.3),
+                                            spreadRadius: 2,
+                                            blurRadius: 4,
+                                            offset: const Offset(0, 3),
+                                          ),
+                                        ],
+                                      ), // Adjust the width as needed
+                                      child: TextField(
+                                        onChanged: (newValue) {
+                                          DataManager().trainData[
+                                              'A-RHS-FlangeWidth'] = newValue;
+                                        },
+                                        style: const TextStyle(
+                                          color: Color(0xFFF5F5F5),
+                                        ),
+                                        controller: TextEditingController(
+                                            text: DataManager().trainData[
+                                                    'A-RHS-FlangeWidth'] ??
+                                                ''),
+                                        decoration: InputDecoration(
+                                          hintText: 'Right',
+                                          hintStyle: const TextStyle(
+                                              color: Colors.grey),
+                                          filled: true,
+                                          fillColor: const Color(0xFF313134),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: const BorderSide(
+                                                color: Color(0xFFFF8518),
+                                                width: 2.0),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
-                            )),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 35, top: 6),
-                          child: Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 16),
-                                  Container(
-                                    width: 150,
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.3),
-                                          spreadRadius: 2,
-                                          blurRadius: 4,
-                                          offset: const Offset(0, 3),
-                                        ),
-                                      ],
-                                    ), // Adjust the width as needed
-                                    child: TextField(
-                                      onChanged: (newValue) {
-                                        DataManager().trainData['A-LHS-Qr'] =
-                                            newValue;
-                                      },
-                                      style: const TextStyle(
-                                        color: Color(0xFFF5F5F5),
-                                      ),
-                                      controller: TextEditingController(
-                                          text: DataManager()
-                                                  .trainData['A-LHS-Qr'] ??
-                                              ''),
-                                      decoration: InputDecoration(
-                                        hintText: 'Left',
-                                        hintStyle:
-                                            const TextStyle(color: Colors.grey),
-                                        filled: true,
-                                        fillColor: const Color(0xFF313134),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: const BorderSide(
-                                              color: Color(0xFFFF8518),
-                                              width: 2.0),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                  width:
-                                      16), // Add spacing between the two columns
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 16),
-                                  Container(
-                                    width: 150,
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.3),
-                                          spreadRadius: 2,
-                                          blurRadius: 4,
-                                          offset: const Offset(0, 3),
-                                        ),
-                                      ],
-                                    ), // Adjust the width as needed
-                                    child: TextField(
-                                      onChanged: (newValue) {
-                                        DataManager().trainData['A-RHS-Qr'] =
-                                            newValue;
-                                      },
-                                      style: const TextStyle(
-                                        color: Color(0xFFF5F5F5),
-                                      ),
-                                      controller: TextEditingController(
-                                          text: DataManager()
-                                                  .trainData['A-RHS-Qr'] ??
-                                              ''),
-                                      decoration: InputDecoration(
-                                        hintText: 'Right',
-                                        hintStyle:
-                                            const TextStyle(color: Colors.grey),
-                                        filled: true,
-                                        fillColor: const Color(0xFF313134),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: const BorderSide(
-                                              color: Color(0xFFFF8518),
-                                              width: 2.0),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
-                        const Padding(
-                            padding: EdgeInsets.only(left: 35, top: 42),
+                          const Padding(
+                              padding: EdgeInsets.only(left: 35, top: 42),
+                              child: Row(
+                                children: [
+                                  CustomTextWidget(
+                                    text: 'Flange Gradient',
+                                    textStyle: TextStyle(
+                                      fontSize: 22,
+                                      color: Color(0xFFF5F5F5),
+                                    ),
+                                  ),
+                                ],
+                              )),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 35, top: 6),
                             child: Row(
                               children: [
-                                CustomTextWidget(
-                                  text: 'Radial Deviation',
-                                  textStyle: TextStyle(
-                                    fontSize: 22,
-                                    color: Color(0xFFF5F5F5),
-                                  ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 16),
+                                    Container(
+                                      width: 150,
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.3),
+                                            spreadRadius: 2,
+                                            blurRadius: 4,
+                                            offset: const Offset(0, 3),
+                                          ),
+                                        ],
+                                      ), // Adjust the width as needed
+                                      child: TextField(
+                                        onChanged: (newValue) {
+                                          DataManager().trainData['A-LHS-Qr'] =
+                                              newValue;
+                                        },
+                                        style: const TextStyle(
+                                          color: Color(0xFFF5F5F5),
+                                        ),
+                                        controller: TextEditingController(
+                                            text: DataManager()
+                                                    .trainData['A-LHS-Qr'] ??
+                                                ''),
+                                        decoration: InputDecoration(
+                                          hintText: 'Left',
+                                          hintStyle: const TextStyle(
+                                              color: Colors.grey),
+                                          filled: true,
+                                          fillColor: const Color(0xFF313134),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: const BorderSide(
+                                                color: Color(0xFFFF8518),
+                                                width: 2.0),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                    width:
+                                        16), // Add spacing between the two columns
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 16),
+                                    Container(
+                                      width: 150,
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.3),
+                                            spreadRadius: 2,
+                                            blurRadius: 4,
+                                            offset: const Offset(0, 3),
+                                          ),
+                                        ],
+                                      ), // Adjust the width as needed
+                                      child: TextField(
+                                        onChanged: (newValue) {
+                                          DataManager().trainData['A-RHS-Qr'] =
+                                              newValue;
+                                        },
+                                        style: const TextStyle(
+                                          color: Color(0xFFF5F5F5),
+                                        ),
+                                        controller: TextEditingController(
+                                            text: DataManager()
+                                                    .trainData['A-RHS-Qr'] ??
+                                                ''),
+                                        decoration: InputDecoration(
+                                          hintText: 'Right',
+                                          hintStyle: const TextStyle(
+                                              color: Colors.grey),
+                                          filled: true,
+                                          fillColor: const Color(0xFF313134),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: const BorderSide(
+                                                color: Color(0xFFFF8518),
+                                                width: 2.0),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
-                            )),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 35, top: 6, bottom: 30),
-                          child: Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 16),
-                                  Container(
-                                    width: 150,
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.3),
-                                          spreadRadius: 2,
-                                          blurRadius: 4,
-                                          offset: const Offset(0, 3),
-                                        ),
-                                      ],
-                                    ), // Adjust the width as needed
-                                    child: TextField(
-                                      onChanged: (newValue) {
-                                        DataManager().trainData[
-                                            'A-LHS-RadialDeviation'] = newValue;
-                                      },
-                                      style: const TextStyle(
-                                        color: Color(0xFFF5F5F5),
-                                      ),
-                                      controller: TextEditingController(
-                                          text: DataManager().trainData[
-                                                  'A-LHS-RadialDeviation'] ??
-                                              ''),
-                                      decoration: InputDecoration(
-                                        hintText: 'Left',
-                                        hintStyle:
-                                            const TextStyle(color: Colors.grey),
-                                        filled: true,
-                                        fillColor: const Color(0xFF313134),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: const BorderSide(
-                                              color: Color(0xFFFF8518),
-                                              width: 2.0),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                  width:
-                                      16), // Add spacing between the two columns
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 16),
-                                  Container(
-                                    width: 150,
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.3),
-                                          spreadRadius: 2,
-                                          blurRadius: 4,
-                                          offset: const Offset(0, 3),
-                                        ),
-                                      ],
-                                    ), // Adjust the width as needed
-                                    child: TextField(
-                                      onChanged: (newValue) {
-                                        DataManager().trainData[
-                                            'A-RHS-RadialDeviation'] = newValue;
-                                      },
-                                      style: const TextStyle(
-                                        color: Color(0xFFF5F5F5),
-                                      ),
-                                      controller: TextEditingController(
-                                          text: DataManager().trainData[
-                                                  'A-RHS-RadialDeviation'] ??
-                                              ''),
-                                      decoration: InputDecoration(
-                                        hintText: 'Right',
-                                        hintStyle:
-                                            const TextStyle(color: Colors.grey),
-                                        filled: true,
-                                        fillColor: const Color(0xFF313134),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: const BorderSide(
-                                              color: Color(0xFFFF8518),
-                                              width: 2.0),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ],
+                          const Padding(
+                              padding: EdgeInsets.only(left: 35, top: 42),
+                              child: Row(
+                                children: [
+                                  CustomTextWidget(
+                                    text: 'Radial Deviation',
+                                    textStyle: TextStyle(
+                                      fontSize: 22,
+                                      color: Color(0xFFF5F5F5),
+                                    ),
+                                  ),
+                                ],
+                              )),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 35, top: 6, bottom: 30),
+                            child: Row(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 16),
+                                    Container(
+                                      width: 150,
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.3),
+                                            spreadRadius: 2,
+                                            blurRadius: 4,
+                                            offset: const Offset(0, 3),
+                                          ),
+                                        ],
+                                      ), // Adjust the width as needed
+                                      child: TextField(
+                                        onChanged: (newValue) {
+                                          DataManager().trainData[
+                                                  'A-LHS-RadialDeviation'] =
+                                              newValue;
+                                        },
+                                        style: const TextStyle(
+                                          color: Color(0xFFF5F5F5),
+                                        ),
+                                        controller: TextEditingController(
+                                            text: DataManager().trainData[
+                                                    'A-LHS-RadialDeviation'] ??
+                                                ''),
+                                        decoration: InputDecoration(
+                                          hintText: 'Left',
+                                          hintStyle: const TextStyle(
+                                              color: Colors.grey),
+                                          filled: true,
+                                          fillColor: const Color(0xFF313134),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: const BorderSide(
+                                                color: Color(0xFFFF8518),
+                                                width: 2.0),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                    width:
+                                        16), // Add spacing between the two columns
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 16),
+                                    Container(
+                                      width: 150,
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.3),
+                                            spreadRadius: 2,
+                                            blurRadius: 4,
+                                            offset: const Offset(0, 3),
+                                          ),
+                                        ],
+                                      ), // Adjust the width as needed
+                                      child: TextField(
+                                        onChanged: (newValue) {
+                                          DataManager().trainData[
+                                                  'A-RHS-RadialDeviation'] =
+                                              newValue;
+                                        },
+                                        style: const TextStyle(
+                                          color: Color(0xFFF5F5F5),
+                                        ),
+                                        controller: TextEditingController(
+                                            text: DataManager().trainData[
+                                                    'A-RHS-RadialDeviation'] ??
+                                                ''),
+                                        decoration: InputDecoration(
+                                          hintText: 'Right',
+                                          hintStyle: const TextStyle(
+                                              color: Colors.grey),
+                                          filled: true,
+                                          fillColor: const Color(0xFF313134),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: const BorderSide(
+                                                color: Color(0xFFFF8518),
+                                                width: 2.0),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -57,7 +57,7 @@ class _ocrState extends State<ocr> {
         // Prepare the image file for upload
         final File imageFile = _image!;
 
-        final uri = Uri.parse('http://192.168.100.94:8000/upload_image');
+        final uri = Uri.parse('http://127.0.0.1:8000/upload_image');
         final request = http.MultipartRequest('POST', uri)
           ..files.add(http.MultipartFile(
             'image',
@@ -103,146 +103,149 @@ class _ocrState extends State<ocr> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: 720,
-        width: 1370,
-        decoration: BoxDecoration(
-          color: Color(0xFFFFFFFF),
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: AssetImage('assets/background.png'),
+      body: SingleChildScrollView(
+        child: Container(
+          height: 720,
+          width: 1370,
+          decoration: BoxDecoration(
+            color: Color(0xFFFFFFFF),
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage('assets/background.png'),
+            ),
           ),
-        ),
-        child: Stack(
-          children: [
-            Positioned(
-              left: 250,
-              top: 70,
-              child: Container(
-                width: 900,
-                height: 600,
-                decoration: BoxDecoration(
-                  color: Color(0xFF313134),
-                  borderRadius: BorderRadius.circular(20.2151851654),
-                ),
-                child: Column(
-                  mainAxisAlignment:
-                      MainAxisAlignment.center, // Center vertically
-                  children: [
-                    Container(
-                      margin: EdgeInsets.fromLTRB(50, 15, 0, 25),
-                      child: RichText(
-                        text: TextSpan(
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 26.2151851654,
-                            fontWeight: FontWeight.w400,
-                            height: 1.2125,
-                            color: Color(0xFFFFFFFF),
-                          ),
-                          children: [
-                            TextSpan(
-                              text: 'Wheel Data OCR',
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 35,
-                                fontWeight: FontWeight.normal,
-                                height: 1.2125,
-                                color: Color(0xFFFFFFFF),
-                              ),
+          child: Stack(
+            children: [
+              Positioned(
+                left: 250,
+                top: 50,
+                child: Container(
+                  width: 895,
+                  height: 590,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF313134),
+                    borderRadius: BorderRadius.circular(20.2151851654),
+                  ),
+                  child: Column(
+                    mainAxisAlignment:
+                        MainAxisAlignment.center, // Center vertically
+                    children: [
+                      Container(
+                        margin: EdgeInsets.fromLTRB(50, 15, 0, 25),
+                        child: RichText(
+                          text: TextSpan(
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 26.2151851654,
+                              fontWeight: FontWeight.w400,
+                              height: 1.2125,
+                              color: Color(0xFFFFFFFF),
                             ),
-                            TextSpan(text: ' '),
-                          ],
+                            children: [
+                              TextSpan(
+                                text: 'Wheel Data OCR',
+                                style: TextStyle(
+                                  fontFamily: 'Inter',
+                                  fontSize: 35,
+                                  fontWeight: FontWeight.normal,
+                                  height: 1.2125,
+                                  color: Color(0xFFFFFFFF),
+                                ),
+                              ),
+                              TextSpan(text: ' '),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 8),
-                    _image == null
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 400,
-                                width: 400,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        'assets/upload_image.png',
-                                        height: 200,
-                                        width: 200,
-                                      ),
-                                      SizedBox(height: 20),
-                                      Text(
-                                        'Drag and drop to upload',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 14,
+                      SizedBox(height: 8),
+                      _image == null
+                          ? Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  height: 400,
+                                  width: 400,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          'assets/upload_image.png',
+                                          height: 200,
+                                          width: 200,
                                         ),
-                                      ),
-                                    ],
+                                        SizedBox(height: 20),
+                                        Text(
+                                          'Drag and drop to upload',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(height: 20),
-                            ],
-                          )
-                        : Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.file(
-                                _image!,
-                                height: 400,
-                                width: 400,
-                              ),
-                              SizedBox(height: 20),
-                            ],
+                                SizedBox(height: 20),
+                              ],
+                            )
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.file(
+                                  _image!,
+                                  height: 400,
+                                  width: 400,
+                                ),
+                                SizedBox(height: 20),
+                              ],
+                            ),
+                      Container(
+                        height: 50,
+                        width: 200,
+                        child: ElevatedButton(
+                          onPressed: isImageUploaded ? wheel_form : getImage,
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
                           ),
-                    Container(
-                      height: 50,
-                      width: 200,
-                      child: ElevatedButton(
-                        onPressed: isImageUploaded ? wheel_form : getImage,
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0),
+                          child: Text(
+                            isImageUploaded ? 'Submit' : 'Upload Image',
+                            style: TextStyle(fontSize: 18),
                           ),
-                        ),
-                        child: Text(
-                          isImageUploaded ? 'Submit' : 'Upload Image',
-                          style: TextStyle(fontSize: 18),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 20),
-                  ],
+                      SizedBox(height: 20),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Positioned(
-              left: 10,
-              top: 10,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Color(0xddff8518), // Replace with your desired color
-                  shape: BoxShape.circle, // Makes the container circular
-                ),
-                child: IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  color: Colors.white, // Icon color
-                  onPressed: () {
-                    // Navigate back when the back button is pressed
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-            ),
-          ],
+              // Positioned(
+              //   left: 10,
+              //   top: 10,
+              //   child: Container(
+              //     decoration: BoxDecoration(
+              //       color: Color(0xddff8518), // Replace with your desired color
+              //       shape: BoxShape.circle, // Makes the container circular
+              //     ),
+              //     child: IconButton(
+              //       icon: Icon(Icons.arrow_back),
+              //       color: Colors.white, // Icon color
+              //       onPressed: () {
+              //         // Navigate back when the back button is pressed
+              //         Navigator.pop(context);
+              //       },
+              //     ),
+              //   ),
+              // ),
+            ],
+          ),
         ),
       ),
     );
@@ -264,7 +267,7 @@ class _MultiStepFormState extends State<MultiStepForm> {
   Future<void> sendOCRToFlaskAPI() async {
     try {
       //const String apiUrl = 'http://192.168.0.115:8000/upload_ocr';
-      const String apiUrl = 'http://192.168.100.94:8000/upload_ocr';
+      const String apiUrl = 'http://127.0.0.1:8000/upload_ocr';
       print('\n*****************************************');
       DataManager().trainData['afterCut'] = DataManager.afterCut.toString();
       String jsonData = jsonEncode(DataManager().trainData);

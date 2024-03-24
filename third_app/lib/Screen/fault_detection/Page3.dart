@@ -32,7 +32,7 @@ class _Page3State extends State<Page3> {
 
   Future<void> getFaultSolution(String faultDescription) async {
     final response = await http.post(
-      Uri.parse('http://127.0.0.1:5000/extract_fault_solution'),
+      Uri.parse('http://127.0.0.1:8000/extract_fault_solution'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
@@ -48,6 +48,37 @@ class _Page3State extends State<Page3> {
     } else {
       // Handle error, you can show a snackbar or display an error message
       print('Failed to get fault solutions: ${response.statusCode}');
+    }
+  }
+
+  void clearTextFields() {
+    FaultInputController.clear();
+    FaultSolutionController.clear();
+  }
+
+  Future<void> sendDataRequest() async {
+    final url = Uri.parse('http://127.0.0.1:8000/fault_detection');
+    final headers = <String, String>{
+      'Content-Type': 'application/json',
+    };
+
+    final data = <String, dynamic>{
+      'faultdescController': (FaultInputController.text),
+      'faultsolController': (FaultSolutionController.text),
+    };
+
+    final response = await http.post(
+      url,
+      headers: headers,
+      body: jsonEncode(data),
+    );
+    if (response.statusCode == 200) {
+      print('Data sent successfully');
+      print('Response: ${response.body}');
+
+      clearTextFields();
+    } else {
+      print('Failed to send data. Error: ${response.statusCode}');
     }
   }
 
@@ -68,10 +99,10 @@ class _Page3State extends State<Page3> {
           children: [
             Positioned(
               left: 250,
-              top: 70,
+              top: 50,
               child: Container(
-                width: 900,
-                height: 600,
+                width: 895,
+                height: 590,
                 decoration: BoxDecoration(
                   color: Color(0xFF313134),
                   borderRadius: BorderRadius.circular(20.2151851654),
@@ -261,23 +292,75 @@ class _Page3State extends State<Page3> {
               ),
             ),
             Positioned(
-              left: 10,
-              top: 10,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Color(0xddff8518), // Replace with your desired color
-                  shape: BoxShape.circle, // Makes the container circular
-                ),
-                child: IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  color: Colors.white, // Icon color
-                  onPressed: () {
-                    // Navigate back when the back button is pressed
-                    Navigator.pop(context);
-                  },
+              left: 150,
+              top: 570,
+              child: Align(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 30),
+                      child: Row(
+                        children: [
+                          SizedBox(height: 5),
+                          Padding(
+                            padding: EdgeInsets.only(left: 710),
+                            child: SizedBox(
+                              width: 150,
+                              height: 40,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  sendDataRequest();
+
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) => MyDashboard(),
+                                  //   ),
+                                  // );
+                                },
+                                child: Text(
+                                  'Save',
+                                  style: TextStyle(
+                                    color: Color(0xffffffff),
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color(0xddff8518),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
+            // Positioned(
+            //   left: 10,
+            //   top: 10,
+            //   child: Container(
+            //     decoration: BoxDecoration(
+            //       color: Color(0xddff8518), // Replace with your desired color
+            //       shape: BoxShape.circle, // Makes the container circular
+            //     ),
+            //     child: IconButton(
+            //       icon: Icon(Icons.arrow_back),
+            //       color: Colors.white, // Icon color
+            //       onPressed: () {
+            //         // Navigate back when the back button is pressed
+            //         Navigator.pop(context);
+            //       },
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

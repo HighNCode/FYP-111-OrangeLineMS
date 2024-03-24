@@ -104,7 +104,7 @@ class _firstState extends State<first> {
 
   Future<void> fetchSystem() async {
     final response = await http.post(
-        Uri.parse('http://127.0.0.1:5000/get_related_system'),
+        Uri.parse('http://127.0.0.1:8000/get_related_system'),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode(<String, String>{'class_instance': 'System'}));
 
@@ -124,7 +124,7 @@ class _firstState extends State<first> {
     selectedValue4Controller.value = 'Select equipment';
     if (selectedValue3 != 'Select system') {
       final response = await http.post(
-          Uri.parse('http://127.0.0.1:5000/get_related_equipment'),
+          Uri.parse('http://127.0.0.1:8000/get_related_equipment'),
           headers: <String, String>{'Content-Type': 'application/json'},
           body:
               jsonEncode(<String, String>{'system_instance': selectedValue3}));
@@ -147,7 +147,7 @@ class _firstState extends State<first> {
     //selectedValue5 = 'Select location';
     if (selectedValue4 != 'Select equipment') {
       final response = await http.post(
-          Uri.parse('http://127.0.0.1:5000/get_related_location'),
+          Uri.parse('http://127.0.0.1:8000/get_related_location'),
           headers: <String, String>{'Content-Type': 'application/json'},
           body: jsonEncode(
               <String, String>{'equipment_instance': selectedValue4}));
@@ -229,671 +229,673 @@ class _firstState extends State<first> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: 720,
-        width: 1370,
-        decoration: BoxDecoration(
-          color: Color(0xFFFFFFFF),
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: AssetImage('assets/background.png'),
+      body: SingleChildScrollView(
+        child: Container(
+          height: 720,
+          width: 1370,
+          decoration: BoxDecoration(
+            color: Color(0xFFFFFFFF),
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage('assets/background.png'),
+            ),
           ),
-        ),
-        child: Stack(
-          children: [
-            Positioned(
-              left: 250,
-              top: 70,
-              child: Container(
-                width: 900,
-                height: 600,
-                decoration: BoxDecoration(
-                  color: Color(0xFF313134),
-                  borderRadius: BorderRadius.circular(20.2151851654),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.fromLTRB(50, 15, 0, 25),
-                      child: RichText(
-                        text: TextSpan(
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 26.2151851654,
-                            fontWeight: FontWeight.w400,
-                            height: 1.2125,
-                            color: Color(0xFFFFFFFF),
-                          ),
-                          children: [
-                            TextSpan(
-                              text: 'Fault Data Entry',
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 35,
-                                fontWeight: FontWeight.normal,
-                                height: 1.2125,
-                                color: Color(0xFFFFFFFF),
-                              ),
+          child: Stack(
+            children: [
+              Positioned(
+                left: 250,
+                top: 50,
+                child: Container(
+                  width: 895,
+                  height: 590,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF313134),
+                    borderRadius: BorderRadius.circular(20.2151851654),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.fromLTRB(50, 15, 0, 25),
+                        child: RichText(
+                          text: TextSpan(
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 26.2151851654,
+                              fontWeight: FontWeight.w400,
+                              height: 1.2125,
+                              color: Color(0xFFFFFFFF),
                             ),
-                            TextSpan(text: ' '),
-                          ],
+                            children: [
+                              TextSpan(
+                                text: 'Fault Data Entry',
+                                style: TextStyle(
+                                  fontFamily: 'Inter',
+                                  fontSize: 35,
+                                  fontWeight: FontWeight.normal,
+                                  height: 1.2125,
+                                  color: Color(0xFFFFFFFF),
+                                ),
+                              ),
+                              TextSpan(text: ' '),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(55, 0, 0, 0),
-                      padding: EdgeInsets.fromLTRB(41, 20, 12, 20),
-                      height: 80,
-                      width: 750,
-                      decoration: BoxDecoration(
-                        color: Color(0xFF222229),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.fromLTRB(0, 0, 43, 0.18),
-                            child: Center(
+                      Container(
+                        margin: EdgeInsets.fromLTRB(55, 0, 0, 0),
+                        padding: EdgeInsets.fromLTRB(41, 20, 12, 20),
+                        height: 80,
+                        width: 750,
+                        decoration: BoxDecoration(
+                          color: Color(0xFF222229),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.fromLTRB(0, 0, 43, 0.18),
+                              child: Center(
+                                child: Text(
+                                  'General Information',
+                                  style: TextStyle(
+                                    fontSize: 20.2151851654,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color(0xddff8518),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.fromLTRB(30, 0, 30, 0.18),
+                              // child: Text(
+                              //   'Fault Description',
+                              //   style: TextStyle(
+                              //     fontSize: 20.2151851654,
+                              //     fontWeight: FontWeight.w400,
+                              //     color: Color(0xFFFFFFFF),
+                              //   ),
+                              // ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.fromLTRB(40, 0, 0, 0.18),
                               child: Text(
-                                'General Information',
+                                'Fault Status',
                                 style: TextStyle(
                                   fontSize: 20.2151851654,
                                   fontWeight: FontWeight.w400,
-                                  color: Color(0xddff8518),
+                                  color: Color(0xFFFFFFFF),
                                 ),
                               ),
                             ),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.fromLTRB(55, 0, 0, 0.10),
+                            width: 280,
+                            height: 8,
+                            decoration: BoxDecoration(
+                              color: Color(0xddff8518),
+                            ),
                           ),
                           Container(
-                            margin: EdgeInsets.fromLTRB(30, 0, 30, 0.18),
-                            // child: Text(
-                            //   'Fault Description',
-                            //   style: TextStyle(
-                            //     fontSize: 20.2151851654,
-                            //     fontWeight: FontWeight.w400,
-                            //     color: Color(0xFFFFFFFF),
-                            //   ),
-                            // ),
+                            width: 470,
+                            height: 8,
+                            decoration: BoxDecoration(
+                              color: Color(0xFF222229),
+                            ),
                           ),
-                          Container(
-                            margin: EdgeInsets.fromLTRB(40, 0, 0, 0.18),
-                            child: Text(
-                              'Fault Status',
+                        ],
+                      ),
+                      SizedBox(height: 40),
+                      Padding(
+                        padding: EdgeInsets.only(left: 60),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 5, // Add spacing between the text and "*"
+                            ),
+                            Text(
+                              'Date',
                               style: TextStyle(
-                                fontSize: 20.2151851654,
+                                fontFamily: 'Inter',
+                                fontSize: 18,
                                 fontWeight: FontWeight.w400,
-                                color: Color(0xFFFFFFFF),
+                                height: 1.2,
+                                color: Color(0xffffffff),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.fromLTRB(55, 0, 0, 0.10),
-                          width: 280,
-                          height: 8,
-                          decoration: BoxDecoration(
-                            color: Color(0xddff8518),
-                          ),
-                        ),
-                        Container(
-                          width: 470,
-                          height: 8,
-                          decoration: BoxDecoration(
-                            color: Color(0xFF222229),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 40),
-                    Padding(
-                      padding: EdgeInsets.only(left: 60),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 5, // Add spacing between the text and "*"
-                          ),
-                          Text(
-                            'Date',
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                              height: 1.2,
-                              color: Color(0xffffffff),
+                            Text(
+                              ' *',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.red,
+                              ),
                             ),
-                          ),
-                          Text(
-                            ' *',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: EdgeInsets.only(left: 60),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 180,
-                            height: 50,
-                            child: TextFormField(
-                              controller: _dateController,
-                              keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
-                                hintText: 'dd-mm-yyyy',
-                                suffixIcon: IconButton(
-                                  icon: Icon(Icons.calendar_today),
-                                  onPressed: () => selectDate(context),
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: EdgeInsets.only(left: 60),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 180,
+                              height: 50,
+                              child: TextFormField(
+                                controller: _dateController,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  hintText: 'dd-mm-yyyy',
+                                  suffixIcon: IconButton(
+                                    icon: Icon(Icons.calendar_today),
+                                    onPressed: () => selectDate(context),
+                                  ),
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                  filled: true,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0xddff8518),
+                                      width: 2,
+                                    ),
+                                  ),
+                                  errorText: dateError,
                                 ),
-                                hintStyle: TextStyle(color: Colors.grey),
-                                filled: true,
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0xddff8518),
-                                    width: 2,
+                                onTap: () => selectDate(context),
+                                onChanged: _validateDate,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: EdgeInsets.only(left: 60),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Row(
+                              // Added a Row widget to include both text and asterisk
+                              children: <Widget>[
+                                Text(
+                                  'Train No',
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.2,
+                                    color: Color(0xffffffff),
                                   ),
                                 ),
-                                errorText: dateError,
-                              ),
-                              onTap: () => selectDate(context),
-                              onChanged: _validateDate,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: EdgeInsets.only(left: 60),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Row(
-                            // Added a Row widget to include both text and asterisk
-                            children: <Widget>[
-                              Text(
-                                'Train No',
-                                style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.2,
-                                  color: Color(0xffffffff),
-                                ),
-                              ),
-                              SizedBox(width: 5), //space between text and *
-                              Text(
-                                '*', // Asterisk
-                                style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.2,
-                                  color: Colors.red,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: EdgeInsets.only(left: 60),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 180,
-                            height: 40,
-                            child: DropdownButton<String>(
-                              value: selectedValue,
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  selectedValue = newValue!;
-                                });
-                              },
-                              items: options.map<DropdownMenuItem<String>>(
-                                  (String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                              icon: Icon(Icons.arrow_drop_down,
-                                  color: Color(0xddff8518)),
-                              iconSize: 24,
-                              isExpanded: true,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: EdgeInsets.only(left: 60),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Row(
-                            // Added a Row widget to include both text and asterisk
-                            children: <Widget>[
-                              Text(
-                                'Car No',
-                                style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.2,
-                                  color: Color(0xffffffff),
-                                ),
-                              ),
-                              SizedBox(width: 5), //space between text and *
-                              Text(
-                                '*', // Asterisk
-                                style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.2,
-                                  color: Colors.red,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: EdgeInsets.only(left: 60),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 180,
-                            height: 40,
-                            child: DropdownButton<String>(
-                              value: selectedValue2,
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  selectedValue2 = newValue!;
-                                });
-                              },
-                              items: options2.map<DropdownMenuItem<String>>(
-                                  (String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                              icon: Icon(Icons.arrow_drop_down,
-                                  color: Color(0xddff8518)),
-                              iconSize: 24,
-                              isExpanded: true,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: EdgeInsets.only(left: 58),
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            // Added a Row widget to include both text and asterisk
-                            children: <Widget>[
-                              Text(
-                                'Equipment Location',
-                                style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.2,
-                                  color: Color(0xffffffff),
-                                ),
-                              ),
-                              SizedBox(width: 5), //space between text and *
-                              Text(
-                                '*', // Asterisk
-                                style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.2,
-                                  color: Colors.red,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: EdgeInsets.only(left: 15),
-                      child: Row(
-                        children: [
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 42),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 180,
-                                  height: 40,
-                                  child: DropdownButton<String>(
-                                    value: selectedValue5,
-                                    onChanged: (String? newValue) {
-                                      setState(() {
-                                        selectedValue5 = newValue!;
-                                      });
-                                    },
-                                    items: locationList
-                                        .map<DropdownMenuItem<String>>(
-                                            (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
-                                    icon: Icon(Icons.arrow_drop_down,
-                                        color: Color(0xddff8518)),
-                                    iconSize: 24,
-                                    isExpanded: true,
+                                SizedBox(width: 5), //space between text and *
+                                Text(
+                                  '*', // Asterisk
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.2,
+                                    color: Colors.red,
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
-              left: 710,
-              top: 280,
-              child: Align(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 30),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Fault Source',
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                              height: 1.2,
-                              color: Color(0xffffffff),
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: EdgeInsets.only(left: 60),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 180,
+                              height: 40,
+                              child: DropdownButton<String>(
+                                value: selectedValue,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedValue = newValue!;
+                                  });
+                                },
+                                items: options.map<DropdownMenuItem<String>>(
+                                    (String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                                icon: Icon(Icons.arrow_drop_down,
+                                    color: Color(0xddff8518)),
+                                iconSize: 24,
+                                isExpanded: true,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            width: 5, // Add spacing between the text and "*"
-                          ),
-                          Text(
-                            '*',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: EdgeInsets.only(left: 15),
-                      child: Row(
-                        children: [
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 15),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 180,
-                                  height: 40,
-                                  child: DropdownButton<String>(
-                                    value: selectedValue6,
-                                    items: [
-                                      '4 Day Power',
-                                      '4 Day Non Power',
-                                      'System Maintenance',
-                                      'Mainline Return',
-                                      'Status Card',
-                                      'Station Guarantee',
-                                      'TD',
-                                      'RSMD',
-                                      'Arrival Inspection',
-                                      'Departure Inspection',
-                                      'Train Operator',
-                                      'Modification',
-                                      'Transition',
-                                    ].map((String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
-                                    onChanged: (String? newValue) {
-                                      setState(() {
-                                        selectedValue6 = newValue!;
-                                      });
-                                    },
-                                    icon: Icon(Icons.arrow_drop_down,
-                                        color: Color(0xddff8518)),
-                                    iconSize: 24,
-                                    isExpanded:
-                                        true, // Ensures the dropdown button expands to fill its container
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: EdgeInsets.only(left: 60),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Row(
+                              // Added a Row widget to include both text and asterisk
+                              children: <Widget>[
+                                Text(
+                                  'Car No',
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.2,
+                                    color: Color(0xffffffff),
+                                  ),
+                                ),
+                                SizedBox(width: 5), //space between text and *
+                                Text(
+                                  '*', // Asterisk
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.2,
+                                    color: Colors.red,
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: EdgeInsets.only(left: 30),
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            // Added a Row widget to include both text and asterisk
-                            children: <Widget>[
-                              Text(
-                                'System',
-                                style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.2,
-                                  color: Color(0xffffffff),
-                                ),
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: EdgeInsets.only(left: 60),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 180,
+                              height: 40,
+                              child: DropdownButton<String>(
+                                value: selectedValue2,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedValue2 = newValue!;
+                                  });
+                                },
+                                items: options2.map<DropdownMenuItem<String>>(
+                                    (String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                                icon: Icon(Icons.arrow_drop_down,
+                                    color: Color(0xddff8518)),
+                                iconSize: 24,
+                                isExpanded: true,
                               ),
-                              SizedBox(width: 5), //space between text and *
-                              Text(
-                                '*', // Asterisk
-                                style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.2,
-                                  color: Colors.red,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: EdgeInsets.only(left: 30),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 180,
-                            height: 40,
-                            child: DropdownButton<String>(
-                              value: selectedValue3Controller.value,
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  selectedValue3Controller.value = newValue!;
-                                });
-                              },
-                              items: systemList.map<DropdownMenuItem<String>>(
-                                  (String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                              icon: Icon(Icons.arrow_drop_down,
-                                  color: Color(0xddff8518)),
-                              iconSize: 24,
-                              isExpanded: true,
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: EdgeInsets.only(left: 30),
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            // Added a Row widget to include both text and asterisk
-                            children: <Widget>[
-                              Text(
-                                'Equipment',
-                                style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.2,
-                                  color: Color(0xffffffff),
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: EdgeInsets.only(left: 58),
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              // Added a Row widget to include both text and asterisk
+                              children: <Widget>[
+                                Text(
+                                  'Equipment Location',
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.2,
+                                    color: Color(0xffffffff),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(width: 5), //space between text and *
-                              Text(
-                                '*', // Asterisk
-                                style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.2,
-                                  color: Colors.red,
+                                SizedBox(width: 5), //space between text and *
+                                Text(
+                                  '*', // Asterisk
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.2,
+                                    color: Colors.red,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: EdgeInsets.only(left: 30),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 180,
-                            height: 40,
-                            child: DropdownButton<String>(
-                              value: selectedValue4Controller.value,
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  selectedValue4Controller.value = newValue!;
-                                });
-                              },
-                              items: equipmentList
-                                  .map<DropdownMenuItem<String>>(
-                                      (String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                              icon: Icon(Icons.arrow_drop_down,
-                                  color: Color(0xddff8518)),
-                              iconSize: 24,
-                              isExpanded: true,
+                              ],
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 80),
-                    Padding(
-                      padding: EdgeInsets.only(left: 250),
-                      child: SizedBox(
-                        width: 150,
-                        height: 40,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Page3(),
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: EdgeInsets.only(left: 15),
+                        child: Row(
+                          children: [
+                            SizedBox(height: 10),
+                            Padding(
+                              padding: EdgeInsets.only(left: 42),
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 180,
+                                    height: 40,
+                                    child: DropdownButton<String>(
+                                      value: selectedValue5,
+                                      onChanged: (String? newValue) {
+                                        setState(() {
+                                          selectedValue5 = newValue!;
+                                        });
+                                      },
+                                      items: locationList
+                                          .map<DropdownMenuItem<String>>(
+                                              (String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value),
+                                        );
+                                      }).toList(),
+                                      icon: Icon(Icons.arrow_drop_down,
+                                          color: Color(0xddff8518)),
+                                      iconSize: 24,
+                                      isExpanded: true,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            );
-                          },
-                          child: Text(
-                            'Next',
-                            style: TextStyle(
-                              color: Color(0xffffffff),
-                              fontSize: 20,
                             ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xddff8518),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 710,
+                top: 280,
+                child: Align(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 30),
+                        child: Row(
+                          children: [
+                            Text(
+                              'Fault Source',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                                height: 1.2,
+                                color: Color(0xffffffff),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 5, // Add spacing between the text and "*"
+                            ),
+                            Text(
+                              '*',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: EdgeInsets.only(left: 15),
+                        child: Row(
+                          children: [
+                            SizedBox(height: 10),
+                            Padding(
+                              padding: EdgeInsets.only(left: 15),
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 180,
+                                    height: 40,
+                                    child: DropdownButton<String>(
+                                      value: selectedValue6,
+                                      items: [
+                                        '4 Day Power',
+                                        '4 Day Non Power',
+                                        'System Maintenance',
+                                        'Mainline Return',
+                                        'Status Card',
+                                        'Station Guarantee',
+                                        'TD',
+                                        'RSMD',
+                                        'Arrival Inspection',
+                                        'Departure Inspection',
+                                        'Train Operator',
+                                        'Modification',
+                                        'Transition',
+                                      ].map((String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value),
+                                        );
+                                      }).toList(),
+                                      onChanged: (String? newValue) {
+                                        setState(() {
+                                          selectedValue6 = newValue!;
+                                        });
+                                      },
+                                      icon: Icon(Icons.arrow_drop_down,
+                                          color: Color(0xddff8518)),
+                                      iconSize: 24,
+                                      isExpanded:
+                                          true, // Ensures the dropdown button expands to fill its container
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: EdgeInsets.only(left: 30),
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              // Added a Row widget to include both text and asterisk
+                              children: <Widget>[
+                                Text(
+                                  'System',
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.2,
+                                    color: Color(0xffffffff),
+                                  ),
+                                ),
+                                SizedBox(width: 5), //space between text and *
+                                Text(
+                                  '*', // Asterisk
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.2,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: EdgeInsets.only(left: 30),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 180,
+                              height: 40,
+                              child: DropdownButton<String>(
+                                value: selectedValue3Controller.value,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedValue3Controller.value = newValue!;
+                                  });
+                                },
+                                items: systemList.map<DropdownMenuItem<String>>(
+                                    (String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                                icon: Icon(Icons.arrow_drop_down,
+                                    color: Color(0xddff8518)),
+                                iconSize: 24,
+                                isExpanded: true,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: EdgeInsets.only(left: 30),
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              // Added a Row widget to include both text and asterisk
+                              children: <Widget>[
+                                Text(
+                                  'Equipment',
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.2,
+                                    color: Color(0xffffffff),
+                                  ),
+                                ),
+                                SizedBox(width: 5), //space between text and *
+                                Text(
+                                  '*', // Asterisk
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.2,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: EdgeInsets.only(left: 30),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 180,
+                              height: 40,
+                              child: DropdownButton<String>(
+                                value: selectedValue4Controller.value,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedValue4Controller.value = newValue!;
+                                  });
+                                },
+                                items: equipmentList
+                                    .map<DropdownMenuItem<String>>(
+                                        (String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                                icon: Icon(Icons.arrow_drop_down,
+                                    color: Color(0xddff8518)),
+                                iconSize: 24,
+                                isExpanded: true,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 70),
+                      Padding(
+                        padding: EdgeInsets.only(left: 250),
+                        child: SizedBox(
+                          width: 150,
+                          height: 40,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Page3(),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'Next',
+                              style: TextStyle(
+                                color: Color(0xffffffff),
+                                fontSize: 20,
+                              ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              primary: Color(0xddff8518),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Positioned(
-              left: 10,
-              top: 10,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Color(0xddff8518), // Replace with your desired color
-                  shape: BoxShape.circle, // Makes the container circular
-                ),
-                child: IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  color: Colors.white, // Icon color
-                  onPressed: () {
-                    // Navigate back when the back button is pressed
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-            ),
-          ],
+              // Positioned(
+              //   left: 10,
+              //   top: 10,
+              //   child: Container(
+              //     decoration: BoxDecoration(
+              //       color: Color(0xddff8518), // Replace with your desired color
+              //       shape: BoxShape.circle, // Makes the container circular
+              //     ),
+              //     child: IconButton(
+              //       icon: Icon(Icons.arrow_back),
+              //       color: Colors.white, // Icon color
+              //       onPressed: () {
+              //         // Navigate back when the back button is pressed
+              //         Navigator.pop(context);
+              //       },
+              //     ),
+              //   ),
+              // ),
+            ],
+          ),
         ),
       ),
     );

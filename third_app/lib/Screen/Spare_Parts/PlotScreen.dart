@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-//import 'package:toast/toast.dart';
 
 class PlotScreen extends StatefulWidget {
   @override
@@ -17,6 +16,13 @@ class _PlotScreenState extends State<PlotScreen> {
   void initState() {
     super.initState();
     fetchData();
+  }
+
+  @override
+  void dispose() {
+    plotData = ''; // Reset plotData
+    tableData = []; // Reset tableData
+    super.dispose();
   }
 
   Future<void> fetchData() async {
@@ -48,7 +54,7 @@ class _PlotScreenState extends State<PlotScreen> {
         if (tableData is String) {
           // Parse the String as a JSON array
           List<dynamic> records = json.decode(tableData);
-
+          print(records);
           // Check if records is a list and contains map entries
           if (records is List &&
               records.isNotEmpty &&
@@ -59,7 +65,7 @@ class _PlotScreenState extends State<PlotScreen> {
               dataRows.add(DataRow(
                 cells: [
                   DataCell(Text(record['Date'])),
-                  DataCell(Text(record['Forecasted_Quantity'].toString())),
+                  DataCell(Text(record['Quantity'])),
                 ],
               ));
             }
@@ -113,10 +119,10 @@ class _PlotScreenState extends State<PlotScreen> {
           ),
           Positioned(
             left: 250,
-            top: 70,
+            top: 50,
             child: Container(
-              width: 900,
-              height: 600,
+              width: 895,
+              height: 590,
               decoration: BoxDecoration(
                 color: Color(0xFF313134),
                 borderRadius: BorderRadius.circular(20.2151851654),
@@ -181,7 +187,7 @@ class _PlotScreenState extends State<PlotScreen> {
                           )
                         : CircularProgressIndicator(),
                   ),
-                  SizedBox(height: 30),
+                  SizedBox(height: 25),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -233,23 +239,23 @@ class _PlotScreenState extends State<PlotScreen> {
               ),
             ),
           ),
-          Positioned(
-            left: 10,
-            top: 10,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Color(0xddff8518),
-                shape: BoxShape.circle,
-              ),
-              child: IconButton(
-                icon: Icon(Icons.arrow_back),
-                color: Colors.white,
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-          ),
+          // Positioned(
+          //   left: 10,
+          //   top: 10,
+          //   child: Container(
+          //     decoration: BoxDecoration(
+          //       color: Color(0xddff8518),
+          //       shape: BoxShape.circle,
+          //     ),
+          //     child: IconButton(
+          //       icon: Icon(Icons.arrow_back),
+          //       color: Colors.white,
+          //       onPressed: () {
+          //         Navigator.pop(context);
+          //       },
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
