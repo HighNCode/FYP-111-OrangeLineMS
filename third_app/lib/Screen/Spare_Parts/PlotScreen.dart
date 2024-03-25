@@ -177,16 +177,16 @@ class _PlotScreenState extends State<PlotScreen> {
                     ],
                   ),
                   SizedBox(height: 20),
-                  Center(
-                    child: plotData.isNotEmpty
-                        ? Image.memory(
-                            base64.decode(plotData),
-                            width: 800,
-                            height: 400,
-                            fit: BoxFit.cover,
-                          )
-                        : CircularProgressIndicator(),
-                  ),
+                  // Center(
+                  //   child: plotData.isNotEmpty
+                  //       ? Image.memory(
+                  //           base64.decode(plotData),
+                  //           width: 800,
+                  //           height: 400,
+                  //           fit: BoxFit.cover,
+                  //         )
+                  //       : CircularProgressIndicator(),
+                  // ),
                   SizedBox(height: 25),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,

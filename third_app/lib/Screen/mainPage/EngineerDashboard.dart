@@ -138,37 +138,7 @@ class _EngineerDashboardState extends State<EngineerDashboard> {
             ],
           ),
 
-          // SizedBox(width: 325), // Add space between title and search bar
-          // Container(
-          //   constraints: BoxConstraints(maxWidth: 260),
-          //   child: TextField(
-          //     controller: _searchController,
-          //     style: TextStyle(color: Colors.white),
-          //     onSubmitted: (value) {
-          //       if (value.toLowerCase() == 'wheel analysis') {
-          //         Navigator.push(
-          //           context,
-          //           MaterialPageRoute(builder: (context) => Page1()),
-          //         );
-          //       }
-          //     },
-          //     decoration: InputDecoration(
-          //       hintText: 'Search',
-          //       hintStyle: TextStyle(color: Colors.grey),
-          //       enabledBorder: UnderlineInputBorder(
-          //         borderSide: BorderSide(color: Colors.white),
-          //       ),
-          //       focusedBorder: UnderlineInputBorder(
-          //         borderSide: BorderSide(color: Colors.orange),
-          //       ),
-          //       suffixIcon: Icon(
-          //         Icons.search,
-          //         color: Colors.white,
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          SizedBox(width: 750),
+          SizedBox(width: 710),
           Icon(Icons.person, color: Colors.white),
 
           PopupMenuButton<String>(

@@ -64,7 +64,7 @@ class _WheelAnalysisState extends State<WheelAnalysis> {
                 ),
               ],
             ),
-            SizedBox(width: 810),
+            SizedBox(width: 770),
             Icon(Icons.person, color: Colors.white),
             PopupMenuButton<String>(
               offset: Offset(0, 40),

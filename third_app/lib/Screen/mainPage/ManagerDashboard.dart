@@ -127,7 +127,7 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
             ],
           ),
 
-          SizedBox(width: 750),
+          SizedBox(width: 710),
           Icon(Icons.person, color: Colors.white),
 
           PopupMenuButton<String>(
