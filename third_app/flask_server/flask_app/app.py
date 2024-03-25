@@ -18,6 +18,7 @@ from supabase import create_client, Client
 from ConsolidatedWheelRawData import mainFun4
 import pytesseract
 
+#runtime error issue solution
 plt.switch_backend('agg')
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Users\Fatima Abdul Wahid\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
