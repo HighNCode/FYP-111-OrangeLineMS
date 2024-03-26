@@ -46,7 +46,7 @@ class _Page2State extends State<Page2> {
   TextEditingController ALRadialDeviationController = TextEditingController();
   TextEditingController ARRadialDeviationController = TextEditingController();
 
-  void checkFields(BuildContext context) {
+  void checkFields2(BuildContext context) {
     if (FieldsEmpty()) {
       // Show a Snackbar if any field is empty
       final snackBar = SnackBar(
@@ -56,7 +56,7 @@ class _Page2State extends State<Page2> {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       // sendRequests();
     } else {
-      sendRequests();
+      sendRequests2();
     }
   }
 
@@ -101,7 +101,7 @@ class _Page2State extends State<Page2> {
     }
   }
 
-  Future<void> sendRequests() async {
+  Future<void> sendRequests2() async {
     // Access the occupation variable
 
     final url = Uri.parse(
@@ -859,51 +859,64 @@ class _Page2State extends State<Page2> {
 
                       SizedBox(height: 140),
                       Padding(
-                        padding: EdgeInsets.only(left: 240),
-                        child: SizedBox(
-                          width: 150,
-                          height: 40,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              // Navigate to the RecognizePage when the button is clicked
-
-                              checkFields(context);
-                            },
-                            child: Text(
-                              'Submit',
-                              style: TextStyle(
-                                color: Color(0xffffffff),
-                                fontSize: 20,
+                        padding: EdgeInsets.only(left: 30),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 70),
+                              child: SizedBox(
+                                width: 130,
+                                height: 40,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    // Navigate back when the back button is pressed
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    'Back',
+                                    style: TextStyle(
+                                      color: Color(0xffffffff),
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Color(0xddff8518),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                            style: ElevatedButton.styleFrom(
-                              primary: Color(0xddff8518),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
+                            SizedBox(width: 10),
+                            SizedBox(
+                              width: 130,
+                              height: 40,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  // Navigate to the RecognizePage when the button is clicked
+                                  // selectedValue = getSelectedValue();
+                                  checkFields2(context);
+                                },
+                                child: Text(
+                                  'Submit',
+                                  style: TextStyle(
+                                    color: Color(0xffffffff),
+                                    fontSize: 17,
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color(0xddff8518),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
                       ),
                     ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 10,
-                top: 10,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xddff8518), // Replace with your desired color
-                    shape: BoxShape.circle, // Makes the container circular
-                  ),
-                  child: IconButton(
-                    icon: Icon(Icons.arrow_back),
-                    color: Colors.white, // Icon color
-                    onPressed: () {
-                      // Navigate back when the back button is pressed
-                      Navigator.pop(context);
-                    },
                   ),
                 ),
               ),

@@ -45,7 +45,7 @@ class _generalInfoState extends State<generalInfo> {
   bool selectedValue = false;
   String fullName = AppState.fullName;
   String occupation = AppState.occupation;
-  
+
 // ...
   bool getSelectedValue() {
     if (isChecked == true) {
@@ -872,115 +872,67 @@ class _generalInfoState extends State<generalInfo> {
                           ],
                         ),
                       ),
-                      // SizedBox(height: 20), // Add spacing between the sections
-                      // Padding(
-                      //   padding: EdgeInsets.only(left: 30),
-                      //   child: Row(
-                      //     children: [
-                      //       SizedBox(
-                      //         width: 5, // Add spacing between the text and "*"
-                      //       ),
-                      //       Text(
-                      //         'Cuts',
-                      //         style: TextStyle(
-                      //           fontFamily: 'Inter',
-                      //           fontSize: 18,
-                      //           fontWeight: FontWeight.w400,
-                      //           height: 1.2,
-                      //           color: Color(0xffffffff),
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
 
-                      // Column(
-                      //   children: [
-                      //     Padding(
-                      //       padding: EdgeInsets.only(
-                      //           left: 30), // Use EdgeInsets.only for left padding
-                      //       child: Row(
-                      //         children: [
-                      //           Checkbox(
-                      //             value: isChecked,
-                      //             activeColor: Color(0xddff8518),
-                      //             onChanged: (newBool) {
-                      //               setState(() {
-                      //                 isChecked = newBool;
-                      //               });
-                      //             },
-                      //           ),
-                      //           Text('Yes'),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //     Padding(
-                      //       padding: EdgeInsets.only(
-                      //           left: 30), // Use EdgeInsets.only for left padding
-                      //       child: Row(
-                      //         children: [
-                      //           Checkbox(
-                      //             value: isChecked2,
-                      //             activeColor: Color(0xddff8518),
-                      //             onChanged: (newBool) {
-                      //               setState(() {
-                      //                 isChecked2 = newBool;
-                      //               });
-                      //             },
-                      //           ),
-                      //           Text('No'),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
                       SizedBox(height: 140),
                       Padding(
-                        padding: EdgeInsets.only(left: 210),
-                        child: SizedBox(
-                          width: 150,
-                          height: 40,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              // Navigate to the RecognizePage when the button is clicked
-                              // selectedValue = getSelectedValue();
-                              checkFields(context);
-                            },
-                            child: Text(
-                              'Next',
-                              style: TextStyle(
-                                color: Color(0xffffffff),
-                                fontSize: 20,
+                        padding: EdgeInsets.only(left: 30),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 70),
+                              child: SizedBox(
+                                width: 130,
+                                height: 40,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    // Navigate back when the back button is pressed
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    'Back',
+                                    style: TextStyle(
+                                      color: Color(0xffffffff),
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Color(0xddff8518),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                            style: ElevatedButton.styleFrom(
-                              primary: Color(0xddff8518),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
+                            SizedBox(width: 10),
+                            SizedBox(
+                              width: 130,
+                              height: 40,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  // Navigate to the RecognizePage when the button is clicked
+                                  // selectedValue = getSelectedValue();
+                                  checkFields(context);
+                                },
+                                child: Text(
+                                  'Next',
+                                  style: TextStyle(
+                                    color: Color(0xffffffff),
+                                    fontSize: 17,
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color(0xddff8518),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
                       ),
                     ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 10,
-                top: 10,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xddff8518), // Replace with your desired color
-                    shape: BoxShape.circle, // Makes the container circular
-                  ),
-                  child: IconButton(
-                    icon: Icon(Icons.arrow_back),
-                    color: Colors.white, // Icon color
-                    onPressed: () {
-                      // Navigate back when the back button is pressed
-                      Navigator.pop(context);
-                    },
                   ),
                 ),
               ),

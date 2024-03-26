@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:third_app/Screen/mainPage/EngineerDashboard.dart';
 import 'package:third_app/main.dart';
 import 'package:third_app/app_state.dart';
+import 'package:third_app/Screen/Fault_Data/first.dart';
 
 void main() {
   runApp(MyApp());
@@ -501,27 +502,20 @@ class _Page3State extends State<Page3> {
                           children: [
                             SizedBox(height: 0),
                             Padding(
-                              padding: EdgeInsets.only(left: 710),
+                              padding: EdgeInsets.only(left: 570),
                               child: SizedBox(
-                                width: 150,
+                                width: 130,
                                 height: 40,
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    // sendData(context);
-
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            EngineerDashboard(), // Provide the role parameter here
-                                      ),
-                                    );
+                                    // Navigate back when the back button is pressed
+                                    Navigator.pop(context);
                                   },
                                   child: Text(
-                                    'Submit',
+                                    'Back',
                                     style: TextStyle(
                                       color: Color(0xffffffff),
-                                      fontSize: 20,
+                                      fontSize: 17,
                                     ),
                                   ),
                                   style: ElevatedButton.styleFrom(
@@ -529,6 +523,37 @@ class _Page3State extends State<Page3> {
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15),
                                     ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            SizedBox(
+                              width: 130,
+                              height: 40,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  // sendData(context);
+
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          EngineerDashboard(), // Provide the role parameter here
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  'Submit',
+                                  style: TextStyle(
+                                    color: Color(0xffffffff),
+                                    fontSize: 17,
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color(0xddff8518),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
                                   ),
                                 ),
                               ),
@@ -692,24 +717,24 @@ class _Page3State extends State<Page3> {
                   ),
                 ),
               ),
-              Positioned(
-                left: 10,
-                top: 10,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xddff8518), // Replace with your desired color
-                    shape: BoxShape.circle, // Makes the container circular
-                  ),
-                  child: IconButton(
-                    icon: Icon(Icons.arrow_back),
-                    color: Colors.white, // Icon color
-                    onPressed: () {
-                      // Navigate back when the back button is pressed
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
-              ),
+              // Positioned(
+              //   left: 10,
+              //   top: 10,
+              //   child: Container(
+              //     decoration: BoxDecoration(
+              //       color: Color(0xddff8518), // Replace with your desired color
+              //       shape: BoxShape.circle, // Makes the container circular
+              //     ),
+              //     child: IconButton(
+              //       icon: Icon(Icons.arrow_back),
+              //       color: Colors.white, // Icon color
+              //       onPressed: () {
+              //         // Navigate back when the back button is pressed
+              //         Navigator.pop(context);
+              //       },
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
