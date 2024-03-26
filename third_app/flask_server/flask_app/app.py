@@ -1,9 +1,10 @@
 import pandas as pd
+
 import matplotlib.pyplot as plt
 from statsmodels.tsa.arima.model import ARIMA
 from flask import Flask, render_template, send_file
 from flask import Flask, jsonify
-import pandas as pd
+
 import io
 import base64
 import matplotlib.pyplot as plt
@@ -27,7 +28,7 @@ from supabase import create_client, Client
 from datetime import datetime
 from ConsolidatedWheelRawData import mainFun4
 import pytesseract;
-pytesseract.pytesseract.tesseract_cmd = r'C:\Users\Fatima Abdul Wahid\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 
 
