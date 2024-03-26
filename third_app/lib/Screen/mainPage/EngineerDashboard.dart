@@ -7,6 +7,7 @@ import 'package:third_app/Screen/Wheel Data OCR/ocr.dart';
 
 import 'package:third_app/Screen/mainPage/Home.dart';
 import 'package:third_app/main.dart';
+import 'package:third_app/app_state.dart';
 
 void main() {
   runApp(MyApp());
@@ -51,8 +52,8 @@ class EngineerDashboard extends StatefulWidget {
 
 class _EngineerDashboardState extends State<EngineerDashboard> {
   int _selectedMenuItem = 0; // Track the selected menu item
-  final String occupation = "Engineer";
-
+  String occupation = AppState.occupation;
+  String fullName = AppState.fullName;
   void _onMenuItemSelected(int index) {
     setState(() {
       _selectedMenuItem = index;
@@ -138,26 +139,111 @@ class _EngineerDashboardState extends State<EngineerDashboard> {
             ],
           ),
 
-          SizedBox(width: 710),
-          Icon(Icons.person, color: Colors.white),
-
+          SizedBox(width: 450),
+          Icon(Icons.person, color: Colors.white), // Display the person icon
+          SizedBox(width: 5), // Add some space between the icon and the text
+          Text(
+            'Welcome, $fullName', // Display user's full name
+            style: TextStyle(color: Colors.white),
+          ),
           PopupMenuButton<String>(
             offset: Offset(0, 40),
-            icon: Icon(Icons.arrow_drop_down, color: Colors.white),
+            icon: Icon(Icons.arrow_drop_down,
+                color: Colors.white), // Display the dropdown icon
             onSelected: (value) {
               if (value == 'logout') {
                 // Navigate to the login page
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                );
               }
             },
             itemBuilder: (BuildContext context) {
-              return ['Logout'].map((String choice) {
+              return [
+                'Logout', // Logout option
+              ].map((String choice) {
                 return PopupMenuItem<String>(
-                  value: 'logout',
-                  child: Container(
-                    child: Text(choice,
-                        style: TextStyle(color: Colors.black)), // Logout text
+                  value: choice.toLowerCase(), // Use lowercase for consistency
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            children: [
+                              GestureDetector(
+                                onTap: () {}, // Empty onTap handler
+                                child: Icon(
+                                  Icons.person, // User icon
+                                  color:
+                                      Colors.orange, // Set icon color to orange
+                                  size: 40, // Increase icon size
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                          height:
+                              8), // Add some space between the icon and text
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {}, // Empty onTap handler
+                            child: Text(
+                              '$fullName - $occupation', // Display user's name and occupation
+                              style: TextStyle(
+                                color: Colors.black, // Set text color to black
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      if (choice ==
+                          'Logout') // Check if the item is the logout option
+                        InkWell(
+                          onTap: () {
+                            // Handle logout option
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen()),
+                            );
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: Text(
+                                choice,
+                                style: TextStyle(
+                                  color:
+                                      Colors.black, // Set text color to black
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      if (choice !=
+                          'Logout') // Display non-pressable items as simple text
+                        Container(
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Text(
+                              choice,
+                              style: TextStyle(
+                                color: Colors.black, // Set text color to black
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
                 );
               }).toList();
@@ -170,7 +256,6 @@ class _EngineerDashboardState extends State<EngineerDashboard> {
       ),
     );
   }
-
   // drawer: MyDrawer(
   //   selectedMenuItem: _selectedMenuItem,
   //   onMenuItemSelected: (int index) {

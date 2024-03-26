@@ -84,8 +84,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
         // Accessing occupation from user_info
         String occupation = userInfo[0]['occupation'];
-        print(occupation);
-        print(occupation);
+// Accessing occupation from user_info
+        String full_name = userInfo[0]['full_name'];
+        AppState.fullName = full_name;
         // After fetching the occupation value
         AppState.occupation = occupation;
 

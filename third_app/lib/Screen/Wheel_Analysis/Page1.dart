@@ -33,12 +33,6 @@ class _Page1State extends State<Page1> {
   DateTime selectedDate = DateTime.now();
   String dateError = ' ';
 
-  // @override
-  // void dispose() {
-  //   _dateController.dispose();
-  //   super.dispose();
-  // }
-
   void _validateDate(String input) {
     if (input.isNotEmpty) {
       final DateFormat dateFormat = DateFormat('yyyy-MM-dd');
@@ -57,12 +51,6 @@ class _Page1State extends State<Page1> {
 
   TextEditingController _timeController = TextEditingController();
   String timeError = ' ';
-
-  // @override
-  // void disposeT() {
-  //   _timeController.dispose();
-  //   super.dispose();
-  // }
 
   void _validateTime(String input) {
     final timePattern = RegExp(r'^[0-2][0-9]:[0-5][0-9]:[0-5][0-9]$');
@@ -89,7 +77,7 @@ class _Page1State extends State<Page1> {
     return true;
   }
 
-  void validateFields() {
+  void validateFields1() {
     _validateDate(_dateController.text);
     _validateTime(_timeController.text);
 
@@ -101,8 +89,14 @@ class _Page1State extends State<Page1> {
           content: Text('Please enter a valid wheel set number.'),
         ),
       );
+    } else if (_dateController.text.isEmpty || _timeController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Date and Time fields cannot be empty.'),
+        ),
+      );
     } else {
-      sendPostRequest();
+      checkFields0(context);
     }
   }
 
@@ -130,6 +124,25 @@ class _Page1State extends State<Page1> {
     super.initState();
     _dateController.text = "${selectedDate.toLocal()}".split(' ')[0];
     _timeController.text = DateFormat('HH:mm:ss').format(DateTime.now());
+  }
+
+  bool FieldsEmpty() {
+    // Check if any of the TextControllers has empty text
+    return trainNoController.text.isEmpty || wheelSetNoController.text.isEmpty;
+  }
+
+  void checkFields0(BuildContext context) {
+    if (FieldsEmpty()) {
+      // Show a Snackbar if any field is empty
+      final snackBar = SnackBar(
+        content: Text('Fields are empty.'),
+        duration: Duration(seconds: 1),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      // sendRequest();
+    } else {
+      sendPostRequest();
+    }
   }
 
   Future<void> sendPostRequest() async {
@@ -552,27 +565,21 @@ class _Page1State extends State<Page1> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 140),
+                      SizedBox(height: 150),
                       Padding(
-                        padding: EdgeInsets.only(left: 210),
+                        padding: EdgeInsets.only(left: 240),
                         child: SizedBox(
-                          width: 150,
+                          width: 130,
                           height: 40,
                           child: ElevatedButton(
                             onPressed: () {
-                              validateFields();
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => generalInfo(),
-                                ),
-                              );
+                              validateFields1();
                             },
                             child: Text(
                               'Next',
                               style: TextStyle(
                                 color: Color(0xffffffff),
-                                fontSize: 20,
+                                fontSize: 17,
                               ),
                             ),
                             style: ElevatedButton.styleFrom(

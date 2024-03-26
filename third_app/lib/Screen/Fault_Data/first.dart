@@ -845,7 +845,7 @@ class _firstState extends State<first> {
                       Padding(
                         padding: EdgeInsets.only(left: 250),
                         child: SizedBox(
-                          width: 150,
+                          width: 130,
                           height: 40,
                           child: ElevatedButton(
                             onPressed: () {
@@ -860,7 +860,7 @@ class _firstState extends State<first> {
                               'Next',
                               style: TextStyle(
                                 color: Color(0xffffffff),
-                                fontSize: 20,
+                                fontSize: 17,
                               ),
                             ),
                             style: ElevatedButton.styleFrom(

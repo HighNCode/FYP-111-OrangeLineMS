@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:third_app/Screen/mainPage/EngineerDashboard.dart';
 import 'package:third_app/main.dart';
+import 'package:third_app/app_state.dart';
+import 'package:third_app/Screen/Fault_Data/first.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,6 +31,9 @@ class Page3 extends StatefulWidget {
 
 class _Page3State extends State<Page3> {
   String selectedValue5 = 'Open'; // Default selected value
+
+  String fullName = AppState.fullName;
+  String occupation = AppState.occupation;
   bool? isChecked = false;
   bool? isChecked2 = false;
   bool? isChecked3 = false;
@@ -111,26 +116,115 @@ class _Page3State extends State<Page3> {
               ],
             ),
 
-            SizedBox(width: 770),
-            Icon(Icons.person, color: Colors.white),
-
+            SizedBox(width: 510),
+            Icon(Icons.person, color: Colors.white), // Display the person icon
+            SizedBox(width: 5), // Add some space between the icon and the text
+            Text(
+              'Welcome, $fullName', // Display user's full name
+              style: TextStyle(color: Colors.white),
+            ),
             PopupMenuButton<String>(
               offset: Offset(0, 40),
-              icon: Icon(Icons.arrow_drop_down, color: Colors.white),
+              icon: Icon(Icons.arrow_drop_down,
+                  color: Colors.white), // Display the dropdown icon
               onSelected: (value) {
                 if (value == 'logout') {
                   // Navigate to the login page
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                  );
                 }
               },
               itemBuilder: (BuildContext context) {
-                return ['Logout'].map((String choice) {
+                return [
+                  'Logout', // Logout option
+                ].map((String choice) {
                   return PopupMenuItem<String>(
-                    value: 'logout',
-                    child: Container(
-                      child: Text(choice,
-                          style: TextStyle(color: Colors.black)), // Logout text
+                    value:
+                        choice.toLowerCase(), // Use lowercase for consistency
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {}, // Empty onTap handler
+                                  child: Icon(
+                                    Icons.person, // User icon
+                                    color: Colors
+                                        .orange, // Set icon color to orange
+                                    size: 40, // Increase icon size
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                            height:
+                                8), // Add some space between the icon and text
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: () {}, // Empty onTap handler
+                              child: Text(
+                                '$fullName - $occupation', // Display user's name and occupation
+                                style: TextStyle(
+                                  color:
+                                      Colors.black, // Set text color to black
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        if (choice ==
+                            'Logout') // Check if the item is the logout option
+                          InkWell(
+                            onTap: () {
+                              // Handle logout option
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginScreen()),
+                              );
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8.0),
+                                child: Text(
+                                  choice,
+                                  style: TextStyle(
+                                    color:
+                                        Colors.black, // Set text color to black
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        if (choice !=
+                            'Logout') // Display non-pressable items as simple text
+                          Container(
+                            alignment: Alignment.center,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: Text(
+                                choice,
+                                style: TextStyle(
+                                  color:
+                                      Colors.black, // Set text color to black
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
                     ),
                   );
                 }).toList();
@@ -408,27 +502,20 @@ class _Page3State extends State<Page3> {
                           children: [
                             SizedBox(height: 0),
                             Padding(
-                              padding: EdgeInsets.only(left: 710),
+                              padding: EdgeInsets.only(left: 570),
                               child: SizedBox(
-                                width: 150,
+                                width: 130,
                                 height: 40,
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    // sendData(context);
-
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            EngineerDashboard(), // Provide the role parameter here
-                                      ),
-                                    );
+                                    // Navigate back when the back button is pressed
+                                    Navigator.pop(context);
                                   },
                                   child: Text(
-                                    'Submit',
+                                    'Back',
                                     style: TextStyle(
                                       color: Color(0xffffffff),
-                                      fontSize: 20,
+                                      fontSize: 17,
                                     ),
                                   ),
                                   style: ElevatedButton.styleFrom(
@@ -436,6 +523,37 @@ class _Page3State extends State<Page3> {
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15),
                                     ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            SizedBox(
+                              width: 130,
+                              height: 40,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  // sendData(context);
+
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          EngineerDashboard(), // Provide the role parameter here
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  'Submit',
+                                  style: TextStyle(
+                                    color: Color(0xffffffff),
+                                    fontSize: 17,
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color(0xddff8518),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
                                   ),
                                 ),
                               ),
@@ -599,24 +717,24 @@ class _Page3State extends State<Page3> {
                   ),
                 ),
               ),
-              Positioned(
-                left: 10,
-                top: 10,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xddff8518), // Replace with your desired color
-                    shape: BoxShape.circle, // Makes the container circular
-                  ),
-                  child: IconButton(
-                    icon: Icon(Icons.arrow_back),
-                    color: Colors.white, // Icon color
-                    onPressed: () {
-                      // Navigate back when the back button is pressed
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
-              ),
+              // Positioned(
+              //   left: 10,
+              //   top: 10,
+              //   child: Container(
+              //     decoration: BoxDecoration(
+              //       color: Color(0xddff8518), // Replace with your desired color
+              //       shape: BoxShape.circle, // Makes the container circular
+              //     ),
+              //     child: IconButton(
+              //       icon: Icon(Icons.arrow_back),
+              //       color: Colors.white, // Icon color
+              //       onPressed: () {
+              //         // Navigate back when the back button is pressed
+              //         Navigator.pop(context);
+              //       },
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),

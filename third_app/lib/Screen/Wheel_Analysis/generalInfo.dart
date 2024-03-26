@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 import 'package:third_app/Screen/Wheel_Analysis/Page2.dart';
 import 'package:third_app/main.dart';
+import 'package:third_app/app_state.dart';
 
 void main() {
   runApp(MyApp());
@@ -42,6 +43,9 @@ class _generalInfoState extends State<generalInfo> {
   bool? isChecked = false;
   bool? isChecked2 = false;
   bool selectedValue = false;
+  String fullName = AppState.fullName;
+  String occupation = AppState.occupation;
+
 // ...
   bool getSelectedValue() {
     if (isChecked == true) {
@@ -180,26 +184,115 @@ class _generalInfoState extends State<generalInfo> {
               ],
             ),
 
-            SizedBox(width: 770),
-            Icon(Icons.person, color: Colors.white),
-
+            SizedBox(width: 510),
+            Icon(Icons.person, color: Colors.white), // Display the person icon
+            SizedBox(width: 5), // Add some space between the icon and the text
+            Text(
+              'Welcome, $fullName', // Display user's full name
+              style: TextStyle(color: Colors.white),
+            ),
             PopupMenuButton<String>(
               offset: Offset(0, 40),
-              icon: Icon(Icons.arrow_drop_down, color: Colors.white),
+              icon: Icon(Icons.arrow_drop_down,
+                  color: Colors.white), // Display the dropdown icon
               onSelected: (value) {
                 if (value == 'logout') {
                   // Navigate to the login page
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                  );
                 }
               },
               itemBuilder: (BuildContext context) {
-                return ['Logout'].map((String choice) {
+                return [
+                  'Logout', // Logout option
+                ].map((String choice) {
                   return PopupMenuItem<String>(
-                    value: 'logout',
-                    child: Container(
-                      child: Text(choice,
-                          style: TextStyle(color: Colors.black)), // Logout text
+                    value:
+                        choice.toLowerCase(), // Use lowercase for consistency
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {}, // Empty onTap handler
+                                  child: Icon(
+                                    Icons.person, // User icon
+                                    color: Colors
+                                        .orange, // Set icon color to orange
+                                    size: 40, // Increase icon size
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                            height:
+                                8), // Add some space between the icon and text
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: () {}, // Empty onTap handler
+                              child: Text(
+                                '$fullName - $occupation', // Display user's name and occupation
+                                style: TextStyle(
+                                  color:
+                                      Colors.black, // Set text color to black
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        if (choice ==
+                            'Logout') // Check if the item is the logout option
+                          InkWell(
+                            onTap: () {
+                              // Handle logout option
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginScreen()),
+                              );
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8.0),
+                                child: Text(
+                                  choice,
+                                  style: TextStyle(
+                                    color:
+                                        Colors.black, // Set text color to black
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        if (choice !=
+                            'Logout') // Display non-pressable items as simple text
+                          Container(
+                            alignment: Alignment.center,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: Text(
+                                choice,
+                                style: TextStyle(
+                                  color:
+                                      Colors.black, // Set text color to black
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
                     ),
                   );
                 }).toList();
@@ -779,115 +872,67 @@ class _generalInfoState extends State<generalInfo> {
                           ],
                         ),
                       ),
-                      // SizedBox(height: 20), // Add spacing between the sections
-                      // Padding(
-                      //   padding: EdgeInsets.only(left: 30),
-                      //   child: Row(
-                      //     children: [
-                      //       SizedBox(
-                      //         width: 5, // Add spacing between the text and "*"
-                      //       ),
-                      //       Text(
-                      //         'Cuts',
-                      //         style: TextStyle(
-                      //           fontFamily: 'Inter',
-                      //           fontSize: 18,
-                      //           fontWeight: FontWeight.w400,
-                      //           height: 1.2,
-                      //           color: Color(0xffffffff),
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
 
-                      // Column(
-                      //   children: [
-                      //     Padding(
-                      //       padding: EdgeInsets.only(
-                      //           left: 30), // Use EdgeInsets.only for left padding
-                      //       child: Row(
-                      //         children: [
-                      //           Checkbox(
-                      //             value: isChecked,
-                      //             activeColor: Color(0xddff8518),
-                      //             onChanged: (newBool) {
-                      //               setState(() {
-                      //                 isChecked = newBool;
-                      //               });
-                      //             },
-                      //           ),
-                      //           Text('Yes'),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //     Padding(
-                      //       padding: EdgeInsets.only(
-                      //           left: 30), // Use EdgeInsets.only for left padding
-                      //       child: Row(
-                      //         children: [
-                      //           Checkbox(
-                      //             value: isChecked2,
-                      //             activeColor: Color(0xddff8518),
-                      //             onChanged: (newBool) {
-                      //               setState(() {
-                      //                 isChecked2 = newBool;
-                      //               });
-                      //             },
-                      //           ),
-                      //           Text('No'),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
                       SizedBox(height: 140),
                       Padding(
-                        padding: EdgeInsets.only(left: 210),
-                        child: SizedBox(
-                          width: 150,
-                          height: 40,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              // Navigate to the RecognizePage when the button is clicked
-                              // selectedValue = getSelectedValue();
-                              checkFields(context);
-                            },
-                            child: Text(
-                              'Next',
-                              style: TextStyle(
-                                color: Color(0xffffffff),
-                                fontSize: 20,
+                        padding: EdgeInsets.only(left: 30),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 70),
+                              child: SizedBox(
+                                width: 130,
+                                height: 40,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    // Navigate back when the back button is pressed
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    'Back',
+                                    style: TextStyle(
+                                      color: Color(0xffffffff),
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Color(0xddff8518),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xddff8518),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
+                            SizedBox(width: 10),
+                            SizedBox(
+                              width: 130,
+                              height: 40,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  // Navigate to the RecognizePage when the button is clicked
+                                  // selectedValue = getSelectedValue();
+                                  checkFields(context);
+                                },
+                                child: Text(
+                                  'Next',
+                                  style: TextStyle(
+                                    color: Color(0xffffffff),
+                                    fontSize: 17,
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color(0xddff8518),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
                       ),
                     ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 10,
-                top: 10,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xddff8518), // Replace with your desired color
-                    shape: BoxShape.circle, // Makes the container circular
-                  ),
-                  child: IconButton(
-                    icon: Icon(Icons.arrow_back),
-                    color: Colors.white, // Icon color
-                    onPressed: () {
-                      // Navigate back when the back button is pressed
-                      Navigator.pop(context);
-                    },
                   ),
                 ),
               ),

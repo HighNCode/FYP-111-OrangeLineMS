@@ -43,8 +43,12 @@ class _HomeState extends State<Home> {
               SizedBox(height: 50),
               Container(
                 margin: EdgeInsets.only(top: 0, bottom: 20),
-                color: Color(0xddff8518),
-                height: 200,
+                decoration: BoxDecoration(
+                  color: Color(0xddff8518),
+                  borderRadius:
+                      BorderRadius.circular(12), // Adjust the radius as needed
+                ),
+                height: 210,
                 width: 1250,
                 child: Row(
                   children: [
@@ -57,53 +61,61 @@ class _HomeState extends State<Home> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Lahore Metro',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 20,
+                                    left: 20), // Adjust top padding here
+                                child: Text(
+                                  'Orange Line Metro Train',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                              SizedBox(height: 30),
+                              SizedBox(height: 20),
                               Row(
                                 children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Passenger Capacity',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Passenger Capacity',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(height: 10),
-                                      Text(
-                                        '300 Person',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
+                                        SizedBox(height: 10),
+                                        Text(
+                                          '300 Person',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(height: 20),
-                                      Text(
-                                        'Total Staff',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
+                                        SizedBox(height: 20),
+                                        Text(
+                                          'Total Staff',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(height: 10),
-                                      Text(
-                                        '345',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
+                                        SizedBox(height: 10),
+                                        Text(
+                                          '345',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                   SizedBox(width: 60),
                                   Column(
