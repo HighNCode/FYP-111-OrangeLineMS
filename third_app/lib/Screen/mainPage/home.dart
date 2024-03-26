@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:third_app/Screen/mainPage/EngineerDashboard.dart';
 import 'package:flutter/services.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 void main() {
   runApp(MyApp());
@@ -175,6 +176,12 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ],
+              ),
+              Expanded(
+                child: WebView(
+                  initialUrl: 'http://127.0.0.1:8000/trending_graph',
+                  javascriptMode: JavascriptMode.unrestricted,
+                ),
               ),
               // SizedBox(height: 10),
               // Row(

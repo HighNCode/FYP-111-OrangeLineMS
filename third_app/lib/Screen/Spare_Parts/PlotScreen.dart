@@ -196,7 +196,7 @@ class _PlotScreenState extends State<PlotScreen> {
                         child: ElevatedButton(
                           onPressed: _getTable,
                           style: ElevatedButton.styleFrom(
-                            primary: Color(0xddff8518),
+                            backgroundColor: Color(0xddff8518),
                           ),
                           child: SizedBox(
                             height: 30.0,

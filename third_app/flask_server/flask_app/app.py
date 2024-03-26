@@ -11,6 +11,7 @@ import supabase
 from rdflib import Graph
 from logic import extractFaultSolution
 from ontology import get_system, get_equipment, get_location
+from trendingFaults import trendingFault
 from werkzeug.utils import secure_filename
 from ocr import perform_ocr
 import os
@@ -717,79 +718,8 @@ def fetch_all_rows(table_name):
 
 @app.route('/trending_graph')
 def generate_graph():
-    table_name = "FaultData"
-    rows = fetch_all_rows(table_name)
-    print("hello")
-    print(rows)
-    # Date calculations
-    current_date = datetime.now().date()
-    three_days_ago = current_date - timedelta(days=3)
-    ten_days_ago = current_date - timedelta(days=10)
-
-    equipment_faults = {}
-    for row in rows:
-        equipment = row["Equipment"]
-        train_number = row["TrainNumber"]
-        car_number = row["CarNumber"]
-        fault_date = datetime.strptime(row["OccurrenceDate"], "%Y-%m-%d").date()
-
-        # Form a unique identifier for each equipment entry based on equipment, train number, and car number
-        equipment_key = f"{equipment}_{train_number}_{car_number}"
-
-        if equipment_key not in equipment_faults:
-            equipment_faults[equipment_key] = {
-                "count": 0,
-                "recent_fault": False,
-                "faults_last_3_days": 0,  # Counter for faults in the last 3 days
-                "day_4_to_10": False,
-            }
-
-        equipment_faults[equipment_key]["count"] += 1
-
-        # Check if fault occurred in the last 3 days
-        if three_days_ago < fault_date <= current_date:
-            equipment_faults[equipment_key]["faults_last_3_days"] += 1  # Increment counter
-        
-        # Check if fault occurred in the days 4 to 10 ago
-        if ten_days_ago < fault_date <= three_days_ago:
-            equipment_faults[equipment_key]["day_4_to_10"] = True
-
-    # Determine recent_fault based on conditions
-    for equipment_key in equipment_faults:
-        conditions_met = (
-            equipment_faults[equipment_key]["faults_last_3_days"] > 1 or
-            (equipment_faults[equipment_key]["faults_last_3_days"] > 0 and equipment_faults[equipment_key]["day_4_to_10"])
-        )
-        if conditions_met:
-            equipment_faults[equipment_key]["recent_fault"] = True
-
-    # Cleanup: Removing the temporary counters and flags
-    for equipment_key in equipment_faults:
-        del equipment_faults[equipment_key]["faults_last_3_days"]
-        del equipment_faults[equipment_key]["day_4_to_10"]
-
-    equipment_faults = {key: val for key, val in equipment_faults.items() if key is not None}
-
-    sorted_equipment = sorted(equipment_faults.items(), key=lambda x: x[1]["count"], reverse=True)[:20]
-    equipment_names = [item[0] for item in sorted_equipment]
-    faults_counts = [item[1]["count"] for item in sorted_equipment]
-    colors = ['red' if item[1]["recent_fault"] else 'skyblue' for item in sorted_equipment]
-
-    plt.figure(figsize=(6, 4))
-    bars = plt.bar(equipment_names, faults_counts, color=colors, alpha=0.75, edgecolor='black')
-    plt.title("Trending Faults", fontsize=16, fontweight='bold')
-    plt.xlabel("Equipment", fontsize=14)
-    plt.ylabel("Faults Count", fontsize=14)
-    plt.xticks([])
-    plt.yticks(fontsize=12)
-    plt.grid(color='gray', linestyle='--', linewidth=0.5, axis='y', alpha=0.7)
     
-    fixed_vertical_height = 1
-
-    for bar, label in zip(bars, equipment_names):
-        yval = bar.get_height()
-        plt.text(bar.get_x() + bar.get_width()/2, yval, int(yval), ha='center', va='bottom', fontsize=10, fontweight='bold')
-        plt.text(bar.get_x() + bar.get_width()/2, fixed_vertical_height, label, ha='center', va='bottom', fontsize=4, color='black', rotation=90)
+    plt = trendingFault()
 
     # Save the plot to a BytesIO object
     img = io.BytesIO()
@@ -797,13 +727,13 @@ def generate_graph():
     img.seek(0)
 
     # Encode the BytesIO object as base64
-    img_base64 = base64.b64encode(img.getvalue()).decode()
+    # img_base64 = base64.b64encode(img.getvalue()).decode()
 
-    plt.close()
+    # plt.close()
 
+    # return render_template('index.html', img_base64=img_base64)
 
-    return render_template('index.html', img_base64=img_base64)
-
+    return send_file(img, mimetype='image/png')
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
