@@ -180,7 +180,7 @@ class _generalInfoState extends State<generalInfo> {
               ],
             ),
 
-            SizedBox(width: 810),
+            SizedBox(width: 770),
             Icon(Icons.person, color: Colors.white),
 
             PopupMenuButton<String>(

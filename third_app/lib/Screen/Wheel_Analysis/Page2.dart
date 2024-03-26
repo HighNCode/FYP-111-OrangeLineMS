@@ -135,14 +135,12 @@ class _Page2State extends State<Page2> {
       print('Data sent successfully');
       print('Response: ${response.body}');
 
-      
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => EngineerDashboard(),
-            ),
-          );
-        
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => EngineerDashboard(),
+        ),
+      );
     } else {
       print('Failed to send data. Error: ${response.statusCode}');
     }
@@ -176,7 +174,7 @@ class _Page2State extends State<Page2> {
               ],
             ),
 
-            SizedBox(width: 810),
+            SizedBox(width: 770),
             Icon(Icons.person, color: Colors.white),
 
             PopupMenuButton<String>(

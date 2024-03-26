@@ -111,7 +111,7 @@ class _Page3State extends State<Page3> {
               ],
             ),
 
-            SizedBox(width: 810),
+            SizedBox(width: 770),
             Icon(Icons.person, color: Colors.white),
 
             PopupMenuButton<String>(

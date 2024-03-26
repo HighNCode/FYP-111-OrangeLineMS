@@ -2,30 +2,20 @@ import pandas as pd
 
 import matplotlib.pyplot as plt
 from statsmodels.tsa.arima.model import ARIMA
-from flask import Flask, render_template, send_file
-from flask import Flask, jsonify
-
+from flask import Flask, render_template, send_file, request, jsonify
 import io
 import base64
-import matplotlib.pyplot as plt
 import seaborn as sns
 from io import BytesIO
-from flask import request
-import base64
-from flask import Flask, jsonify, request,send_file
 import supabase 
-from datetime import datetime
-from flask import Flask, request, jsonify
 from rdflib import Graph
 from logic import extractFaultSolution
 from ontology import get_system, get_equipment, get_location
-from flask import Flask, request, jsonify
 from werkzeug.utils import secure_filename
 from ocr import perform_ocr
 import os
 from datetime import datetime, timedelta
 from supabase import create_client, Client
-from datetime import datetime
 from ConsolidatedWheelRawData import mainFun4
 import pytesseract;
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'

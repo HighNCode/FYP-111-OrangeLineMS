@@ -355,7 +355,9 @@ class _MultiStepFormState extends State<MultiStepForm> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    if (_currentPage > 0) {
+                    if (_currentPage == 0) {
+                      Navigator.of(context).pop(); // Navigate back to ocr.dart
+                    } else if (_currentPage > 0) {
                       _pageController.previousPage(
                         duration: const Duration(milliseconds: 500),
                         curve: Curves.ease,
@@ -392,8 +394,8 @@ class _MultiStepFormState extends State<MultiStepForm> {
                     backgroundColor: MaterialStateProperty.resolveWith<Color>(
                       (Set<MaterialState> states) {
                         return _currentPage == _totalPages - 1
-                            ? Colors.orange // Color when on the last page
-                            : Color(0xFF313134); // Color when button is enabled
+                            ? Colors.orange
+                            : Color(0xFF313134);
                       },
                     ),
                   ),
