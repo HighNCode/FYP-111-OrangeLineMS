@@ -42,7 +42,11 @@ class _HomeState extends State<Home> {
               SizedBox(height: 50),
               Container(
                 margin: EdgeInsets.only(top: 0, bottom: 20),
-                color: Color(0xddff8518),
+                decoration: BoxDecoration(
+                  color: Color(0xddff8518),
+                  borderRadius:
+                      BorderRadius.circular(12), // Adjust the radius as needed
+                ),
                 height: 200,
                 width: 1250,
                 child: Row(
