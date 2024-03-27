@@ -189,6 +189,31 @@ class _HomeState extends State<Home> {
                 ],
               ),
               
+              SizedBox(height: 10),
+              FloatingActionButton(onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FaultsChart()),
+                );
+              }),
+              // () async {
+              //     var url = Uri.parse('http://127.0.0.1:8000/trending_graph');
+              //     var response = await http.get(url);
+              //     if (response.statusCode == 200) {
+              //       var jsonResponse = jsonDecode(response.body);
+              //       var graphUrl = jsonResponse['graph_url'];
+              //       // Now you have the graph URL which you can display using an Image widget or similar
+              //       // For example, you could use setState to update the UI to display the image
+              //       setState(() {
+              //         // Update your UI here with the graph URL
+              //       });
+              //     } else {
+              //       print(
+              //           'Request failed with status: ${response.statusCode}.');
+              //     }
+              //   },
+              //   child: Icon(Icons.abc), // Replace with appropriate icon
+              // ),
               // Row(
               //   mainAxisAlignment: MainAxisAlignment.start,
               //   children: [
