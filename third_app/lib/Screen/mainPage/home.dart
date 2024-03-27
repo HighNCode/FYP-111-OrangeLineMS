@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:third_app/Screen/mainPage/EngineerDashboard.dart';
 import 'package:third_app/Screen/mainPage/TrendingFaults.dart';
+import 'package:third_app/Screen/mainPage/RepetitiveFaults.dart';
 import 'package:flutter/services.dart';
 
 void main() {
@@ -173,147 +174,52 @@ class _HomeState extends State<Home> {
                 ),
               ),
               SizedBox(height: 20),
-              Row(
-                mainAxisAlignment:
-                    MainAxisAlignment.start, // Align to the start (left)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(width: 60),
-                  Text(
-                    'Overview',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(width: 60),
+                      Text(
+                        'Overview',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
+                  SizedBox(height: 30),
+                  Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 60),
+                        width: 550,
+                        height: 400,
+                        child: FaultsChart(),
+                        decoration: BoxDecoration(
+                          color: Color(0xFF313134),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      SizedBox(width: 10), // Add SizedBox for spacing
+                      Container(
+                        margin: EdgeInsets.only(left: 60),
+                        width: 650,
+                        height: 400,
+                        child: RepetitiveFaultsChart(),
+                        decoration: BoxDecoration(
+                          color: Color(0xFF313134),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
                 ],
               ),
-              
-              SizedBox(height: 10),
-              FloatingActionButton(onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => FaultsChart()),
-                );
-              }),
-              // () async {
-              //     var url = Uri.parse('http://127.0.0.1:8000/trending_graph');
-              //     var response = await http.get(url);
-              //     if (response.statusCode == 200) {
-              //       var jsonResponse = jsonDecode(response.body);
-              //       var graphUrl = jsonResponse['graph_url'];
-              //       // Now you have the graph URL which you can display using an Image widget or similar
-              //       // For example, you could use setState to update the UI to display the image
-              //       setState(() {
-              //         // Update your UI here with the graph URL
-              //       });
-              //     } else {
-              //       print(
-              //           'Request failed with status: ${response.statusCode}.');
-              //     }
-              //   },
-              //   child: Icon(Icons.abc), // Replace with appropriate icon
-              // ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.start,
-              //   children: [
-              //     SizedBox(width: 80), // Adjust as needed
-              //     // Container(
-              //     //   width: 600, // Adjust width as needed
-              //     //   height: 500, // Adjust height as needed
-              //     //   child: FutureBuilder<String>(
-              //     //     future: fetchHtmlContent(),
-              //     //     builder: (context, snapshot) {
-              //     //       if (snapshot.connectionState ==
-              //     //           ConnectionState.waiting) {
-              //     //         return Center(
-              //     //           child: CircularProgressIndicator(),
-              //     //         );
-              //     //       } else if (snapshot.hasError) {
-              //     //         return Center(
-              //     //           child: Text('Error: ${snapshot.error}'),
-              //     //         );
-              //     //       } else {
-              //     //         return Html(data: snapshot.data);
-              //     //       }
-              //     //     },
-              //     //   ),
-              //     //   // FutureBuilder(
-              //     //   //   future: http.get(Uri.parse(graphUrl)),
-              //     //   //   builder: (context, snapshot) {
-              //     //   //     if (snapshot.connectionState ==
-              //     //   //         ConnectionState.waiting) {
-              //     //   //       return CircularProgressIndicator();
-              //     //   //     } else if (snapshot.hasError) {
-              //     //   //       return Text('Error: ${snapshot.error}');
-              //     //   //     } else if (snapshot.data != null &&
-              //     //   //         snapshot.data!.bodyBytes != null) {
-              //     //   //       // If the response data and body bytes are not null, display the image
-              //     //   //       return Image.memory(
-              //     //   //         snapshot.data!.bodyBytes!,
-              //     //   //         fit: BoxFit.contain,
-              //     //   //       );
-              //     //   //     } else {
-              //     //   //       return Text('Failed to load image');
-              //     //   //     }
-              //     //   //   },
-              //     //   // ),
-              //     // ),
-              //     Container(
-              //       child: SingleChildScrollView(
-              //         child: FutureBuilder<String>(
-              //           future: fetchHtmlContent(),
-              //           builder: (context, snapshot) {
-              //             if (snapshot.connectionState ==
-              //                 ConnectionState.waiting) {
-              //               return Center(
-              //                 child: CircularProgressIndicator(),
-              //               );
-              //             } else if (snapshot.hasError) {
-              //               return Center(
-              //                 child: Text('Error: ${snapshot.error}'),
-              //               );
-              //             } else {
-              //               return Html(data: snapshot.data);
-              //             }
-              //           },
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.start,
-              //   children: [
-              //     SizedBox(width: 80), // Adjust as needed
-              //     Expanded(
-              //       // Ensures the Container takes up all available horizontal space
-              //       child: Container(
-              //         width:
-              //             double.infinity, // Set width to fill available space
-              //         child: SingleChildScrollView(
-              //           child: FutureBuilder<String>(
-              //             future: fetchHtmlContent(),
-              //             builder: (context, snapshot) {
-              //               if (snapshot.connectionState ==
-              //                   ConnectionState.waiting) {
-              //                 return Center(
-              //                   child: CircularProgressIndicator(),
-              //                 );
-              //               } else if (snapshot.hasError) {
-              //                 return Center(
-              //                   child: Text('Error: ${snapshot.error}'),
-              //                 );
-              //               } else {
-              //                 return Html(data: snapshot.data);
-              //               }
-              //             },
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
             ],
           ),
         ),
@@ -323,7 +229,7 @@ class _HomeState extends State<Home> {
 
   Future<String> fetchHtmlContent() async {
     final response = await http.get(Uri.parse(
-        'http://127.0.0.1:5000')); // Replace with your Flask server URL
+        'http://127.0.0.1:8000')); // Replace with your Flask server URL
     if (response.statusCode == 200) {
       return response.body;
     } else {

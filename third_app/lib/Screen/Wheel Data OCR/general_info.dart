@@ -479,6 +479,67 @@ class _GeneralInfoState extends State<GeneralInfo> {
                                     ),
                                   ),
                                 ),
+                                SizedBox(
+                                    width: 10), // Add space between elements
+
+                                // Back Button
+                                SizedBox(
+                                  width: 130,
+                                  height: 40,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      // Navigate back when the back button is pressed
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text(
+                                      'Back',
+                                      style: TextStyle(
+                                        color: Color(0xffffffff),
+                                        fontSize: 17,
+                                      ),
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Color(0xddff8518),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
+                                SizedBox(
+                                    width:
+                                        10), // Add space between buttons and TextField
+
+                                // Next Button
+                                SizedBox(
+                                  width: 130,
+                                  height: 40,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      // Perform action for next button
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                GeneralInfo()),
+                                      );
+                                    },
+                                    child: Text(
+                                      'Next',
+                                      style: TextStyle(
+                                        color: Color(0xffffffff),
+                                        fontSize: 17,
+                                      ),
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Color(0xddff8518),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:supabase/supabase.dart' as supabase;
 
 void main() {
   runApp(MyApp());
@@ -38,20 +39,55 @@ class RepetitiveFaultsChart extends StatefulWidget {
 class _RepetitiveFaultsChartState extends State<RepetitiveFaultsChart> {
   late Future<List<EquipmentFault>> futureData;
 
+  late supabase.SupabaseClient
+      supabaseClient; // Use SupabaseClient instead of Client
+
   @override
   void initState() {
     super.initState();
     futureData = fetchEquipmentFaults();
   }
 
+  Future<List<dynamic>> fetchAllRows2(String tableName,
+      {int pageSize = 1000}) async {
+    int offset = 0;
+    List<dynamic> allRows = [];
+
+    String supabase_url = "https://typmqqidaijuobjosrpi.supabase.co";
+    String supabase_key =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR5cG1xcWlkYWlqdW9iam9zcnBpIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTM0MzkzODAsImV4cCI6MjAwOTAxNTM4MH0.Ihde633Yj9FFaQ7hKLooxDxaFEno4fK8YxSb3gy8S4c";
+
+    var supabase_client = supabase.SupabaseClient(supabase_url, supabase_key);
+    while (true) {
+      final response = await supabase_client
+          .from(tableName) // Use 'from' instead of 'table'
+          .select("*")
+          .range(offset, offset + pageSize - 1)
+          .execute();
+      List<dynamic> data = response.data;
+      if (data.isEmpty) {
+        break;
+      }
+      allRows.addAll(data);
+      if (data.length < pageSize) {
+        break;
+      }
+      offset += pageSize;
+    }
+
+    return allRows;
+  }
+
   Future<List<EquipmentFault>> fetchEquipmentFaults() async {
-    const String url = 'https://typmqqidaijuobjosrpi.supabase.co/rest/v1/FaultData';
+    const String url =
+        'https://typmqqidaijuobjosrpi.supabase.co/rest/v1/FaultData';
     final response = await http.get(Uri.parse(url), headers: {
-      'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR5cG1xcWlkYWlqdW9iam9zcnBpIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTM0MzkzODAsImV4cCI6MjAwOTAxNTM4MH0.Ihde633Yj9FFaQ7hKLooxDxaFEno4fK8YxSb3gy8S4c',
+      'apikey':
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR5cG1xcWlkYWlqdW9iam9zcnBpIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTM0MzkzODAsImV4cCI6MjAwOTAxNTM4MH0.Ihde633Yj9FFaQ7hKLooxDxaFEno4fK8YxSb3gy8S4c',
     });
 
     if (response.statusCode == 200) {
-      final List rawData = json.decode(response.body);
+      List<dynamic> rawData = await fetchAllRows2('FaultData');
       return processData(rawData);
     } else {
       throw Exception('Failed to load data');
@@ -79,11 +115,9 @@ class _RepetitiveFaultsChartState extends State<RepetitiveFaultsChart> {
           "date": faultDate,
         };
       }
-      else{
-        equipmentFaults[equipmentKey]?["count"] += 1;
-        equipmentFaults[equipmentKey]?["date"] = faultDate;
-      }
-      
+
+      equipmentFaults[equipmentKey]?["count"] += 1;
+      equipmentFaults[equipmentKey]?["date"] = faultDate;
     }
 
     List<EquipmentFault> filteredFaults = [];
@@ -111,20 +145,36 @@ class _RepetitiveFaultsChartState extends State<RepetitiveFaultsChart> {
           return SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Container(
-              width: snapshot.data!.length * 100.0,
+              width: 650,
+              height: 400,
               child: SfCartesianChart(
-                primaryXAxis: CategoryAxis(),
+                backgroundColor: Colors.transparent,
+                primaryXAxis: CategoryAxis(
+                  majorGridLines: MajorGridLines(width: 0),
+                ),
+                primaryYAxis: NumericAxis(
+                  majorGridLines: MajorGridLines(width: 0),
+                  labelStyle: TextStyle(color: Colors.white),
+                ),
+                title: ChartTitle(
+                  text: 'Repetitive Faults',
+                  textStyle: TextStyle(color: Colors.white),
+                ),
                 series: <ChartSeries<EquipmentFault, String>>[
                   BarSeries<EquipmentFault, String>(
                     dataSource: snapshot.data!,
                     xValueMapper: (EquipmentFault fault, _) =>
                         fault.equipmentKey,
                     yValueMapper: (EquipmentFault fault, _) => fault.count,
-                    dataLabelSettings: DataLabelSettings(isVisible: true),
+                    dataLabelSettings: DataLabelSettings(
+                      isVisible: true,
+                      textStyle: TextStyle(color: Colors.white),
+                    ),
+                    borderRadius: BorderRadius.circular(10),
                     pointColorMapper: (EquipmentFault fault, _) =>
                         fault.date.isAtSameMomentAs(DateTime.now())
                             ? Colors.red
-                            : Colors.blue,
+                            : Color.fromRGBO(255, 133, 24, 1),
                   )
                 ],
               ),

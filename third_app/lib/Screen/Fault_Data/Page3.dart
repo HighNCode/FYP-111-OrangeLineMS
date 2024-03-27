@@ -519,7 +519,7 @@ class _Page3State extends State<Page3> {
                                     ),
                                   ),
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Color(0xddff8518),
+                                    primary: Color(0xddff8518),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15),
                                     ),
@@ -551,7 +551,7 @@ class _Page3State extends State<Page3> {
                                   ),
                                 ),
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xddff8518),
+                                  primary: Color(0xddff8518),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15),
                                   ),
