@@ -4,8 +4,8 @@ import 'dart:convert';
 //import 'package:flutter_html/flutter_html.dart';
 import 'package:http/http.dart' as http;
 import 'package:third_app/Screen/mainPage/EngineerDashboard.dart';
+import 'package:third_app/Screen/mainPage/TrendingFaults.dart';
 import 'package:flutter/services.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,7 +30,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  // String graphUrl = 'http://127.0.0.1:8000/trending_graph';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -189,13 +188,7 @@ class _HomeState extends State<Home> {
                   ),
                 ],
               ),
-              Expanded(
-                child: WebView(
-                  initialUrl: 'http://127.0.0.1:8000/trending_graph',
-                  javascriptMode: JavascriptMode.unrestricted,
-                ),
-              ),
-              // SizedBox(height: 10),
+              
               // Row(
               //   mainAxisAlignment: MainAxisAlignment.start,
               //   children: [
