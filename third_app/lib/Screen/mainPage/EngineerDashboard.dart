@@ -4,6 +4,7 @@ import 'package:third_app/Screen/Wheel_Analysis/Page1.dart';
 import 'package:third_app/Screen/fault_detection/Page3.dart';
 import 'package:third_app/Screen/Fault_Data/first.dart';
 import 'package:third_app/Screen/Wheel Data OCR/ocr.dart';
+import 'package:third_app/Screen/Report/report.dart';
 
 import 'package:third_app/Screen/mainPage/Home.dart';
 import 'package:third_app/main.dart';
@@ -85,6 +86,8 @@ class _EngineerDashboardState extends State<EngineerDashboard> {
         return Page3();
       case 4:
         return ocr();
+      case 5:
+        return ReportScreen();
       // case 5:
       //   return PlotScreen();
       default:
@@ -110,6 +113,9 @@ class _EngineerDashboardState extends State<EngineerDashboard> {
         appBarColor = Color(0xFF111112); // Color for the fourth page
         break;
       case 4:
+        appBarColor = Color(0xFF111112); // Color for the fifth page
+        break;
+      case 5:
         appBarColor = Color(0xFF111112); // Color for the fifth page
         break;
       default:
@@ -493,6 +499,7 @@ class MyDrawer extends StatelessWidget {
                   _buildMenuItem(2, 'Fault Data Form', Icons.edit),
                   _buildMenuItem(3, 'Fault Detection', Icons.warning),
                   _buildMenuItem(4, 'Wheel Analysis', Icons.analytics),
+                  _buildMenuItem(5, 'Report', Icons.description),
                   // _buildMenuItem(5, 'Spare Parts', Icons.settings),
                 ],
               ),

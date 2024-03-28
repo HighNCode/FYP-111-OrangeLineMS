@@ -16,6 +16,7 @@ import os
 from datetime import datetime, timedelta
 from supabase import create_client, Client
 from ConsolidatedWheelRawData import mainFun4
+from matplotlib.ticker import MaxNLocator
 import pytesseract
 
 plt.switch_backend('agg')
@@ -699,8 +700,195 @@ def fault_detection():
         return jsonify({'error': 'Invalid request method'}), 405
 
 
+#Reporting 
+current_date = datetime.now().date()
+last_week = current_date - timedelta(days=120)
+
+table_name = "FaultData"
+rows = supabase_client.table(table_name).select("*").gte('OccurrenceDate', last_week).execute().data
+
+@app.route('/report_data')
+def get_report_data():
+    faultsOccurred = 0
+    faultsResolved = 0
+    faultsPending = 0
+    faultsObservation = 0
+
+        
+    for row in rows:
+        status = row["Status"]
+        faultsOccurred += 1
+
+        if status == 'Resolved':
+            faultsResolved += 1
+        elif status == 'Pending':
+            faultsPending += 1
+        elif status == 'Under Observation':
+            faultsObservation += 1
+
+    tableData = {
+        "Fault Data": ["Faults Occurred", "Faults Resolved", "Faults Pending", "Faults Under Observation"],
+        "Number of Faults": [faultsOccurred, faultsResolved, faultsPending, faultsObservation]
+    }
+
+    return jsonify(tableData)
 
 
+def generate_and_return_graph():
+   
+    system_faults = {}
+    
+    for row in rows:
+        system = row["System"]
+
+        if system not in system_faults:
+            system_faults[system] = 0
+        
+        system_faults[system] += 1
+
+    # Plotting
+    sorted_system = sorted(system_faults.items(), key=lambda x: x[1], reverse=True)[:10]
+    system_names = [item[0] for item in sorted_system]
+    faults_counts = [item[1] for item in sorted_system]
+
+    plt.figure(figsize=(12, 8))
+    bars = plt.bar(system_names, faults_counts, color='skyblue', alpha=0.75, edgecolor='black')
+    plt.title("System Faults", fontsize=16, fontweight='bold')
+    plt.xlabel("System", fontsize=14)
+    plt.ylabel("Faults Count", fontsize=14)
+    plt.xticks([])
+    plt.yticks(fontsize=12)
+    plt.gca().yaxis.set_major_locator(MaxNLocator(integer=True))  # Display only whole number values on y-axis
+    plt.grid(color='gray', linestyle='--', linewidth=0.5, axis='y', alpha=0.7)
+
+    fixed_vertical_height = 0.1
+
+    for bar, label in zip(bars, system_names):
+        yval = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width()/2, yval, int(yval), ha='center', va='bottom', fontsize=10, fontweight='bold')
+        plt.text(bar.get_x() + bar.get_width()/2, fixed_vertical_height, label, ha='center', va='bottom', fontsize=8, color='black', rotation=90)
+
+    plt.tight_layout()
+    folder_path = os.path.abspath(os.path.join(os.path.dirname("app.py"), '..', '..', 'assets'))
+
+    # Check if the directory exists, if not, create it
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+
+    # Now you can save your images in this folder
+    image_path = os.path.join(folder_path, 'systems.png')
+
+    plt.savefig(image_path)
+
+    # Close plot to free up memory
+    plt.close()
+
+    return image_path
+
+@app.route('/systems_graph')
+def systems_graph():
+    # Get the image path
+    image_path = generate_and_return_graph()
+    # Return the image path
+    return jsonify({'image_path': image_path})
+
+
+
+def generate_equipment_graph(system_names):
+   
+    if not system_names:
+        return jsonify({'error': 'System names not provided'})
+    print("DDSFDS")
+    print(system_names)
+    for saved_system in system_names:
+        equipment_faults = {}
+
+        for row in rows:
+            system = row["System"]
+
+            if system == saved_system:
+                equipment = row["Equipment"]
+
+                if system == "Others" or system is None or equipment == "Others" or equipment is None:
+                    continue
+
+                if equipment not in equipment_faults:
+                    equipment_faults[equipment] = 0
+        
+                equipment_faults[equipment] += 1
+
+        # Plotting
+        sorted_equipment = sorted(equipment_faults.items(), key=lambda x: x[1], reverse=True)
+        equipment_names = [item[0] for item in sorted_equipment]
+        faults_counts = [item[1] for item in sorted_equipment]
+
+        plt.figure(figsize=(12, 8))
+        bars = plt.bar(equipment_names, faults_counts, color='orange', alpha=0.75, edgecolor='black')
+        plt.title("Equipment Faults", fontsize=16, fontweight='bold')
+        plt.xlabel("Equipment", fontsize=14)
+        plt.ylabel("Faults Count", fontsize=14)
+        max_faults_count = max(faults_counts)
+        plt.xticks([])
+        plt.yticks(range(5, max_faults_count + 5), fontsize=12)
+        plt.gca().yaxis.set_major_locator(MaxNLocator(integer=True))  # Display only whole number values on y-axis
+        plt.grid(color='gray', linestyle='--', linewidth=0.5, axis='y', alpha=0.7)
+
+        fixed_vertical_height = 0.1
+
+        for bar, label in zip(bars, equipment_names):
+            yval = bar.get_height()
+            plt.text(bar.get_x() + bar.get_width()/2, yval, int(yval), ha='center', va='bottom', fontsize=20, fontweight='bold')
+            plt.text(bar.get_x() + bar.get_width()/2, fixed_vertical_height, label, ha='center', va='bottom', fontsize=20, color='black', rotation=90)
+
+        plt.tight_layout()
+
+        folder_path = os.path.abspath(os.path.join(os.path.dirname("app.py"), '..', '..', 'assets'))
+
+        # Check if the directory exists, if not, create it
+        if not os.path.exists(folder_path):
+            os.makedirs(folder_path)
+
+
+        # Now you can save your images in this folder
+        image_path = os.path.join(folder_path, f'{saved_system}.png')
+
+        plt.savefig(image_path)
+
+        # Close plot to free up memory
+        plt.close()
+
+        return image_path
+        
+        
+@app.route('/equipment_graph')
+def equipment_graph():
+
+    system_faults = {}
+    print(rows)
+    print("daasd")
+    for row in rows:
+        system = row["System"]
+        equipment = row["Equipment"]
+
+        if system == "Others" or system is None or equipment == "Others" or equipment is None:
+            continue
+
+        if system not in system_faults:
+            system_faults[system] = 0
+        
+        system_faults[system] += 1
+
+    # Plotting
+    sorted_system = sorted(system_faults.items(), key=lambda x: x[1], reverse=True)
+    system_names = [item[0] for item in sorted_system]
+   # Plot equipment graphs for each system
+   # Plot equipment graphs for each system
+    generated_images = []
+    for system_name in system_names:
+        image_path = generate_equipment_graph([system_name])  # Pass each system name separately
+        generated_images.append(image_path)
+    # Return the list of image paths
+    return jsonify({'image_paths': generated_images})
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
