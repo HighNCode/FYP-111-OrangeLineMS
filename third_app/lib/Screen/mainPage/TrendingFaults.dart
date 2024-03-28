@@ -143,15 +143,31 @@ class _FaultsChartState extends State<FaultsChart> {
 
           return Container(
             width: 550,
-            height: 400,
+            height: 550,
             child: SfCartesianChart(
               backgroundColor: Colors.transparent,
               primaryXAxis: CategoryAxis(
                 majorGridLines: MajorGridLines(width: 0),
+
+                title: AxisTitle(
+                  text: 'Equipments',
+                  textStyle: TextStyle(color: Colors.white),
+                ), // X-axis label
+
+                labelRotation: 90,
+
+                labelStyle: TextStyle(color: Colors.white),
               ),
               primaryYAxis: NumericAxis(
                 majorGridLines: MajorGridLines(width: 0),
+
                 labelStyle: TextStyle(color: Colors.white),
+                title: AxisTitle(
+                  text: 'Count', // Y-axis label
+                  textStyle:
+                      TextStyle(color: Colors.white), // Y-axis title color
+                ), // Y-axis label
+                interval: 50,
               ),
               title: ChartTitle(
                 text: 'Trending Faults',
@@ -163,8 +179,8 @@ class _FaultsChartState extends State<FaultsChart> {
                 textStyle: TextStyle(color: Colors.white),
               ),
               plotAreaBorderWidth: 0,
-              series: <BarSeries<FaultData, String>>[
-                BarSeries<FaultData, String>(
+              series: <CartesianSeries>[
+                ColumnSeries<FaultData, String>(
                   dataSource: snapshot.data!,
                   xValueMapper: (FaultData faults, _) => faults.equipment,
                   yValueMapper: (FaultData faults, _) => faults.faultsCount,

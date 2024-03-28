@@ -191,24 +191,23 @@ class _HomeState extends State<Home> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 30),
+                  SizedBox(height: 20),
                   Row(
                     children: [
                       Container(
                         margin: EdgeInsets.only(left: 60),
                         width: 550,
-                        height: 400,
+                        height: 550,
                         child: FaultsChart(),
                         decoration: BoxDecoration(
                           color: Color(0xFF313134),
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      SizedBox(width: 10), // Add SizedBox for spacing
+                      SizedBox(width: 50), // Add SizedBox for spacing
                       Container(
-                        margin: EdgeInsets.only(left: 60),
                         width: 650,
-                        height: 400,
+                        height: 550,
                         child: RepetitiveFaultsChart(),
                         decoration: BoxDecoration(
                           color: Color(0xFF313134),

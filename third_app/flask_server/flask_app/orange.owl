@@ -861,6 +861,7 @@
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#Carbon_skateboard">
         <rdf:type rdf:resource="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#Equipment"/>
+        <untitled-ontology-12:hasFault rdf:resource="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#EdgeDamage"/>
         <untitled-ontology-12:isLocated rdf:resource="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#Bogie1_LHS"/>
         <untitled-ontology-12:isLocated rdf:resource="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#Bogie1_RHS"/>
         <untitled-ontology-12:isLocated rdf:resource="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#Bogie2_LHS"/>
@@ -1281,6 +1282,15 @@
         <untitled-ontology-12:isLocated rdf:resource="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#Bogie1_RHS"/>
         <untitled-ontology-12:isLocated rdf:resource="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#Bogie2_LHS"/>
         <untitled-ontology-12:isLocated rdf:resource="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#Bogie2_RHS"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#EdgeDamage -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#EdgeDamage">
+        <rdf:type rdf:resource="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#Fault"/>
+        <rdfs:comment>Carefully examine the extent of the damage to determine the best course of action. Look for any signs of cracking, chipping, or separation along the edges of the skateboard deck. If you notice areas of the skateboard&apos;s edges that are particularly susceptible to damage, consider reinforcing them with additional layers of carbon fiber or protective materials. Keep it under observation for the next system maintenance.</rdfs:comment>
     </owl:NamedIndividual>
     
 
@@ -1829,6 +1839,15 @@
     
 
 
+    <!-- http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#OilSeepage -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#OilSeepage">
+        <rdf:type rdf:resource="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#Fault"/>
+        <rdfs:comment>If the oil seepage is originating from loose fittings or connections, tighten them securely to prevent further leakage. Be careful not to overtighten, as this can damage the components. If the oil seepage is due to worn or damaged seals or gaskets, replace them with new ones. Ensure that you use high-quality replacement seals or gaskets compatible with the damper system to maintain proper functionality.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#Overflow_Valve -->
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#Overflow_Valve">
@@ -1936,6 +1955,7 @@
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#Primary_Damper">
         <rdf:type rdf:resource="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#Equipment"/>
+        <untitled-ontology-12:hasFault rdf:resource="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#OilSeepage"/>
         <untitled-ontology-12:isLocated rdf:resource="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#Bogie1_Axle1_LHS"/>
         <untitled-ontology-12:isLocated rdf:resource="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#Bogie1_Axle1_RHS"/>
         <untitled-ontology-12:isLocated rdf:resource="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#Bogie1_Axle2_LHS"/>
@@ -2441,6 +2461,7 @@
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#Traction_motor">
         <rdf:type rdf:resource="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#Equipment"/>
+        <untitled-ontology-12:hasFault rdf:resource="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#VaporContainment"/>
         <untitled-ontology-12:isLocated rdf:resource="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#Bogie1_Axle1"/>
         <untitled-ontology-12:isLocated rdf:resource="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#Bogie1_Axle2"/>
         <untitled-ontology-12:isLocated rdf:resource="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#Bogie2_Axle1"/>
@@ -2593,6 +2614,15 @@
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#Unit2_Fan2">
         <rdf:type rdf:resource="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#Location"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#VaporContainment -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#VaporContainment">
+        <rdf:type rdf:resource="http://www.semanticweb.org/zuhaumar/ontologies/2023/10/untitled-ontology-12#Fault"/>
+        <rdfs:comment>Ensure that all seals, gaskets, and joints in the traction motor are in good condition and effectively prevent moisture ingress. Replace any damaged seals or gaskets promptly. Enhance the ventilation system within the traction motor to facilitate the removal of vapors generated during operation. Proper ventilation can help prevent the buildup of moisture and other contaminants.</rdfs:comment>
     </owl:NamedIndividual>
     
 

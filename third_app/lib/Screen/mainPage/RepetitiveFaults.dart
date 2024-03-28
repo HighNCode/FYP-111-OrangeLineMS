@@ -146,22 +146,36 @@ class _RepetitiveFaultsChartState extends State<RepetitiveFaultsChart> {
             scrollDirection: Axis.horizontal,
             child: Container(
               width: 650,
-              height: 400,
+              height: 550,
               child: SfCartesianChart(
+                plotAreaBorderWidth: 0,
                 backgroundColor: Colors.transparent,
                 primaryXAxis: CategoryAxis(
                   majorGridLines: MajorGridLines(width: 0),
+                  title: AxisTitle(
+                    text: 'Equipments',
+                    textStyle: TextStyle(color: Colors.white),
+                  ), // X-axis label
+                  labelStyle: TextStyle(color: Colors.white),
+                  // Experiment with this value to reduce label clutter
+
+                  labelRotation: 90,
                 ),
                 primaryYAxis: NumericAxis(
                   majorGridLines: MajorGridLines(width: 0),
                   labelStyle: TextStyle(color: Colors.white),
+                  title: AxisTitle(
+                    text: 'Count',
+                    textStyle: TextStyle(color: Colors.white),
+                  ), // Y-axis label
+                  interval: 2,
                 ),
                 title: ChartTitle(
                   text: 'Repetitive Faults',
                   textStyle: TextStyle(color: Colors.white),
                 ),
-                series: <ChartSeries<EquipmentFault, String>>[
-                  BarSeries<EquipmentFault, String>(
+                series: <CartesianSeries>[
+                  ColumnSeries<EquipmentFault, String>(
                     dataSource: snapshot.data!,
                     xValueMapper: (EquipmentFault fault, _) =>
                         fault.equipmentKey,
@@ -171,10 +185,17 @@ class _RepetitiveFaultsChartState extends State<RepetitiveFaultsChart> {
                       textStyle: TextStyle(color: Colors.white),
                     ),
                     borderRadius: BorderRadius.circular(10),
-                    pointColorMapper: (EquipmentFault fault, _) =>
-                        fault.date.isAtSameMomentAs(DateTime.now())
-                            ? Colors.red
-                            : Color.fromRGBO(255, 133, 24, 1),
+                    pointColorMapper: (EquipmentFault fault, _) {
+                      DateTime faultDate = DateTime(
+                          fault.date.year, fault.date.month, fault.date.day);
+                      DateTime currentDate = DateTime.now();
+                      DateTime currentDateWithoutTime = DateTime(
+                          currentDate.year, currentDate.month, currentDate.day);
+
+                      return faultDate.isAtSameMomentAs(currentDateWithoutTime)
+                          ? Colors.red
+                          : Color.fromRGBO(255, 133, 24, 1);
+                    },
                   )
                 ],
               ),
