@@ -18,6 +18,8 @@ from supabase import create_client, Client
 from ConsolidatedWheelRawData import mainFun4
 from matplotlib.ticker import MaxNLocator
 import pytesseract
+import csv
+
 
 plt.switch_backend('agg')
 
@@ -889,6 +891,15 @@ def equipment_graph():
         generated_images.append(image_path)
     # Return the list of image paths
     return jsonify({'image_paths': generated_images})
+
+@app.route('/spareParts_data', methods=['GET'])
+def get_data():
+    data = []
+    with open('sparePartsPrediction.csv', mode='r') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            data.append(row)
+    return jsonify(data)
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)

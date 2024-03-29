@@ -194,7 +194,7 @@ class _Page3State extends State<Page3> {
                         children: [
                           SizedBox(
                             width: 650,
-                            height: 80,
+                            height: 120,
                             child: TextField(
                               maxLines: 6,
                               controller: FaultInputController,
@@ -257,7 +257,7 @@ class _Page3State extends State<Page3> {
                         children: [
                           SizedBox(
                             width: 650,
-                            height: 80,
+                            height: 120,
                             child: TextField(
                               maxLines: 6,
                               controller: FaultSolutionController,

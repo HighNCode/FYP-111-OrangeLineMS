@@ -102,6 +102,75 @@ class _PlotScreenState extends State<PlotScreen> {
     }
   }
 
+  void _getTable2() async {
+    final response =
+        await http.get(Uri.parse('http://127.0.0.1:8000/spareParts_data'));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> responseData = json.decode(response.body);
+
+      print(responseData);
+
+      if (responseData.isNotEmpty) {
+        // Format the content
+        List<DataRow> dataRows = [];
+        for (var record in responseData) {
+          dataRows.add(DataRow(
+            cells: [
+              DataCell(Text(record['System'])),
+              DataCell(Text(record['Quantity'])),
+            ],
+          ));
+        }
+
+        // Show the dialog box with DataTable
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('March 2024'),
+              content: SingleChildScrollView(
+                child: DataTable(
+                  columns: [
+                    DataColumn(label: Text('System')),
+                    DataColumn(label: Text('Quantity')),
+                  ],
+                  rows: dataRows,
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('April 2024'),
+              content: Text('No data available.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,7 +212,7 @@ class _PlotScreenState extends State<PlotScreen> {
                         ),
                         children: [
                           TextSpan(
-                            text: 'Prediction Preview',
+                            text: 'Yearly Prediction Preview',
                             style: TextStyle(
                               fontFamily: 'Inter',
                               fontSize: 32,
@@ -211,30 +280,51 @@ class _PlotScreenState extends State<PlotScreen> {
                           ),
                         ),
                       ),
-                      //     SizedBox(height: 20),
-                      //     if (tableData.isNotEmpty)
-                      //       DataTable(
-                      //         columns: [
-                      //           DataColumn(label: Text('Column 1')),
-                      //           DataColumn(label: Text('Column 2')),
-                      //           // Add more columns as needed
-                      //         ],
-                      //         rows: tableData
-                      //             .map(
-                      //               (row) => DataRow(
-                      //                 cells: [
-                      //                   DataCell(Text('${row['key1']}')),
-                      //                   DataCell(Text('${row['key2']}')),
-                      //                   // Add more cells as needed
-                      //                 ],
-                      //               ),
-                      //             )
-                      //             .toList(),
-                      //       )
-                      //     else
-                      //       Text('Table data not available'),
+                      SizedBox(width: 10),
+                      ElevatedButton(
+                        // Adding another button
+                        onPressed: _getTable2,
+                        style: ElevatedButton.styleFrom(
+                          primary: Color(
+                              0xddff8518), // Change color as per your requirement
+                        ),
+                        child: SizedBox(
+                          height: 30.0,
+                          child: Center(
+                            child: Text(
+                              'Next Month Preview', // Change text as per your requirement
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
+
+                  //     SizedBox(height: 20),
+                  //     if (tableData.isNotEmpty)
+                  //       DataTable(
+                  //         columns: [
+                  //           DataColumn(label: Text('Column 1')),
+                  //           DataColumn(label: Text('Column 2')),
+                  //           // Add more columns as needed
+                  //         ],
+                  //         rows: tableData
+                  //             .map(
+                  //               (row) => DataRow(
+                  //                 cells: [
+                  //                   DataCell(Text('${row['key1']}')),
+                  //                   DataCell(Text('${row['key2']}')),
+                  //                   // Add more cells as needed
+                  //                 ],
+                  //               ),
+                  //             )
+                  //             .toList(),
+                  //       )
+                  //     else
+                  //       Text('Table data not available'),
                 ],
               ),
             ),
