@@ -196,7 +196,7 @@ class _HomeState extends State<Home> {
                     children: [
                       Container(
                         margin: EdgeInsets.only(left: 60),
-                        width: 550,
+                        width: 600,
                         height: 550,
                         child: FaultsChart(),
                         decoration: BoxDecoration(
@@ -206,7 +206,7 @@ class _HomeState extends State<Home> {
                       ),
                       SizedBox(width: 50), // Add SizedBox for spacing
                       Container(
-                        width: 650,
+                        width: 550,
                         height: 550,
                         child: RepetitiveFaultsChart(),
                         decoration: BoxDecoration(

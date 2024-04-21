@@ -145,7 +145,7 @@ class _RepetitiveFaultsChartState extends State<RepetitiveFaultsChart> {
           return SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Container(
-              width: 650,
+              width: 550,
               height: 550,
               child: SfCartesianChart(
                 plotAreaBorderWidth: 0,

@@ -5,7 +5,7 @@ import 'package:third_app/Screen/fault_detection/Page3.dart';
 import 'package:third_app/Screen/Fault_Data/first.dart';
 import 'package:third_app/Screen/Wheel Data OCR/ocr.dart';
 import 'package:third_app/Screen/Report/report.dart';
-
+import 'package:third_app/Screen/crud_app/edit_faults.dart';
 import 'package:third_app/Screen/mainPage/Home.dart';
 import 'package:third_app/main.dart';
 import 'package:third_app/app_state.dart';
@@ -87,6 +87,8 @@ class _EngineerDashboardState extends State<EngineerDashboard> {
       case 4:
         return ocr();
       case 5:
+        return FaultsEditor();
+      case 6:
         return ReportScreen();
       // case 5:
       //   return PlotScreen();
@@ -499,7 +501,8 @@ class MyDrawer extends StatelessWidget {
                   _buildMenuItem(2, 'Fault Data Form', Icons.edit),
                   _buildMenuItem(3, 'Fault Detection', Icons.warning),
                   _buildMenuItem(4, 'Wheel Analysis', Icons.analytics),
-                  _buildMenuItem(5, 'Report', Icons.description),
+                  _buildMenuItem(5, 'View Faults', Icons.error_outline),
+                  _buildMenuItem(6, 'Report', Icons.description),
                   // _buildMenuItem(5, 'Spare Parts', Icons.settings),
                 ],
               ),
