@@ -53,10 +53,15 @@ class _firstState extends State<first> {
   List<String> systemList = []; // Empty list intially for system
   List<String> equipmentList = []; // Empty list intially for equipment
   List<String> locationList = []; // Empty list intially for location
+  TextEditingController _timeController = TextEditingController();
+  String timeError = ' ';
 
   @override
   void initState() {
     super.initState();
+
+    _dateController.text = "${selectedDate.toLocal()}".split(' ')[0];
+    _timeController.text = DateFormat('HH:mm:ss').format(DateTime.now());
     // Fetch data from Supabase and update options list
     fetchOptionsData();
     fetchOptionsData2();
@@ -226,6 +231,45 @@ class _firstState extends State<first> {
     }
   }
 
+  Future<void> sendDataToDatabase(
+      String selectedValue,
+      String selectedValue2,
+      String selectedValue5,
+      String selectedValue6,
+      String selectedValue3,
+      String selectedValue4) async {
+    final url = Uri.parse(
+        'http://127.0.0.1:8000/fault_info'); // Replace with your Flask API endpoint URL
+
+    final data = <String, dynamic>{
+      '_date1Controller': (_dateController.text),
+      'trainNo': selectedValue,
+      'CarNo': selectedValue2,
+      'system': selectedValue3,
+      'Equipment': selectedValue4,
+      'Equipment_loc': selectedValue5,
+      'Fault_Source': selectedValue6,
+    };
+
+    print(data);
+    final headers = <String, String>{
+      'Content-Type': 'application/json',
+    };
+
+    final response = await http.post(
+      url,
+      headers: headers,
+      body: jsonEncode(data),
+    );
+
+    if (response.statusCode == 200) {
+      print('Data sent successfully');
+      print('Response: ${response.body}');
+    } else {
+      print('Failed to send data. Error: ${response.statusCode}');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -308,19 +352,22 @@ class _firstState extends State<first> {
                             ),
                             Container(
                               margin: EdgeInsets.fromLTRB(30, 0, 30, 0.18),
-                              // child: Text(
-                              //   'Fault Description',
-                              //   style: TextStyle(
-                              //     fontSize: 20.2151851654,
-                              //     fontWeight: FontWeight.w400,
-                              //     color: Color(0xFFFFFFFF),
-                              //   ),
-                              // ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.fromLTRB(30, 0, 30, 0.18),
+                              child: Text(
+                                'Fault Status',
+                                style: TextStyle(
+                                  fontSize: 20.2151851654,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color(0xFFFFFFFF),
+                                ),
+                              ),
                             ),
                             Container(
                               margin: EdgeInsets.fromLTRB(40, 0, 0, 0.18),
                               child: Text(
-                                'Fault Status',
+                                'Fault Detection',
                                 style: TextStyle(
                                   fontSize: 20.2151851654,
                                   fontWeight: FontWeight.w400,
@@ -849,6 +896,13 @@ class _firstState extends State<first> {
                           height: 40,
                           child: ElevatedButton(
                             onPressed: () {
+                              sendDataToDatabase(
+                                  selectedValue,
+                                  selectedValue2,
+                                  selectedValue5,
+                                  selectedValue6,
+                                  selectedValue3Controller.value,
+                                  selectedValue4Controller.value);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(

@@ -90,8 +90,7 @@ class _EngineerDashboardState extends State<EngineerDashboard> {
         return FaultsEditor();
       case 6:
         return ReportScreen();
-      // case 5:
-      //   return PlotScreen();
+
       default:
         return Container(); // Return an empty container if index is out of range
     }

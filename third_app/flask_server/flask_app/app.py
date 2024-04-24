@@ -225,6 +225,13 @@ def get_table():
     
 
 # Create a dictionary to store all data
+
+all_fault_info = {
+    'fault_info': {},
+    'fault_status': {},
+    'fault_Detection': {},
+}
+
 all_data = {
     'general_info': {},
     'intial_measurement': {},
@@ -329,8 +336,7 @@ def final_measurement():
         # Convert date and time to the required format
        # Extract general info data
         general_info_data = all_data['general_info']
-        print("plz",all_data['general_info'])
-        print("y",general_info_data)
+        
        # Extract date and time strings
         date_string = general_info_data['_dateController']
         time_string = general_info_data['_timeController']
@@ -901,5 +907,139 @@ def get_data():
             data.append(row)
     return jsonify(data)
 
+
+# Fault Data Form
+
+@app.route('/fault_info', methods=['POST'])
+
+def fault_info():
+    if request.method == 'POST':
+        data = request.get_json()
+        a = data['_date1Controller']
+        b = data['trainNo']
+        c = data['CarNo']
+        d = data['system']
+        e = data['Equipment']
+        f = data['Equipment_loc']
+        g = data['Fault_Source']
+
+        response_data = {
+            'date': a,
+            'trainNo': b,
+            'CarNo': c,
+            'system': d,
+            'Equipment': e,
+            'Equipment_loc': f,
+            'Fault_Source': g,
+        }
+        
+    all_fault_info['fault_info'] = data
+    print(all_fault_info['fault_info'])
+    return jsonify(response_data)
+
+@app.route('/fault_status', methods=['POST'])
+def fault_status():
+    if request.method == 'POST':
+        data = request.get_json()
+        # Extract data from the JSON payload
+        a = data['_resdateController']
+        b = data['status']
+        c = data['sparePartsConsumed']
+        d = data['partsSwapped']
+
+        # Prepare response data
+        response_data = {
+            '_resdateController': a,
+            'status': b,
+            'sparePartsConsumed': c,
+            'partsSwapped': d,
+        }
+
+        # Store received fault status data
+        all_fault_info['fault_status'] = data
+        print(all_fault_info['fault_info'])
+
+        # Return response as JSON
+        return jsonify(response_data)
+
+@app.route('/fault_detection_info', methods=['POST'])
+def fault_detection_info():
+    if request.method == 'POST':
+        data = request.get_json() 
+        print(data)
+
+        fault_description = data.get('faultdescController', '')
+        fault_solution = data.get('faultsolController', '')
+
+ 
+    all_fault_info['fault_detection'] = data
+
+
+
+          
+    fault_info_data = all_fault_info['fault_info']
+   
+    # # Extract date and time strings
+    # date_string = fault_info_data['_date1Controller']
+    
+    #     # Convert date string to a date object
+        
+    # formatted_date = datetime.strptime(date_string, '%Y-%m-%d').date()
+    # formatted_date = formatted_date.strftime('%Y-%m-%d')
+    # print(formatted_date)
+
+  
+
+    trainNumber = fault_info_data['trainNo']
+    
+    CarNo = fault_info_data['CarNo']
+    system = fault_info_data['system']
+    equipment = fault_info_data['Equipment']
+    equipment_loc = fault_info_data['Equipment_loc']
+    fault_source = fault_info_data['Fault_Source']
+
+           
+    fault_info_data = all_fault_info['fault_status']
+    status = fault_info_data['status']
+    
+    # Extract date and time strings
+    res_date_string = fault_info_data['_resdateController']
+   
+    formatted_date_res = datetime.strptime(res_date_string, '%Y-%m-%d').date()
+    formatted_date_res = formatted_date_res.strftime('%Y-%m-%d')
+    print(formatted_date_res)
+
+    # Define your Supabase project URL and API key
+    supabase_url = "https://typmqqidaijuobjosrpi.supabase.co"
+    supabase_key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR5cG1xcWlkYWlqdW9iam9zcnBpIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTM0MzkzODAsImV4cCI6MjAwOTAxNTM4MH0.Ihde633Yj9FFaQ7hKLooxDxaFEno4fK8YxSb3gy8S4c"
+
+    # Initialize the Supabase client
+    supabase_client = supabase.Client(supabase_url, supabase_key)
+    table_name = "FaultData"
+   
+   
+    
+
+    # Prepare the data to be inserted
+    insert_data = {     
+        # 'SR':102, 
+        'OccurrenceDate':'2024-04-23',
+        'TrainNumber':trainNumber, 
+        'CarNumber':CarNo,
+        'Source': fault_source,
+        'System':system,
+        'Equipment':equipment,
+        'EquipmentLocation':equipment_loc,
+        'Status':status,
+        'ResolutionDate':res_date_string,
+        'fault_desc':fault_description,
+        'fault_sol':fault_solution,
+    }
+    print(insert_data)
+    supabase_client.table(table_name).insert(insert_data).execute()
+                    
+      
+       
+    return jsonify({"message": "Dummy data inserted successfully"})
 if __name__ == '__main__':
     app.run(debug=True, port=8000)

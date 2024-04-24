@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 // Import the Uint8List type.
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:third_app/Screen/mainPage/EngineerDashboard.dart';
 import 'package:third_app/main.dart';
 import 'package:third_app/app_state.dart';
-import 'package:third_app/Screen/Fault_Data/first.dart';
+import 'package:third_app/Screen/Fault_Data/fault_prediction.dart';
 
 void main() {
   runApp(MyApp());
@@ -86,6 +88,37 @@ class _Page3State extends State<Page3> {
         selectedResDate = picked;
         _resdateController.text = "${picked.toLocal()}".split(' ')[0];
       });
+    }
+  }
+
+  Future<void> sendDataInDatabase(String selected, bool? isChecked,
+      bool? isChecked2, bool? isChecked3, bool? isChecked4) async {
+    final data = {
+      '_resdateController': (_resdateController.text),
+      'status': selected,
+      'sparePartsConsumed':
+          isChecked != null ? (isChecked ? 'Yes' : 'No') : 'No',
+      'partsSwapped': isChecked3 != null ? (isChecked3 ? 'Yes' : 'No') : 'No',
+    };
+    final url = Uri.parse(
+        'http://127.0.0.1:8000/fault_status'); // Replace with your Flask API endpoint URL
+
+    print(data);
+    final headers = <String, String>{
+      'Content-Type': 'application/json',
+    };
+
+    final response = await http.post(
+      url,
+      headers: headers,
+      body: jsonEncode(data),
+    );
+
+    if (response.statusCode == 200) {
+      print('Data sent successfully');
+      print('Response: ${response.body}');
+    } else {
+      print('Failed to send data. Error: ${response.statusCode}');
     }
   }
 
@@ -315,17 +348,6 @@ class _Page3State extends State<Page3> {
                             ),
                             Container(
                               margin: EdgeInsets.fromLTRB(30, 0, 30, 0.18),
-                              // child: Text(
-                              //   'Fault Description',
-                              //   style: TextStyle(
-                              //     fontSize: 20.2151851654,
-                              //     fontWeight: FontWeight.w400,
-                              //     color: Color(0xFFFFFFFF),
-                              //   ),
-                              // ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(40, 0, 0, 0.18),
                               child: Text(
                                 'Fault Status',
                                 style: TextStyle(
@@ -335,31 +357,49 @@ class _Page3State extends State<Page3> {
                                 ),
                               ),
                             ),
+                            Container(
+                              margin: EdgeInsets.fromLTRB(40, 0, 0, 0.18),
+                              child: Text(
+                                'Fault Detection',
+                                style: TextStyle(
+                                  fontSize: 20.2151851654,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color(0xFFFFFFFF),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
                       Row(
                         children: [
-                          //   Container(
-                          //     margin: EdgeInsets.fromLTRB(55, 0, 0, 0.10),
-                          //     width: 510,
-                          //     height: 8,
-                          //     decoration: BoxDecoration(
-                          //       color: Color(0xFF222229),
-                          //     ),
-                          //   ),
                           Container(
-                            // No margin for the second Container
                             margin: EdgeInsets.fromLTRB(55, 0, 0, 0.10),
-                            width: 750,
+                            width: 280,
                             height: 8,
                             decoration: BoxDecoration(
                               color: Color(0xddff8518),
                             ),
                           ),
+                          Container(
+                            // No margin for the second Container
+                            width: 180,
+                            height: 8,
+                            decoration: BoxDecoration(
+                              color: Color(0xddff8518),
+                            ),
+                          ),
+                          Container(
+                            // No margin for the second Container
+                            width: 290,
+                            height: 8,
+                            decoration: BoxDecoration(
+                              color: Color(0xFF222229),
+                            ),
+                          ),
                         ],
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 55),
                       Padding(
                         padding: EdgeInsets.only(left: 70),
                         child: Row(
@@ -533,18 +573,18 @@ class _Page3State extends State<Page3> {
                               height: 40,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  // sendData(context);
-
+                                  sendDataInDatabase(selectedValue5, isChecked,
+                                      isChecked2, isChecked3, isChecked4);
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          EngineerDashboard(), // Provide the role parameter here
+                                          FaultPrediction(), // Provide the role parameter here
                                     ),
                                   );
                                 },
                                 child: Text(
-                                  'Submit',
+                                  'Next',
                                   style: TextStyle(
                                     color: Color(0xffffffff),
                                     fontSize: 17,
