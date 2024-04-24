@@ -86,9 +86,9 @@ class _EngineerDashboardState extends State<EngineerDashboard> {
         return Page3();
       case 4:
         return ocr();
+      // case 5:
+      //   return FaultsEditor();
       case 5:
-        return FaultsEditor();
-      case 6:
         return ReportScreen();
 
       default:
@@ -500,8 +500,8 @@ class MyDrawer extends StatelessWidget {
                   _buildMenuItem(2, 'Fault Data Form', Icons.edit),
                   _buildMenuItem(3, 'Fault Detection', Icons.warning),
                   _buildMenuItem(4, 'Wheel Analysis', Icons.analytics),
-                  _buildMenuItem(5, 'View Faults', Icons.error_outline),
-                  _buildMenuItem(6, 'Report', Icons.description),
+                  // _buildMenuItem(5, 'View Faults', Icons.error_outline),
+                  _buildMenuItem(5, 'Report', Icons.description),
                   // _buildMenuItem(5, 'Spare Parts', Icons.settings),
                 ],
               ),
